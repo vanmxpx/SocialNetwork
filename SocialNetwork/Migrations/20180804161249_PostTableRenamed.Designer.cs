@@ -2,22 +2,24 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(ShortyContext))]
-    partial class ShortyContextModelSnapshot : ModelSnapshot
+    [Migration("20180804161249_PostTableRenamed")]
+    partial class PostTableRenamed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("SocialNetwork.Authorization", b =>
+            modelBuilder.Entity("SocialNetwork.Authorizations", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,8 +34,9 @@ namespace SocialNetwork.Migrations
                     b.Property<int>("IdProfile")
                         .HasColumnType("int(11)");
 
-                    b.Property<int>("SystemStatus")
-                        .HasColumnType("int(11)");
+                    b.Property<string>("SystemStatus")
+                        .IsRequired()
+                        .HasColumnType("varchar(45)");
 
                     b.HasKey("Id");
 
@@ -126,8 +129,7 @@ namespace SocialNetwork.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("int(11)");
 
-                    b.Property<int?>("Gender")
-                        .HasColumnType("int(11)");
+                    b.Property<byte?>("Gender");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -152,7 +154,7 @@ namespace SocialNetwork.Migrations
                     b.ToTable("Userdata");
                 });
 
-            modelBuilder.Entity("SocialNetwork.Authorization", b =>
+            modelBuilder.Entity("SocialNetwork.Authorizations", b =>
                 {
                     b.HasOne("SocialNetwork.Profile", "IdProfileNavigation")
                         .WithMany("Authorizations")

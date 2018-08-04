@@ -8,7 +8,7 @@ namespace SocialNetwork
     {
         public Profile()
         {
-            Authorizations = new HashSet<Authorizations>();
+            Authorizations = new HashSet<Authorization>();
             FollowersIdProfileBlogerNavigation = new HashSet<Followers>();
             FollowersIdProfileSubscriberNavigation = new HashSet<Followers>();
             Post = new HashSet<Post>();
@@ -19,8 +19,8 @@ namespace SocialNetwork
         public string Password { get; set; }
         public DateTime DateRegistration { get; set; }
 
-        public Userdata IdUserdataNavigation { get; set; }
-        public ICollection<Authorizations> Authorizations { get; set; }
+        public Userdata UserdataNavigation { get; set; }
+        public ICollection<Authorization> Authorizations { get; set; }
         public ICollection<Followers> FollowersIdProfileBlogerNavigation { get; set; }
         public ICollection<Followers> FollowersIdProfileSubscriberNavigation { get; set; }
         public ICollection<Post> Post { get; set; }

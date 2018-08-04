@@ -15,10 +15,10 @@ namespace SocialNetwork
         {
         }
 
-        public virtual DbSet<Authorizations> Authorizations { get; set; }
+        public virtual DbSet<Authorization> Authorizations { get; set; }
         public virtual DbSet<Followers> Followers { get; set; }
-        public virtual DbSet<Post> Post { get; set; }
-        public virtual DbSet<Profile> Profile { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Userdata> Userdata { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,7 +31,7 @@ namespace SocialNetwork
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Authorizations>(entity =>
+            modelBuilder.Entity<Authorization>(entity =>
             {
                 entity.ToTable("Authorizations");
 
@@ -52,7 +52,7 @@ namespace SocialNetwork
 
                 entity.Property(e => e.SystemStatus)
                     .IsRequired()
-                    .HasColumnType("varchar(45)");
+                    .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.IdProfileNavigation)
                     .WithMany(p => p.Authorizations)
@@ -92,7 +92,7 @@ namespace SocialNetwork
 
             modelBuilder.Entity<Post>(entity =>
             {
-                entity.ToTable("post");
+                entity.ToTable("posts");
 
                 entity.HasIndex(e => e.IdProfile)
                     .HasName("idProfileAuthor_idx");
@@ -141,7 +141,9 @@ namespace SocialNetwork
                     .IsRequired()
                     .HasColumnType("varchar(45)");
 
-                entity.Property(e => e.DateRegistration).HasColumnType("datetime");
+                entity.Property(e => e.DateRegistration)
+                .IsRequired()
+                .HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Userdata>(entity =>
@@ -168,8 +170,10 @@ namespace SocialNetwork
 
                 entity.Property(e => e.Photo).HasColumnType("varbinary(8001)");
 
+                entity.Property(e => e.Gender).HasColumnType("int(11)");
+
                 entity.HasOne(d => d.ProfileNavigation)
-                    .WithOne(p => p.IdUserdataNavigation)
+                    .WithOne(p => p.UserdataNavigation)
                     .HasForeignKey<Userdata>(d => d.IdProfile)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("idProfile");
