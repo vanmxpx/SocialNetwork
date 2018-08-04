@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace SocialNetwork
 {
@@ -28,6 +31,14 @@ namespace SocialNetwork
             {
                 configuration.RootPath = "client/dist";
             });
+
+        //     services.AddDbContextPool<BloggingContext>( // replace "YourDbContext" with the class name of your DbContext
+        //       options => options.UseMySql("Server=localhost;Database=posts;User=root;Password=NEWPASSWORD;", // replace with your Connection String
+        //           mysqlOptions =>
+        //           {
+        //               mysqlOptions.ServerVersion(new Version(8, 0, 11), ServerType.MySql); // replace with your Server Version and Type
+        //            }
+        //   ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
