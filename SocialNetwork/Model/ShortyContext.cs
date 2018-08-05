@@ -9,6 +9,7 @@ namespace SocialNetwork
         public ShortyContext(DbContextOptions<ShortyContext> options)
             : base(options)
         {
+            
         }
 
         public virtual DbSet<Authorization> Authorizations { get; set; }
