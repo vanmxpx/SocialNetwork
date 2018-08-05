@@ -23,6 +23,7 @@ namespace SocialNetwork
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -32,13 +33,16 @@ namespace SocialNetwork
                 configuration.RootPath = "client/dist";
             });
 
-        //     services.AddDbContextPool<BloggingContext>( // replace "YourDbContext" with the class name of your DbContext
-        //       options => options.UseMySql("Server=localhost;Database=posts;User=root;Password=NEWPASSWORD;", // replace with your Connection String
-        //           mysqlOptions =>
-        //           {
-        //               mysqlOptions.ServerVersion(new Version(8, 0, 11), ServerType.MySql); // replace with your Server Version and Type
-        //            }
-        //   ));
+            services.AddDbContext<ShortyContext>(options =>
+                   options.UseSqlServer(Configuration.GetConnectionString("BloggingDatabase"))); // replace connection string from appsettings.json
+
+            //     services.AddDbContextPool<BloggingContext>( // replace "YourDbContext" with the class name of your DbContext
+            //       options => options.UseMySql("Server=localhost;Database=posts;User=root;Password=NEWPASSWORD;", // replace with your Connection String
+            //           mysqlOptions =>
+            //           {
+            //               mysqlOptions.ServerVersion(new Version(8, 0, 11), ServerType.MySql); // replace with your Server Version and Type
+            //            }
+            //   ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
