@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
@@ -16,15 +15,13 @@ namespace SocialNetwork.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("SocialNetwork.Authorization", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint(20)")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint(20)");
 
                     b.Property<DateTime?>("DatetimeRequest")
                         .HasColumnType("datetime");
@@ -73,8 +70,7 @@ namespace SocialNetwork.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint(20)")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint(20)");
 
                     b.Property<DateTime>("Datetime")
                         .HasColumnType("datetime");
@@ -98,8 +94,7 @@ namespace SocialNetwork.Migrations
                 {
                     b.Property<int>("IdProfile")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int(11)")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int(11)");
 
                     b.Property<DateTime>("DateRegistration")
                         .HasColumnType("datetime");

@@ -6,10 +6,6 @@ namespace SocialNetwork
 {
     public partial class ShortyContext : DbContext
     {
-        public ShortyContext()
-        {
-        }
-
         public ShortyContext(DbContextOptions<ShortyContext> options)
             : base(options)
         {

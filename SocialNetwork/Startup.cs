@@ -32,9 +32,13 @@ namespace SocialNetwork
                 configuration.RootPath = "client/dist";
             });
 
-            services.AddDbContext<ShortyContext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("LocalDatabase"))); // replace connection string from appsettings.json
-
+            services.AddDbContextPool<ShortyContext>( // replace "YourDbContext" with the class name of your DbContext
+                options => options.UseMySql(Configuration.GetConnectionString("LocalDatabase"), // replace with your Connection String
+                    mysqlOptions =>
+                    {
+                        mysqlOptions.ServerVersion(new Version(8, 0, 12), ServerType.MySql); // replace with your Server Version and Type
+                    }
+            ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
