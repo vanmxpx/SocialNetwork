@@ -13,7 +13,7 @@ namespace SocialNetwork
         public string LastName { get; set; }
         public byte? Gender { get; set; }
         public string Location { get; set; }
-        public int? Age { get; set; }
+        public byte? Age { get; set; }
 
         public Profile ProfileNavigation { get; set; }
 

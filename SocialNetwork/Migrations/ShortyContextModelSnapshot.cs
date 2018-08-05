@@ -128,8 +128,7 @@ namespace SocialNetwork.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("int(11)");
 
-                    b.Property<int?>("Gender")
-                        .HasColumnType("int(11)");
+                    b.Property<byte?>("Gender");
 
                     b.Property<string>("LastName")
                         .IsRequired()

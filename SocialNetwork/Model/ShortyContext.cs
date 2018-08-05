@@ -169,8 +169,6 @@ namespace SocialNetwork
                     .IsRequired()
                     .HasColumnType("varchar(45)");
 
-                entity.Property(e => e.Gender).HasColumnType("int(11)");
-
                 entity.HasOne(d => d.ProfileNavigation)
                     .WithOne(p => p.UserdataNavigation)
                     .HasForeignKey<Userdata>(d => d.IdProfile)
