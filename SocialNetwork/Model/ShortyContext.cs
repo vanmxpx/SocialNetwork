@@ -40,9 +40,13 @@ namespace SocialNetwork
 
                 entity.Property(e => e.Id).HasColumnType("bigint(20)");
 
-                entity.Property(e => e.DatetimeRequest).HasColumnType("datetime");
+                entity.Property(e => e.DatetimeRequest)
+                .IsRequired()
+                .HasColumnType("datetime");
 
-                entity.Property(e => e.DatetimeStart).HasColumnType("datetime");
+                entity.Property(e => e.DatetimeStart)
+                .IsRequired()
+                .HasColumnType("datetime");
 
                 entity.Property(e => e.IdProfile).HasColumnType("int(11)");
 
@@ -131,7 +135,7 @@ namespace SocialNetwork
 
                 entity.Property(e => e.Email)
                     .IsRequired()
-                    .HasColumnType("varchar(45)");
+                    .HasColumnType("varchar(60)");
 
                 entity.Property(e => e.Password)
                     .IsRequired()
@@ -163,8 +167,6 @@ namespace SocialNetwork
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnType("varchar(45)");
-
-                entity.Property(e => e.Photo).HasColumnType("varbinary(8001)");
 
                 entity.Property(e => e.Gender).HasColumnType("int(11)");
 

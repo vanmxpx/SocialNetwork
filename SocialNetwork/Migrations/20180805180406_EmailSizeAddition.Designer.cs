@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(ShortyContext))]
-    partial class ShortyContextModelSnapshot : ModelSnapshot
+    [Migration("20180805180406_EmailSizeAddition")]
+    partial class EmailSizeAddition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,11 +26,9 @@ namespace SocialNetwork.Migrations
                         .HasColumnType("bigint(20)");
 
                     b.Property<DateTime?>("DatetimeRequest")
-                        .IsRequired()
                         .HasColumnType("datetime");
 
                     b.Property<DateTime?>("DatetimeStart")
-                        .IsRequired()
                         .HasColumnType("datetime");
 
                     b.Property<int>("IdProfile")
