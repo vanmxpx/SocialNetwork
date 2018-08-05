@@ -33,7 +33,7 @@ namespace SocialNetwork
             });
 
             services.AddDbContext<ShortyContext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("BloggingDatabase"))); // replace connection string from appsettings.json
+                   options.UseSqlServer(Configuration.GetConnectionString("LocalDatabase"))); // replace connection string from appsettings.json
 
         }
 
