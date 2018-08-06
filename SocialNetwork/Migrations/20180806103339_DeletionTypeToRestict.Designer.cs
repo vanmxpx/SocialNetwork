@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(ShortyContext))]
-    partial class ShortyContextModelSnapshot : ModelSnapshot
+    [Migration("20180806103339_DeletionTypeToRestict")]
+    partial class DeletionTypeToRestict
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,7 +194,7 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Userdata", "UserdataNavigation")
                         .WithOne("ProfileNavigation")
                         .HasForeignKey("SocialNetwork.Profile", "IdProfile")
-                        .HasConstraintName("idProfileProfile")
+                        .HasConstraintName("idProfile")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

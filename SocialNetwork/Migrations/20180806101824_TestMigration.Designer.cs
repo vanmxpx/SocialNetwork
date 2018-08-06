@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(ShortyContext))]
-    partial class ShortyContextModelSnapshot : ModelSnapshot
+    [Migration("20180806101824_TestMigration")]
+    partial class TestMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,8 +161,7 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Profile", "IdProfileNavigation")
                         .WithMany("Authorizations")
                         .HasForeignKey("IdProfile")
-                        .HasConstraintName("IdOwner")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("IdOwner");
                 });
 
             modelBuilder.Entity("SocialNetwork.Followers", b =>
@@ -168,14 +169,12 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Profile", "IdProfileBlogerNavigation")
                         .WithMany("FollowersIdProfileBlogerNavigation")
                         .HasForeignKey("IdProfileBloger")
-                        .HasConstraintName("idProfileBloger")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("idProfileBloger");
 
                     b.HasOne("SocialNetwork.Profile", "IdProfileSubscriberNavigation")
                         .WithMany("FollowersIdProfileSubscriberNavigation")
                         .HasForeignKey("IdProfileSubscriber")
-                        .HasConstraintName("idProfileSubscriber")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("idProfileSubscriber");
                 });
 
             modelBuilder.Entity("SocialNetwork.Post", b =>
@@ -183,8 +182,7 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Profile", "IdProfileNavigation")
                         .WithMany("Post")
                         .HasForeignKey("IdProfile")
-                        .HasConstraintName("idProfileAuthor")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("idProfileAuthor");
                 });
 
             modelBuilder.Entity("SocialNetwork.Profile", b =>
@@ -192,8 +190,7 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Userdata", "UserdataNavigation")
                         .WithOne("ProfileNavigation")
                         .HasForeignKey("SocialNetwork.Profile", "IdProfile")
-                        .HasConstraintName("idProfileProfile")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("idProfile");
                 });
 #pragma warning restore 612, 618
         }

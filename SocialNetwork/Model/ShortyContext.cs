@@ -21,8 +21,6 @@ namespace SocialNetwork
         {
             if (!optionsBuilder.IsConfigured)
             {
-                #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseMySql("Server=localhost;Database=shorty;User=root;Password=NEWPASSWORD;");
             }
         }
 
@@ -42,12 +40,12 @@ namespace SocialNetwork
                 entity.Property(e => e.Id).HasColumnType("bigint(20)");
 
                 entity.Property(e => e.DatetimeRequest)
-                .IsRequired()
-                .HasColumnType("datetime");
+                    .IsRequired()
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DatetimeStart)
-                .IsRequired()
-                .HasColumnType("datetime");
+                    .IsRequired()
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.IdProfile).HasColumnType("int(11)");
 
@@ -58,7 +56,7 @@ namespace SocialNetwork
                 entity.HasOne(d => d.IdProfileNavigation)
                     .WithMany(p => p.Authorizations)
                     .HasForeignKey(d => d.IdProfile)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("IdOwner");
             });
 
@@ -81,13 +79,13 @@ namespace SocialNetwork
                 entity.HasOne(d => d.IdProfileBlogerNavigation)
                     .WithMany(p => p.FollowersIdProfileBlogerNavigation)
                     .HasForeignKey(d => d.IdProfileBloger)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("idProfileBloger");
 
                 entity.HasOne(d => d.IdProfileSubscriberNavigation)
                     .WithMany(p => p.FollowersIdProfileSubscriberNavigation)
                     .HasForeignKey(d => d.IdProfileSubscriber)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("idProfileSubscriber");
             });
 
@@ -111,7 +109,7 @@ namespace SocialNetwork
                 entity.HasOne(d => d.IdProfileNavigation)
                     .WithMany(p => p.Post)
                     .HasForeignKey(d => d.IdProfile)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("idProfileAuthor");
             });
 
@@ -127,8 +125,8 @@ namespace SocialNetwork
                 entity.Property(e => e.IdProfile).HasColumnType("int(11)");
 
                 entity.HasIndex(e => e.Email)
-    .HasName("email_UNIQUE")
-    .IsUnique();
+                    .HasName("email_UNIQUE")
+                    .IsUnique();
 
                 entity.Property(e => e.IdProfile)
                     .HasColumnType("int(11)")
@@ -143,8 +141,8 @@ namespace SocialNetwork
                     .HasColumnType("varchar(45)");
 
                 entity.Property(e => e.DateRegistration)
-                .IsRequired()
-                .HasColumnType("datetime");
+                    .IsRequired()
+                    .HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Userdata>(entity =>
@@ -171,11 +169,13 @@ namespace SocialNetwork
 
                 entity.HasOne(d => d.ProfileNavigation)
                     .WithOne(p => p.UserdataNavigation)
-                    .HasForeignKey<Userdata>(d => d.IdProfile)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("idProfile");
+                    .HasForeignKey<Profile>(d => d.IdProfile)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("idProfileProfile");
+
+                entity.Property(x => x.Gender)
+                    .HasDefaultValue(Gender.Other);
             });
-            modelBuilder.Entity<Userdata>().Property(x => x.Gender).HasDefaultValue(Gender.Other);
         }
     }
 }

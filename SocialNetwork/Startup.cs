@@ -39,7 +39,7 @@ namespace SocialNetwork
                         mysqlOptions.ServerVersion(new Version(8, 0, 12), ServerType.MySql); // replace with your Server Version and Type
                     }
             ));
-            services.AddSingleton<Intitializer>();
+            services.AddTransient<Intitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
