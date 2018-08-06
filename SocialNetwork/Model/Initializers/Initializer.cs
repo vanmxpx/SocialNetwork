@@ -38,6 +38,10 @@ namespace SocialNetwork
 
         public async Task Seed()
         {
+            string sqlDatabaseFill = File.ReadAllText(
+                Directory.GetCurrentDirectory() + "\\Model\\TestData\\addTestData.sql");
+            int numberOfRowInserted = SC.Database.ExecuteSqlCommand(sqlDatabaseFill);
+
             //   if (!SC.Authorizations.Any())
             //       SC.Authorizations.RemoveRange(SC.Authorizations);
 
@@ -53,9 +57,6 @@ namespace SocialNetwork
                 
             // if (!SC.Userdata.Any())
             //     SC.Userdata.AddRange(Userdatas);
-
-            string sqlDatabaseFill = File.ReadAllText(Directory.GetCurrentDirectory() + "\\addTestData.sql");
-            int numberOfRowInserted = SC.Database.ExecuteSqlCommand(sqlDatabaseFill);
 
             await SC.SaveChangesAsync();
         }
