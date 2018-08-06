@@ -83,7 +83,7 @@ namespace SocialNetwork
                 entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
 
                 entity.HasOne(d => d.Profile)
-                    .WithOne(p => p.Credential)
+                    .WithOne()
                     .HasForeignKey<Credential>(d => d.ProfileRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("IdProfile");

@@ -21,7 +21,6 @@ namespace SocialNetwork
         public sbyte? Age { get; set; }
         public byte[] Photo { get; set; }
 
-        public Credential Credential { get; set; }
         public ICollection<Followers> Blogers { get; set; }
         public ICollection<Followers> Subscribers { get; set; }
         public ICollection<Post> Posts { get; set; }
