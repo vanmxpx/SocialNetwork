@@ -39,11 +39,12 @@ namespace SocialNetwork
                         mysqlOptions.ServerVersion(new Version(8, 0, 12), ServerType.MySql); // replace with your Server Version and Type
                     }
             ));
-            services.AddTransient<Intitializer>();
+            // services.AddTransient<Intitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Intitializer ini)
+        // public void Configure(IApplicationBuilder app, IHostingEnvironment env, Intitializer ini)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -95,8 +96,8 @@ namespace SocialNetwork
                 }
             });
             
-            ini.DeleteAll().Wait();
-            ini.Seed().Wait();
+            // ini.DeleteAll().Wait();
+            // ini.Seed().Wait();
         }
     }
 }

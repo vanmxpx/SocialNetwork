@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialNetwork
 {
-
     public partial class Profile
     {
         public Profile()
         {
-            Authorizations = new HashSet<Authorization>();
-            FollowersIdProfileBlogerNavigation = new HashSet<Followers>();
-            FollowersIdProfileSubscriberNavigation = new HashSet<Followers>();
-            Post = new HashSet<Post>();
+            Blogers = new HashSet<Followers>();
+            Subscribers = new HashSet<Followers>();
+            Posts = new HashSet<Post>();
         }
 
-        public int IdProfile { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public DateTime DateRegistration { get; set; }
+        public int Id { get; set; }
+        public string Login { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public sbyte Gender { get; set; }
+        public string Location { get; set; }
+        public sbyte? Age { get; set; }
+        public byte[] Photo { get; set; }
 
-        public Userdata UserdataNavigation { get; set; }
-        public ICollection<Authorization> Authorizations { get; set; }
-        public ICollection<Followers> FollowersIdProfileBlogerNavigation { get; set; }
-        public ICollection<Followers> FollowersIdProfileSubscriberNavigation { get; set; }
-        public ICollection<Post> Post { get; set; }
+        public Credential Credential { get; set; }
+        public ICollection<Followers> Blogers { get; set; }
+        public ICollection<Followers> Subscribers { get; set; }
+        public ICollection<Post> Posts { get; set; }
     }
 }
