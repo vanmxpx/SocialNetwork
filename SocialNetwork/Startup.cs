@@ -95,8 +95,8 @@ namespace SocialNetwork
                 }
             });
             
-            // ini.DeleteAll().Wait();
-            // ini.Seed().Wait();
+            ini.DeleteAll().Wait();
+            ini.Seed().Wait();
         }
     }
 }

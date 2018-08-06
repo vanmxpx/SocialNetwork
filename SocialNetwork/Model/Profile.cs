@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SocialNetwork
 {
-    public partial class Profile
+    public class Profile
     {
         public Profile()
         {

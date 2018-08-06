@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SocialNetwork
 {
-    public partial class ShortyContext : DbContext
+    public class ShortyContext : DbContext
     {
         public ShortyContext(DbContextOptions<ShortyContext> options)
             : base(options)
@@ -70,7 +70,7 @@ namespace SocialNetwork
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
-                entity.Property(e => e.DateRigistration).HasColumnType("datetime");
+                entity.Property(e => e.DateRegistration).HasColumnType("datetime");
 
                 entity.Property(e => e.Email)
                     .IsRequired()

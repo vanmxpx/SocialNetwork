@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SocialNetwork
 {
-    public partial class Post
+    public class Post
     {
         public long Id { get; set; }
         public int ProfileRef { get; set; }

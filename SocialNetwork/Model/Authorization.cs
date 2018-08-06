@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SocialNetwork
 {
-    public partial class Authorization
+    public class Authorization
     {
         public int Id { get; set; }
         public int CredentialRef { get; set; }

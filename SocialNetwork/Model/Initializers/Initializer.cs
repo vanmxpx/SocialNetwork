@@ -18,25 +18,22 @@ namespace SocialNetwork
         }
         public async Task DeleteAll()
         {
-            if (SC!=null)
-            {
-                if (SC.Authorizations.Any())
-                    SC.Authorizations.RemoveRange(SC.Authorizations);
+                if (SC.Authorization.Any())
+                    SC.Authorization.RemoveRange(SC.Authorization);
 
                 if (SC.Followers.Any())
                     SC.Followers.RemoveRange(SC.Followers);
 
-                if (SC.Posts.Any())
-                    SC.Posts.RemoveRange(SC.Posts);
+                if (SC.Post.Any())
+                    SC.Post.RemoveRange(SC.Post);
 
-                if (SC.Userdata.Any())
-                    SC.Userdata.RemoveRange(SC.Userdata);
+                if (SC.Credential.Any())
+                    SC.Credential.RemoveRange(SC.Credential);
 
-                if (SC.Profiles.Any())
-                    SC.Profiles.RemoveRange(SC.Profiles);
+                if (SC.Profile.Any())
+                    SC.Profile.RemoveRange(SC.Profile);
                 
                 await SC.SaveChangesAsync();
-            }
         }
 
         public async Task Seed()

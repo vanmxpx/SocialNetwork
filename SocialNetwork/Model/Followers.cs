@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SocialNetwork
 {
-    public partial class Followers
+    public class Followers
     {
         public int IdBloger { get; set; }
         public int IdSubscriber { get; set; }
