@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialNetwork
 {
+
     public partial class Profile
     {
         public Profile()

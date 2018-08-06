@@ -4,6 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialNetwork
 {
+        public enum Gender : byte {
+      Male = 0,
+      Female = 1,
+      Other = 2
+}
     public partial class Userdata
     {
 
@@ -11,7 +16,7 @@ namespace SocialNetwork
         public string Login { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        public byte? Gender { get; set; }
+        public Gender Gender { get; set; }
         public string Location { get; set; }
         public byte? Age { get; set; }
 

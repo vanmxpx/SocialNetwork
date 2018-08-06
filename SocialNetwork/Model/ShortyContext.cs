@@ -175,6 +175,7 @@ namespace SocialNetwork
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("idProfile");
             });
+            modelBuilder.Entity<Userdata>().Property(x => x.Gender).HasDefaultValue(Gender.Other);
         }
     }
 }
