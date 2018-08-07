@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(ShortyContext))]
-    partial class ShortyContextModelSnapshot : ModelSnapshot
+    [Migration("20180807171803_RelationshipInheritanceFix")]
+    partial class RelationshipInheritanceFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,9 +22,11 @@ namespace SocialNetwork.Migrations
             modelBuilder.Entity("SocialNetwork.Authorization", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int(11)");
 
-                    b.Property<int>("CredentialRef");
+                    b.Property<int>("CredentialRef")
+                        .HasColumnType("int(11)");
 
                     b.Property<DateTime>("DatetimeRequest");
 
@@ -95,12 +99,14 @@ namespace SocialNetwork.Migrations
             modelBuilder.Entity("SocialNetwork.Post", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint(20)");
 
                     b.Property<DateTime>("Datetime")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("ProfileRef");
+                    b.Property<int>("ProfileRef")
+                        .HasColumnType("int(11)");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -117,9 +123,11 @@ namespace SocialNetwork.Migrations
             modelBuilder.Entity("SocialNetwork.Profile", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int(11)");
 
-                    b.Property<byte?>("Age");
+                    b.Property<sbyte?>("Age")
+                        .HasColumnType("tinyint(3)");
 
                     b.Property<sbyte>("Gender")
                         .ValueGeneratedOnAdd()

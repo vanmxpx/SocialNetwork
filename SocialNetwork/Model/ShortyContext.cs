@@ -37,14 +37,9 @@ namespace SocialNetwork
                     .HasName("Id_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnType("int(11)");
-
-                entity.Property(e => e.CredentialRef).HasColumnType("int(11)");
-
                 entity.Property(e => e.SystemStatus)
                     .IsRequired()
                     .HasColumnType("varchar(45)");
-
             });
 
             modelBuilder.Entity<Credential>(entity =>
@@ -74,7 +69,7 @@ namespace SocialNetwork
                     .HasForeignKey<Credential>(d => d.ProfileRef)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                    entity.HasMany(d => d.Authorizations)
+                entity.HasMany(d => d.Authorizations)
                     .WithOne(p=>p.Credential)
                     .HasForeignKey(p=>p.CredentialRef)
                     .OnDelete(DeleteBehavior.Restrict);
@@ -91,18 +86,6 @@ namespace SocialNetwork
 
                 entity.HasIndex(e => e.SubscriberRef)
                     .HasName("idSubscriber_idx");
-
-                entity.HasOne(d => d.Bloger)
-                    .WithMany(p => p.Blogers)
-                    .HasForeignKey(d => d.BlogerRef)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-
-                entity.HasOne(d => d.Subscriber)
-                    .WithMany(p => p.Subscribers)
-                    .HasForeignKey(d => d.SubscriberRef)
-                    .OnDelete(DeleteBehavior.Restrict);
-
             });
 
             modelBuilder.Entity<Post>(entity =>
@@ -112,20 +95,11 @@ namespace SocialNetwork
                 entity.HasIndex(e => e.ProfileRef)
                     .HasName("idProfileAuthor_idx");
 
-                entity.Property(e => e.Id).HasColumnType("bigint(20)");
-
                 entity.Property(e => e.Datetime).HasColumnType("datetime");
-
-                entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
 
                 entity.Property(e => e.Text)
                     .IsRequired()
                     .HasColumnType("varchar(256)");
-
-                entity.HasOne(d => d.Profile)
-                    .WithMany(p => p.Posts)
-                    .HasForeignKey(d => d.ProfileRef)
-                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Profile>(entity =>
@@ -134,10 +108,6 @@ namespace SocialNetwork
 
                 entity.HasIndex(e => e.Id)
                     .HasName("idProfile_idx");
-
-                entity.Property(e => e.Id).HasColumnType("int(11)");
-
-                entity.Property(e => e.Age).HasColumnType("tinyint(3)");
 
                 entity.Property(e => e.Gender)
                     .HasColumnType("tinyint(3)")
@@ -158,6 +128,21 @@ namespace SocialNetwork
                     .HasColumnType("varchar(32)");
 
                 entity.Property(e => e.Photo).HasColumnType("varbinary(8001)");
+                
+                entity.HasMany(d => d.Posts)
+                    .WithOne(p => p.Profile)
+                    .HasForeignKey(d => d.ProfileRef)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(d => d.Blogers)
+                    .WithOne(p => p.Bloger)
+                    .HasForeignKey(d => d.BlogerRef)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(d => d.Subscribers)
+                    .WithOne(p => p.Subscriber)
+                    .HasForeignKey(d => d.SubscriberRef)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }
