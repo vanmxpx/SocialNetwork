@@ -13,12 +13,25 @@ namespace SocialNetwork
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
+
+        private void AddDatabaseConnection(IServiceCollection services, string connection)
+        {
+            services.AddDbContextPool<ShortyContext>( // replace "YourDbContext" with the class name of your DbContext
+                options => options.UseMySql(Configuration.GetConnectionString(connection), // replace with your Connection String
+                    mysqlOptions =>
+                    {
+                        mysqlOptions.ServerVersion(new Version(8, 0, 12), ServerType.MySql); // replace with your Server Version and Type
+                    }
+            ));
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -32,13 +45,14 @@ namespace SocialNetwork
                 configuration.RootPath = "client/dist";
             });
 
-            services.AddDbContextPool<ShortyContext>( // replace "YourDbContext" with the class name of your DbContext
-                options => options.UseMySql(Configuration.GetConnectionString("LocalDatabase"), // replace with your Connection String
-                    mysqlOptions =>
-                    {
-                        mysqlOptions.ServerVersion(new Version(8, 0, 12), ServerType.MySql); // replace with your Server Version and Type
-                    }
-            ));
+            if (Environment.IsDevelopment())
+            {
+                AddDatabaseConnection(services, "LocalDatabase");
+            }
+            else
+            {
+                AddDatabaseConnection(services, "RemoteDatabase");
+            }
             services.AddTransient<Intitializer>();
         }
 
@@ -94,7 +108,7 @@ namespace SocialNetwork
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
-            
+
             ini.DeleteAll().Wait();
             ini.Seed().Wait();
         }
