@@ -11,11 +11,11 @@ namespace SocialNetwork
         {
         }
 
-        public virtual DbSet<Authorization> Authorization { get; set; }
-        public virtual DbSet<Credential> Credential { get; set; }
+        public virtual DbSet<Authorization> Authorizations { get; set; }
+        public virtual DbSet<Credential> Credentials { get; set; }
         public virtual DbSet<Followings> Followers { get; set; }
-        public virtual DbSet<Post> Post { get; set; }
-        public virtual DbSet<Profile> Profile { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<Profile> Profiles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
