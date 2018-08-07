@@ -20,17 +20,13 @@ namespace SocialNetwork.Migrations
             modelBuilder.Entity("SocialNetwork.Authorization", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int(11)");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CredentialRef")
-                        .HasColumnType("int(11)");
+                    b.Property<int>("CredentialRef");
 
-                    b.Property<DateTime>("DatetimeRequest")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("DatetimeRequest");
 
-                    b.Property<DateTime>("DatetimeStart")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("DatetimeStart");
 
                     b.Property<string>("SystemStatus")
                         .IsRequired()
@@ -51,11 +47,9 @@ namespace SocialNetwork.Migrations
             modelBuilder.Entity("SocialNetwork.Credential", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int(11)");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DateRegistration")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("DateRegistration");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -65,8 +59,7 @@ namespace SocialNetwork.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(64)");
 
-                    b.Property<int>("ProfileRef")
-                        .HasColumnType("int(11)");
+                    b.Property<int>("ProfileRef");
 
                     b.HasKey("Id");
 
@@ -83,11 +76,10 @@ namespace SocialNetwork.Migrations
 
             modelBuilder.Entity("SocialNetwork.Followings", b =>
                 {
-                    b.Property<int>("SubscriberRef")
-                        .HasColumnType("int(11)");
+                    b.Property<int>("SubscriberRef");
 
-                    b.Property<int>("BlogerRef")
-                        .HasColumnType("int(11)");
+                    b.Property<int>("BlogerRef");
+
 
                     b.HasKey("SubscriberRef", "BlogerRef");
 
@@ -103,14 +95,11 @@ namespace SocialNetwork.Migrations
             modelBuilder.Entity("SocialNetwork.Post", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint(20)");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Datetime")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("Datetime");
 
-                    b.Property<int>("ProfileRef")
-                        .HasColumnType("int(11)");
+                    b.Property<int>("ProfileRef");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -127,11 +116,9 @@ namespace SocialNetwork.Migrations
             modelBuilder.Entity("SocialNetwork.Profile", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int(11)");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<sbyte?>("Age")
-                        .HasColumnType("tinyint(3)");
+                    b.Property<byte?>("Age");
 
                     b.Property<sbyte>("Gender")
                         .ValueGeneratedOnAdd()
@@ -188,6 +175,7 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Profile", "Subscriber")
                         .WithMany("Subscribers")
                         .HasForeignKey("SubscriberRef");
+
                 });
 
             modelBuilder.Entity("SocialNetwork.Post", b =>

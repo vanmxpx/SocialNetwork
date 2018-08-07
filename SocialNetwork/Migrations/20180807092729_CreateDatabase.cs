@@ -12,14 +12,14 @@ namespace SocialNetwork.Migrations
                 name: "profile",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int(11)", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Login = table.Column<string>(type: "varchar(32)", nullable: false),
                     Name = table.Column<string>(type: "varchar(32)", nullable: false),
                     LastName = table.Column<string>(type: "varchar(32)", nullable: false),
-                    Gender = table.Column<sbyte>(type: "tinyint(3)", nullable: false, defaultValueSql: "'2'"),
+                    Gender = table.Column<sbyte>(type: "tinyint(3)", nullable: false, defaultValueSql: "2"),
                     Location = table.Column<string>(type: "varchar(64)", nullable: true),
-                    Age = table.Column<sbyte>(type: "tinyint(3)", nullable: true),
+                    Age = table.Column<byte>(nullable: true),
                     Photo = table.Column<byte[]>(type: "varbinary(8001)", nullable: true)
                 },
                 constraints: table =>
@@ -31,12 +31,12 @@ namespace SocialNetwork.Migrations
                 name: "credential",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int(11)", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ProfileRef = table.Column<int>(type: "int(11)", nullable: false),
                     Email = table.Column<string>(type: "varchar(64)", nullable: false),
                     Password = table.Column<string>(type: "varchar(64)", nullable: false),
-                    DateRigistration = table.Column<DateTime>(type: "datetime", nullable: false)
+                    DateRegistration = table.Column<DateTime>(nullable: false),
+                    ProfileRef = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,21 +53,21 @@ namespace SocialNetwork.Migrations
                 name: "followers",
                 columns: table => new
                 {
-                    IdBloger = table.Column<int>(type: "int(11)", nullable: false),
-                    IdSubscriber = table.Column<int>(type: "int(11)", nullable: false)
+                    BlogerRef = table.Column<int>(nullable: false),
+                    SubscriberRef = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_followers", x => new { x.IdSubscriber, x.IdBloger });
+                    table.PrimaryKey("PK_followers", x => new { x.SubscriberRef, x.BlogerRef });
                     table.ForeignKey(
-                        name: "IdBloger",
-                        column: x => x.IdBloger,
+                        name: "BlogerRef",
+                        column: x => x.BlogerRef,
                         principalTable: "profile",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "IdSubscriber",
-                        column: x => x.IdSubscriber,
+                        name: "SubscriberRef",
+                        column: x => x.SubscriberRef,
                         principalTable: "profile",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -77,11 +77,11 @@ namespace SocialNetwork.Migrations
                 name: "post",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint(20)", nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ProfileRef = table.Column<int>(type: "int(11)", nullable: false),
                     Text = table.Column<string>(type: "varchar(256)", nullable: false),
-                    Datetime = table.Column<DateTime>(type: "datetime", nullable: false)
+                    Datetime = table.Column<DateTime>(nullable: false),
+                    ProfileRef = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,12 +98,12 @@ namespace SocialNetwork.Migrations
                 name: "authorization",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int(11)", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CredentialRef = table.Column<int>(type: "int(11)", nullable: false),
                     SystemStatus = table.Column<string>(type: "varchar(45)", nullable: false),
-                    DatetimeStart = table.Column<DateTime>(type: "datetime", nullable: false),
-                    DatetimeRequest = table.Column<DateTime>(type: "datetime", nullable: false)
+                    DatetimeStart = table.Column<DateTime>(nullable: false),
+                    DatetimeRequest = table.Column<DateTime>(nullable: false),
+                    CredentialRef = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -142,12 +142,12 @@ namespace SocialNetwork.Migrations
             migrationBuilder.CreateIndex(
                 name: "idBloger_idx",
                 table: "followers",
-                column: "IdBloger");
+                column: "BlogerRef");
 
             migrationBuilder.CreateIndex(
                 name: "idSubscriber_idx",
                 table: "followers",
-                column: "IdSubscriber");
+                column: "SubscriberRef");
 
             migrationBuilder.CreateIndex(
                 name: "idProfileAuthor_idx",

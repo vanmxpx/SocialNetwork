@@ -41,10 +41,6 @@ namespace SocialNetwork
 
                 entity.Property(e => e.CredentialRef).HasColumnType("int(11)");
 
-                entity.Property(e => e.DatetimeRequest).HasColumnType("datetime");
-
-                entity.Property(e => e.DatetimeStart).HasColumnType("datetime");
-
                 entity.Property(e => e.SystemStatus)
                     .IsRequired()
                     .HasColumnType("varchar(45)");
@@ -55,6 +51,8 @@ namespace SocialNetwork
             {
                 entity.ToTable("credential");
 
+                entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
+
                 entity.HasIndex(e => e.Email)
                     .HasName("Email_UNIQUE")
                     .IsUnique();
@@ -63,10 +61,6 @@ namespace SocialNetwork
                     .HasName("ProfileRef_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnType("int(11)");
-
-                entity.Property(e => e.DateRegistration).HasColumnType("datetime");
-
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasColumnType("varchar(64)");
@@ -74,8 +68,6 @@ namespace SocialNetwork
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasColumnType("varchar(64)");
-
-                entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
 
                 entity.HasOne(d => d.Profile)
                     .WithOne()
@@ -100,19 +92,17 @@ namespace SocialNetwork
                 entity.HasIndex(e => e.SubscriberRef)
                     .HasName("idSubscriber_idx");
 
-                entity.Property(e => e.BlogerRef).HasColumnType("int(11)");
-
-                entity.Property(e => e.SubscriberRef).HasColumnType("int(11)");
-
                 entity.HasOne(d => d.Bloger)
                     .WithMany(p => p.Blogers)
                     .HasForeignKey(d => d.BlogerRef)
                     .OnDelete(DeleteBehavior.Restrict);
 
+
                 entity.HasOne(d => d.Subscriber)
                     .WithMany(p => p.Subscribers)
                     .HasForeignKey(d => d.SubscriberRef)
                     .OnDelete(DeleteBehavior.Restrict);
+
             });
 
             modelBuilder.Entity<Post>(entity =>
