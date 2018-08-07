@@ -13,7 +13,7 @@ namespace SocialNetwork
 
         public virtual DbSet<Authorization> Authorization { get; set; }
         public virtual DbSet<Credential> Credential { get; set; }
-        public virtual DbSet<Followers> Followers { get; set; }
+        public virtual DbSet<Followings> Followers { get; set; }
         public virtual DbSet<Post> Post { get; set; }
         public virtual DbSet<Profile> Profile { get; set; }
 
@@ -89,7 +89,7 @@ namespace SocialNetwork
                     .HasConstraintName("IdProfile");
             });
 
-            modelBuilder.Entity<Followers>(entity =>
+            modelBuilder.Entity<Followings>(entity =>
             {
                 entity.HasKey(e => new { e.SubscriberRef, e.BlogerRef });
 

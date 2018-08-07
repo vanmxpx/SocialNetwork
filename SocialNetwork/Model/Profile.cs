@@ -7,8 +7,8 @@ namespace SocialNetwork
     {
         public Profile()
         {
-            Blogers = new HashSet<Followers>();
-            Subscribers = new HashSet<Followers>();
+            Blogers = new HashSet<Followings>();
+            Subscribers = new HashSet<Followings>();
             Posts = new HashSet<Post>();
         }
 
@@ -21,8 +21,8 @@ namespace SocialNetwork
         public byte? Age { get; set; }
         public byte[] Photo { get; set; }
 
-        public ICollection<Followers> Blogers { get; set; }
-        public ICollection<Followers> Subscribers { get; set; }
+        public ICollection<Followings> Blogers { get; set; }
+        public ICollection<Followings> Subscribers { get; set; }
         public ICollection<Post> Posts { get; set; }
     }
 }
