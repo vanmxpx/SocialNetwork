@@ -107,14 +107,12 @@ namespace SocialNetwork
                 entity.HasOne(d => d.Bloger)
                     .WithMany(p => p.Blogers)
                     .HasForeignKey(d => d.BlogerRef)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("IdBloger");
+                    .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(d => d.Subscriber)
                     .WithMany(p => p.Subscribers)
                     .HasForeignKey(d => d.SubscriberRef)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("IdSubscriber");
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Post>(entity =>
@@ -137,8 +135,7 @@ namespace SocialNetwork
                 entity.HasOne(d => d.Profile)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.ProfileRef)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("IdAuthor");
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Profile>(entity =>
