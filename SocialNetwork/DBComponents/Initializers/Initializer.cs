@@ -39,7 +39,7 @@ namespace SocialNetwork
         public async Task Seed()
         {
             string sqlDatabaseFill = File.ReadAllText(
-                Directory.GetCurrentDirectory() + "\\Model\\TestData\\addTestData.sql");
+                Directory.GetCurrentDirectory() + "\\DBComponents\\TestData\\addTestData.sql");
             int numberOfRowInserted = SC.Database.ExecuteSqlCommand(sqlDatabaseFill);
 
             //   if (!SC.Authorizations.Any())
