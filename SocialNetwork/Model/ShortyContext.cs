@@ -155,7 +155,7 @@ namespace SocialNetwork
 
                 entity.Property(e => e.Gender)
                     .HasColumnType("tinyint(3)")
-                    .HasDefaultValueSql("'2'");
+                    .HasDefaultValueSql("2");
 
                 entity.Property(e => e.LastName)
                     .IsRequired()
