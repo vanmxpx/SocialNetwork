@@ -80,7 +80,7 @@ namespace SocialNetwork
                 entity.HasOne(d => d.Profile)
                     .WithOne()
                     .HasForeignKey<Credential>(d => d.ProfileRef)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Restrict);
 
                     entity.HasMany(d => d.Authorizations)
                     .WithOne(p=>p.Credential)
@@ -107,12 +107,12 @@ namespace SocialNetwork
                 entity.HasOne(d => d.Bloger)
                     .WithMany(p => p.Blogers)
                     .HasForeignKey(d => d.BlogerRef)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(d => d.Subscriber)
                     .WithMany(p => p.Subscribers)
                     .HasForeignKey(d => d.SubscriberRef)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Post>(entity =>
@@ -135,7 +135,7 @@ namespace SocialNetwork
                 entity.HasOne(d => d.Profile)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.ProfileRef)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Profile>(entity =>
