@@ -91,29 +91,29 @@ namespace SocialNetwork
 
             modelBuilder.Entity<Followers>(entity =>
             {
-                entity.HasKey(e => new { e.IdSubscriber, e.IdBloger });
+                entity.HasKey(e => new { e.SubscriberRef, e.BlogerRef });
 
                 entity.ToTable("followers");
 
-                entity.HasIndex(e => e.IdBloger)
+                entity.HasIndex(e => e.BlogerRef)
                     .HasName("idBloger_idx");
 
-                entity.HasIndex(e => e.IdSubscriber)
+                entity.HasIndex(e => e.SubscriberRef)
                     .HasName("idSubscriber_idx");
 
-                entity.Property(e => e.IdBloger).HasColumnType("int(11)");
+                entity.Property(e => e.BlogerRef).HasColumnType("int(11)");
 
-                entity.Property(e => e.IdSubscriber).HasColumnType("int(11)");
+                entity.Property(e => e.SubscriberRef).HasColumnType("int(11)");
 
                 entity.HasOne(d => d.Bloger)
                     .WithMany(p => p.Blogers)
-                    .HasForeignKey(d => d.IdBloger)
+                    .HasForeignKey(d => d.BlogerRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("IdBloger");
 
                 entity.HasOne(d => d.Subscriber)
                     .WithMany(p => p.Subscribers)
-                    .HasForeignKey(d => d.IdSubscriber)
+                    .HasForeignKey(d => d.SubscriberRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("IdSubscriber");
             });

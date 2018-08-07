@@ -3,13 +3,6 @@ using System.Collections.Generic;
 
 namespace SocialNetwork
 {
-    public enum Gender : byte
-    {
-        Male = 0,
-        Female = 1,
-        NotSet = 2
-    }
-
     public class Profile
     {
         public Profile()
