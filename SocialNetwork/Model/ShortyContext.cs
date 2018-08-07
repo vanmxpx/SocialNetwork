@@ -49,11 +49,6 @@ namespace SocialNetwork
                     .IsRequired()
                     .HasColumnType("varchar(45)");
 
-                entity.HasOne(d => d.Credential)
-                    .WithMany(p => p.Authorizations)
-                    .HasForeignKey(d => d.CredentialRef)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("IdOwner");
             });
 
             modelBuilder.Entity<Credential>(entity =>
@@ -85,8 +80,12 @@ namespace SocialNetwork
                 entity.HasOne(d => d.Profile)
                     .WithOne()
                     .HasForeignKey<Credential>(d => d.ProfileRef)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("IdProfile");
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                    entity.HasMany(d => d.Authorizations)
+                    .WithOne(p=>p.Credential)
+                    .HasForeignKey(p=>p.CredentialRef)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Followings>(entity =>
