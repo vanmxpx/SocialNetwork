@@ -5,17 +5,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace SocialNetwork
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
+
+        private void AddDatabaseConnection(IServiceCollection services, string connection)
+        {
+            services.AddDbContextPool<ShortyContext>( // replace "YourDbContext" with the class name of your DbContext
+                options => options.UseMySql(Configuration.GetConnectionString(connection), // replace with your Connection String
+                    mysqlOptions =>
+                    {
+                        mysqlOptions.ServerVersion(new Version(8, 0, 12), ServerType.MySql); // replace with your Server Version and Type
+                    }
+            ));
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -28,13 +44,30 @@ namespace SocialNetwork
             {
                 configuration.RootPath = "client/dist";
             });
+
+            if (Environment.IsDevelopment())
+            {
+                AddDatabaseConnection(services, "LocalDatabase");
+            }
+            else
+            {
+                AddDatabaseConnection(services, "RemoteDatabase");
+            }
+            services.AddTransient<Intitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, Intitializer ini)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
+                // Deleting database and filling it with test data
+                if (Configuration.GetValue<string>("DatabaseDataDeleteFillOption") == "DeleteFill")
+                {
+                    ini.DeleteAll().Wait();
+                    ini.Seed().Wait();
+                }
+
                 app.UseDeveloperExceptionPage();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
@@ -42,7 +75,7 @@ namespace SocialNetwork
                 app.UseCors(builder =>
                     builder.WithOrigins("http://localhost:4200")
                         .AllowAnyHeader()
-    );
+                );
             }
             else
             {
@@ -74,7 +107,7 @@ namespace SocialNetwork
 
                 spa.Options.SourcePath = "client";
 
-                if (env.IsDevelopment())
+                if (Environment.IsDevelopment())
                 {
                     // Первый вариант запустит новое Angular приложение, второй же подключится по ссылке к уже существующему.
                     // Удобно использовать 2ой вариант, потому что два отдельно запущеных приложения клиента/сервера можно одновременно дебажить.
