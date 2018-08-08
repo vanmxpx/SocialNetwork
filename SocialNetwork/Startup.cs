@@ -57,17 +57,17 @@ namespace SocialNetwork
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Intitializer ini)
+        public void Configure(IApplicationBuilder app, Intitializer ini)
         {
-            // Deleting database and filling it with test data
-            if (env.IsDevelopment() && (Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill"))
+            if (Environment.IsDevelopment())
             {
-                ini.DeleteAll().Wait();
-                ini.Seed().Wait();
-            }
+                // Deleting database and filling it with test data
+                if (Configuration.GetValue<string>("DatabaseDataDeleteFillOption") == "DeleteFill")
+                {
+                    ini.DeleteAll().Wait();
+                    ini.Seed().Wait();
+                }
 
-            if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
@@ -107,7 +107,7 @@ namespace SocialNetwork
 
                 spa.Options.SourcePath = "client";
 
-                if (env.IsDevelopment())
+                if (Environment.IsDevelopment())
                 {
                     // Первый вариант запустит новое Angular приложение, второй же подключится по ссылке к уже существующему.
                     // Удобно использовать 2ой вариант, потому что два отдельно запущеных приложения клиента/сервера можно одновременно дебажить.
