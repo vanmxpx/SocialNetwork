@@ -16,8 +16,16 @@ namespace SocialNetwork
         {
             this.SC = SC;
         }
+
+        private void checkOnExistingDatabase()
+        {
+            SC.Database.Migrate();
+        }
+
         public async Task DeleteAll()
         {
+            checkOnExistingDatabase();
+
             if (SC.Authorizations.Any())
                 SC.Authorizations.RemoveRange(SC.Authorizations);
 
@@ -38,6 +46,8 @@ namespace SocialNetwork
 
         public async Task Seed()
         {
+            checkOnExistingDatabase();
+            
             string sqlDatabaseFill = File.ReadAllText(
                 Directory.GetCurrentDirectory() + "\\DBComponents\\TestData\\addTestData.sql");
             int numberOfRowInserted = SC.Database.ExecuteSqlCommand(sqlDatabaseFill);
