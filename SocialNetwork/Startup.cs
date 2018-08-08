@@ -59,6 +59,13 @@ namespace SocialNetwork
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, Intitializer ini)
         {
+            // Deleting database and filling it with test data
+            if (env.IsDevelopment() && (Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill"))
+            {
+                ini.DeleteAll().Wait();
+                ini.Seed().Wait();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -108,9 +115,6 @@ namespace SocialNetwork
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
-
-            ini.DeleteAll().Wait();
-            ini.Seed().Wait();
         }
     }
 }
