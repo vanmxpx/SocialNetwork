@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using SocialNetwork.Repositories;
+using SocialNetwork.Repositories.GenericRepository;
 
 namespace SocialNetwork
 {
@@ -54,12 +56,13 @@ namespace SocialNetwork
                 AddDatabaseConnection(services, "RemoteDatabase");
             }
             services.AddTransient<Intitializer>();
+            services.AddTransient<IProfileRepository, ProfileRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, Intitializer ini)
         {
-            // Deleting database and filling it with test data
+            //Deleting database and filling it with test data
             if (env.IsDevelopment() && (Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill"))
             {
                 ini.DeleteAll().Wait();
@@ -69,6 +72,7 @@ namespace SocialNetwork
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMvc();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
                 // запросы на другой домен, порт и т.д.. Все это в целях безопасности)
@@ -89,14 +93,6 @@ namespace SocialNetwork
             // Укажем, что наше приложение будет использовать статические странички, сгенерированые ангуляр приложением.
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
 
             // Для того, что бы наше приложение разворачивалось с Ангуляром, используем опцию,
             // которая позволяет запускать Single Page Application вместо привычных страниц в папке View
