@@ -10,7 +10,7 @@ namespace SocialNetwork.Repositories
         {
         }   
 
-        public async Task<Credential> GetByLogin(string email)
+        public async Task<Credential> GetByEmail(string email)
         {
             return await Context.Set<Credential>()
                 .AsNoTracking()
