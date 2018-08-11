@@ -5,8 +5,8 @@ namespace SocialNetwork
 {
     public class Followings
     {
-        public int BlogerRef { get; set; }
-        public Profile Bloger { get; set; }
+        public int BloggerRef { get; set; }
+        public Profile Blogger { get; set; }
         
         public int SubscriberRef { get; set; }
         public Profile Subscriber{ get; set; }
