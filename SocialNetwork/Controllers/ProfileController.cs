@@ -10,11 +10,11 @@ namespace SocialNetwork.Controllers
     [Route("/api/[controller]")]
     public class ProfileController : Controller
     {
-        private readonly ProfileRepository repository;
+        private readonly IProfileRepository _repository;
 
         public ProfileController(IProfileRepository repository)
         {
-            this.repository = (ProfileRepository)repository;
+            this._repository = repository;
         }
 
         [HttpGet("{id}")]
@@ -22,14 +22,12 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Profile>> GetProfileById(int id)
         {
-            var profile = await repository.GetById(id);
+            var profile = await _repository.GetById(id);
             if(profile != null)
             {
                 return new OkObjectResult(Json(profile));
             }
             return NotFound();
         }
-
-
     }
 }
