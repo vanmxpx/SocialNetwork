@@ -59,7 +59,7 @@ namespace SocialNetwork
             services.AddTransient<IProfileRepository, ProfileRepository>();
             services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
             services.AddTransient<ICredentialRepository, CredentialRepository>();
-            services.AddTransient<PostRepository>();
+            services.AddTransient<IPostRepository, PostRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

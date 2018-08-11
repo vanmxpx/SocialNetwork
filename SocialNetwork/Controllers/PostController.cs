@@ -29,5 +29,27 @@ namespace SocialNetwork.Controllers
             }
             return NotFound();
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(Post))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<Post>> GetAllPost(int id)
+        {
+            var post = await repository.GetById(id);
+            if(post != null)
+            {
+                return new OkObjectResult(Json(post));
+            }
+            return NotFound();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id) {
+           if(repository.Delete(id).Result)
+           {
+                return Ok("Deleted succesfully");
+           }
+           return NotFound();
+        }
     }
 }
