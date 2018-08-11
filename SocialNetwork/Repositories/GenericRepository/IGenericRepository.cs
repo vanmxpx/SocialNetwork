@@ -7,8 +7,7 @@ namespace SocialNetwork.Repositories.GenericRepository
     {
         IQueryable<TEntity> GetAll();
     
-        Task Create(TEntity entity);
-    
+        Task Create(TEntity entity);    
         Task Update(int id, TEntity entity);
     }
 }
