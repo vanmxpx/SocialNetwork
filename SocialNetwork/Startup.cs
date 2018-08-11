@@ -56,7 +56,7 @@ namespace SocialNetwork
                 AddDatabaseConnection(services, "RemoteDatabase");
             }
             services.AddTransient<Intitializer>();
-            services.AddTransient<IProfileRepository, ProfileRepository>();
+            services.AddTransient<ProfileRepository>();
             services.AddTransient<IAuthorizationRepository, AuthorizationRepository >();
             services.AddTransient<ICredentialRepository, CredentialRepository >();
         }

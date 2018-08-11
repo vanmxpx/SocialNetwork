@@ -6,7 +6,7 @@ namespace SocialNetwork.Repositories.GenericRepository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private readonly ShortyContext Context;
+        protected readonly ShortyContext Context;
     
         public GenericRepository(ShortyContext Context)
         {
