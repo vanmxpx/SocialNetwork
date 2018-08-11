@@ -6,22 +6,22 @@ namespace SocialNetwork.Repositories
 {
     public class ProfileRepository : GenericRepository<Profile>, IProfileRepository
     {
-        private readonly ShortyContext _context;
-        public ProfileRepository(ShortyContext _context) : base(_context)
+        private readonly ShortyContext Context;
+        public ProfileRepository(ShortyContext Context) : base(Context)
         {
-            this._context = _context;
+            this.Context = Context;
         }
         public async Task<Profile> GetById(int id)
         {
-            return await _context.Set<Profile>()
+            return await Context.Set<Profile>()
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
         public async Task Delete(int id)
         {
             var entity = await GetById(id);
-            _context.Set<Profile>().Remove(entity);
-            await _context.SaveChangesAsync();
+            Context.Set<Profile>().Remove(entity);
+            await Context.SaveChangesAsync();
         }
     }
 }

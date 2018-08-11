@@ -6,28 +6,28 @@ namespace SocialNetwork.Repositories.GenericRepository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private readonly ShortyContext _context;
+        private readonly ShortyContext Context;
     
-        public GenericRepository(ShortyContext _context)
+        public GenericRepository(ShortyContext Context)
         {
-            this._context = _context;
+            this.Context = Context;
         }
 
         public IQueryable<TEntity> GetAll()
         {
-            return _context.Set<TEntity>().AsNoTracking();
+            return Context.Set<TEntity>().AsNoTracking();
         }
 
         public async Task Create(TEntity entity)
         {
-            await _context.Set<TEntity>().AddAsync(entity);
-            await _context.SaveChangesAsync();
+            await Context.Set<TEntity>().AddAsync(entity);
+            await Context.SaveChangesAsync();
         }
 
         public async Task Update(int id, TEntity entity)
         {
-            _context.Set<TEntity>().Update(entity);
-            await _context.SaveChangesAsync();
+            Context.Set<TEntity>().Update(entity);
+            await Context.SaveChangesAsync();
         }
     }
 }
