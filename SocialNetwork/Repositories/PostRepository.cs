@@ -12,11 +12,15 @@ namespace SocialNetwork.Repositories
 
         }
 
-        public async Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             var entity = await GetById(id);
-            Context.Set<Post>().Remove(entity);
-            await Context.SaveChangesAsync();
+            if (entity!=null) 
+            {
+                Context.Set<Post>().Remove(entity);
+                await Context.SaveChangesAsync();
+            }
+            return (entity != null) ? true : false;
         }
 
         public async Task<Post> GetById(int id)
