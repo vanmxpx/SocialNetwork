@@ -64,6 +64,11 @@ namespace SocialNetwork
                     .IsRequired()
                     .HasColumnType("varchar(64)");
 
+                entity.HasMany(d => d.Authorizations)
+                    .WithOne(p => p.Credential)
+                    .HasForeignKey(d => d.CredentialRef)
+                    .OnDelete(DeleteBehavior.Restrict);
+
                 entity.HasOne(d => d.Profile)
                     .WithOne()
                     .HasForeignKey<Credential>(d => d.ProfileRef)
