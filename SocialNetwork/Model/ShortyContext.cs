@@ -146,7 +146,8 @@ namespace SocialNetwork
                     .HasForeignKey(d => d.SubscriberRef)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                //entity.OwnsOne(typeof(Credential), "Profile").ToTable("credentiallls");                   
+                //entity.OwnsOne(typeof(Credential)).ToTable("credential");  
+
                 // entity.HasMany(d => d.Bloggers)
                 //     .WithOne()
                 //     .OnDelete(DeleteBehavior.Restrict)
