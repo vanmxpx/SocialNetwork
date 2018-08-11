@@ -67,16 +67,14 @@ namespace SocialNetwork
                 entity.HasOne(d => d.Profile)
                     .WithOne()
                     .HasForeignKey<Credential>(d => d.ProfileRef)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-                // entity.OwnsOne<Profile>(d => d.Profile).ToTable("profile");      
+                    .OnDelete(DeleteBehavior.Restrict);                 
             });
 
             modelBuilder.Entity<Followings>(entity =>
             {
-                entity.HasKey(e => new { e.SubscriberRef, e.BloggerRef });
+                entity.HasKey(e => e.Id);
 
-                entity.ToTable("followers");
+                entity.ToTable("followings");
 
                 entity.HasIndex(e => e.BloggerRef)
                     .HasName("idBlogger_idx");
@@ -142,6 +140,17 @@ namespace SocialNetwork
                     .WithOne(p => p.Subscriber)
                     .HasForeignKey(d => d.SubscriberRef)
                     .OnDelete(DeleteBehavior.Restrict);
+
+                //entity.OwnsOne(typeof(Credential), "Profile").ToTable("credentiallls");                   
+                // entity.HasMany(d => d.Bloggers)
+                //     .WithOne()
+                //     .OnDelete(DeleteBehavior.Restrict)
+                //     .HasConstraintName("IdBlogger");
+
+                // entity.HasMany(d => d.Subscribers)
+                //     .WithOne()
+                //     .OnDelete(DeleteBehavior.Restrict)
+                //     .HasConstraintName("IdSubscriber");
             });
         }
     }
