@@ -6,15 +6,13 @@ namespace SocialNetwork.Repositories
 {
     public class CredentialRepository : GenericRepository<Credential>, ICredentialRepository
     {
-        private readonly ShortyContext _context;
         public CredentialRepository(ShortyContext context) : base(context)
         {
-            this._context = context;
         }   
 
         public async Task<Credential> GetByLogin(string email)
         {
-            return await _context.Set<Credential>()
+            return await Context.Set<Credential>()
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Email == email);
         } 

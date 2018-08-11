@@ -56,9 +56,10 @@ namespace SocialNetwork
                 AddDatabaseConnection(services, "RemoteDatabase");
             }
             services.AddTransient<Intitializer>();
-            services.AddTransient<ProfileRepository>();
-            services.AddTransient<IAuthorizationRepository, AuthorizationRepository >();
-            services.AddTransient<ICredentialRepository, CredentialRepository >();
+            services.AddTransient<IProfileRepository, ProfileRepository>();
+            services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
+            services.AddTransient<ICredentialRepository, CredentialRepository>();
+            services.AddTransient<PostRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
