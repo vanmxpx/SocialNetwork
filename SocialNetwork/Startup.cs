@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
+using SocialNetwork.SignalRChatHub;
 
 namespace SocialNetwork
 {
@@ -44,7 +45,7 @@ namespace SocialNetwork
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "client/dist";
+                configuration.RootPath = "client/dist";                
             });
 
             if (Environment.IsDevelopment())
@@ -55,6 +56,9 @@ namespace SocialNetwork
             {
                 AddDatabaseConnection(services, "RemoteDatabase");
             }
+
+            services.AddSignalR();
+
             services.AddTransient<Intitializer>();
             services.AddTransient<IProfileRepository, ProfileRepository>();
             services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
@@ -113,6 +117,11 @@ namespace SocialNetwork
                     //spa.UseAngularCliServer(npmScript: "start");
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
+            });
+
+             app.UseSignalR(routes =>
+            {
+                routes.MapHub< ChatHub>("/chatHub");
             });
         }
     }

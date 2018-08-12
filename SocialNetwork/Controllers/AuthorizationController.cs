@@ -6,26 +6,30 @@ using SocialNetwork.Repositories.GenericRepository;
 
 namespace SocialNetwork.Controllers
 {
-    //http://localhost:5000/api/authorization/ - test url
+    //http://localhost:5000/api/authorizations/ - test url
     [Route("/api/[controller]")]
-    public class AuthorizationController : Controller
+    public class AuthorizationsController : Controller
     {
         private readonly IAuthorizationRepository repositoryAuthorization;
         private readonly ICredentialRepository repositoryCredential;
 
-        public AuthorizationController(IAuthorizationRepository repositoryAuthorization, ICredentialRepository repositoryCredential)
+        public AuthorizationsController(IAuthorizationRepository repositoryAuthorization, ICredentialRepository repositoryCredential)
         {
             this.repositoryAuthorization = repositoryAuthorization;
             this.repositoryCredential = repositoryCredential;
         }
 
-        //http://localhost:5000/api/authorization/{id} - test url
+        //http://localhost:5000/api/authorizations/{id} - test url
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
         public async Task<ActionResult<Authorization>> GetAuthorizationById(int id)
         {
+<<<<<<< HEAD
+            //добавить валидацию id             
+=======
             //добавить валидацию id 
+>>>>>>> 8e3f11908b271a64cf893b3f52796466da183d41
             var authorization = await repositoryAuthorization.GetById(id);
             if (authorization != null)
             {

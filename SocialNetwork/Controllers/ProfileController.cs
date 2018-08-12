@@ -6,15 +6,15 @@ using SocialNetwork.Repositories.GenericRepository;
 
 namespace SocialNetwork.Controllers
 {
-    //http://localhost:5000/api/profile/{id} - test url
+    //http://localhost:5000/api/profiles/{id} - test url
     [Route("/api/[controller]")]
-    public class ProfileController : Controller
+    public class ProfilesController : Controller
     {
-        private readonly IProfileRepository _repository;
+        private readonly IProfileRepository repository;
 
-        public ProfileController(IProfileRepository repository)
+        public ProfilesController(IProfileRepository repository)
         {
-            this._repository = repository;
+            this.repository = repository;
         }
 
         [HttpGet("{id}")]
@@ -22,7 +22,7 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Profile>> GetProfileById(int id)
         {
-            var profile = await _repository.GetById(id);
+            var profile = await repository.GetById(id);
             if(profile != null)
             {
                 return new OkObjectResult(Json(profile));

@@ -6,9 +6,8 @@ namespace SocialNetwork.Repositories
 {
     public class AuthorizationRepository : GenericRepository<Authorization>, IAuthorizationRepository
     {
-        public AuthorizationRepository(ShortyContext context) : base(context)
-        {
-        }   
+       public AuthorizationRepository(ShortyContext context) : base(context)
+        { }   
 
         public async Task<Authorization> GetById(int id)
         {
