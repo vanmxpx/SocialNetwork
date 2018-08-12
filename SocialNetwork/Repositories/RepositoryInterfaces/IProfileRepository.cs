@@ -8,5 +8,5 @@ namespace SocialNetwork.Repositories.GenericRepository
         Task<Profile> GetById(int id);
     
         Task Delete(int id);
-    }
+    }    
 }

@@ -38,7 +38,7 @@ namespace SocialNetwork.Controllers
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
-        public async void AddAuthorization(string email, string password)
+        public async void AddAuthorization([FromBody]string email, [FromBody]string password)
         {
             // FIXME: добавить валидацию данных
             // JWT, OAuth, JSession
