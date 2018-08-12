@@ -6,16 +6,26 @@ namespace SocialNetwork.Repositories
 {
     public class ProfileRepository : GenericRepository<Profile>, IProfileRepository
     {
-        //private readonly ShortyContext Context;
         public ProfileRepository(ShortyContext Context) : base(Context)
         {
-            //this.Context = Context;
         }
         public async Task<Profile> GetById(int id)
         {
             return await Context.Set<Profile>()
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
+        }
+        public async Task<Profile> GetByLogin(string login)
+        {
+            return await Context.Set<Profile>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.Login == login);
+        }
+        public async Task<Profile> GetByNameAndLastName(string name, string lastName)
+        {
+            return await Context.Set<Profile>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.Name == name && e.LastName == lastName);
         }
         public async Task Delete(int id)
         {
