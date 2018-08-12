@@ -70,7 +70,7 @@ namespace SocialNetwork
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, Intitializer ini)
         {
             //Deleting database and filling it with test data
-            if (env.IsDevelopment() && (Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill"))
+            if (env.IsDevelopment() && (Configuration.GetValue<string>("DatabaseDataDeleteFillOption")==""))
             {
                 ini.DeleteAll().Wait();
                 ini.Seed().Wait();
