@@ -25,11 +25,7 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Authorization>> GetAuthorizationById(int id)
         {
-<<<<<<< HEAD
-            //добавить валидацию id             
-=======
             //добавить валидацию id 
->>>>>>> 8e3f11908b271a64cf893b3f52796466da183d41
             var authorization = await repositoryAuthorization.GetById(id);
             if (authorization != null)
             {
@@ -51,7 +47,7 @@ namespace SocialNetwork.Controllers
             {
                 // FIXME: определить статусы
                 SystemStatus = "",
-                Credential = await repositoryCredential.GetByLogin(email)  //??              
+                Credential = await repositoryCredential.GetByEmail(email)  //??              
             };
             await repositoryAuthorization.Create(authorization);
         }
