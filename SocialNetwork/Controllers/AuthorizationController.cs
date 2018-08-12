@@ -25,7 +25,8 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Authorization>> GetAuthorizationById(int id)
         {
-            //добавить валидацию id 
+            //добавить валидацию id             
+
             var authorization = await repositoryAuthorization.GetById(id);
             if (authorization != null)
             {
