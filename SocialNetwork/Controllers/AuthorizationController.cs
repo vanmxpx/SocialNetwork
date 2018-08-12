@@ -47,7 +47,7 @@ namespace SocialNetwork.Controllers
             {
                 // FIXME: определить статусы
                 SystemStatus = "",
-                Credential = await repositoryCredential.GetByLogin(email)  //??              
+                Credential = await repositoryCredential.GetByEmail(email)  //??              
             };
             await repositoryAuthorization.Create(authorization);
         }

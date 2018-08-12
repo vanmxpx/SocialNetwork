@@ -5,6 +5,9 @@ namespace SocialNetwork.Repositories.GenericRepository
 {
     public interface ICredentialRepository : IGenericRepository<Credential>
     {
-         Task<Credential> GetByLogin(string email);
+         Task<Credential> GetByEmail(string email);
+         Task<Credential> GetById(int id);
+         Task<bool> IsExist(string email);
+         Task Delete(Credential entity);
     }
 }
