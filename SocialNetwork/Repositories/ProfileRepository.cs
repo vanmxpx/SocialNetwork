@@ -6,10 +6,10 @@ namespace SocialNetwork.Repositories
 {
     public class ProfileRepository : GenericRepository<Profile>, IProfileRepository
     {
-        private readonly ShortyContext Context;
+        //private readonly ShortyContext Context;
         public ProfileRepository(ShortyContext Context) : base(Context)
         {
-            this.Context = Context;
+            //this.Context = Context;
         }
         public async Task<Profile> GetById(int id)
         {
