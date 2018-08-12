@@ -6,13 +6,13 @@ using SocialNetwork.Repositories.GenericRepository;
 
 namespace SocialNetwork.Controllers
 {
-    //http://localhost:5000/api/profile/{id} - test url
+    //http://localhost:5000/api/profiles/{id} - test url
     [Route("/api/[controller]")]
-    public class ProfileController : Controller
+    public class ProfilesController : Controller
     {
         private readonly IProfileRepository repository;
 
-        public ProfileController(IProfileRepository repository)
+        public ProfilesController(IProfileRepository repository)
         {
             this.repository = repository;
         }

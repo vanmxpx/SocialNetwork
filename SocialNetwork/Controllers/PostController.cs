@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,50 +7,68 @@ using SocialNetwork.Repositories.GenericRepository;
 
 namespace SocialNetwork.Controllers
 {
-    //http://localhost:5000/api/post/{id} - test url
     [Route("/api/[controller]")]
-    public class PostController : Controller
+    public class PostsController : Controller
     {
         private readonly IPostRepository repository;
 
-        public PostController(IPostRepository repository)
+        public PostsController(IPostRepository repository)
         {
             this.repository = repository;
         }
 
+        // GET api/posts/79
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Post))]
         [ProducesResponseType(404)]
         public async Task<ActionResult<Post>> GetPostById(int id)
         {
             var post = await repository.GetById(id);
-            if(post != null)
+            if (post != null)
             {
                 return new OkObjectResult(Json(post));
             }
             return NotFound();
         }
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(200, Type = typeof(Post))]
-        [ProducesResponseType(404)]
-        public async Task<ActionResult<Post>> GetAllPost(int id)
+        // GET api/posts/?authorId=2
+        [HttpGet]
+        public async Task<ActionResult<ICollection<Post>>> GetAllPostByAuthor([FromQuery]int authorId)
         {
-            var post = await repository.GetById(id);
-            if(post != null)
+            if (authorId != 0)
             {
-                return new OkObjectResult(Json(post));
+                var posts = await repository.GetByAuthorId(authorId);
+                if (posts != null)
+                {
+                    return new OkObjectResult(Json(posts));
+                }
+                return NotFound();
             }
             return NotFound();
         }
 
+        // POST api/posts
+        [HttpPost]
+        public async Task<ActionResult> AddPost([FromBody]Post post)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+            await repository.CreatePost(post);
+            return Created("api/post", post);
+        }
+
+        // DELETE api/posts/100
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id) {
-           if(repository.Delete(id).Result)
-           {
-                return Ok("Deleted succesfully");
-           }
-           return NotFound();
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var entity = await repository.GetById(id);
+            if (entity != null)
+            {
+                await repository.Delete(entity);
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }
