@@ -9,9 +9,9 @@ namespace SocialNetwork.Controllers
     [Route("/api/[controller]")]
     public class ProfilesController : Controller
     {
-        private readonly UnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
-        public ProfilesController(UnitOfWork unitOfWork)
+        public ProfilesController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }

@@ -2,7 +2,7 @@ using System;
 
 namespace SocialNetwork.Repositories
 {
-    public class UnitOfWork
+    public class UnitOfWork: IUnitOfWork
     {
         private readonly ShortyContext context;
         public UnitOfWork(ShortyContext context)

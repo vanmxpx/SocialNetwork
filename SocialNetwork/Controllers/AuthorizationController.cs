@@ -10,9 +10,9 @@ namespace SocialNetwork.Controllers
     [Route("/api/[controller]")]
     public class AuthorizationsController : Controller
     {
-        private readonly UnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
-        public AuthorizationsController(UnitOfWork unitOfWork)
+        public AuthorizationsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
