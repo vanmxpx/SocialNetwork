@@ -10,13 +10,11 @@ namespace SocialNetwork.Controllers
     [Route("/api/[controller]")]
     public class AuthorizationsController : Controller
     {
-        private readonly IAuthorizationRepository repositoryAuthorization;
-        private readonly ICredentialRepository repositoryCredential;
+        private readonly UnitOfWork unitOfWork;
 
-        public AuthorizationsController(IAuthorizationRepository repositoryAuthorization, ICredentialRepository repositoryCredential)
+        public AuthorizationsController(UnitOfWork unitOfWork)
         {
-            this.repositoryAuthorization = repositoryAuthorization;
-            this.repositoryCredential = repositoryCredential;
+            this.unitOfWork = unitOfWork;
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
@@ -26,7 +24,7 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult<Authorization>> GetAuthorizationById(int id)
         {
             //добавить валидацию id             
-            var authorization = await repositoryAuthorization.GetById(id);
+            var authorization = await unitOfWork.AuthorizationRepository.GetById(id);
             if (authorization != null)
             {
                 return new OkObjectResult(Json(authorization));
@@ -47,9 +45,9 @@ namespace SocialNetwork.Controllers
             {
                 // FIXME: определить статусы
                 SystemStatus = "",
-                Credential = await repositoryCredential.GetByEmail(email)  //??              
+                Credential = await unitOfWork.CredentialRepository.GetByEmail(email)  //??              
             };
-            await repositoryAuthorization.Create(authorization);
+            await unitOfWork.AuthorizationRepository.Create(authorization);
         }
     }
 }

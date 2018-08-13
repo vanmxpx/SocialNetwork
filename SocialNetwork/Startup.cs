@@ -41,7 +41,6 @@ namespace SocialNetwork
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSingleton<ShortyContext>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -61,10 +60,7 @@ namespace SocialNetwork
             services.AddSignalR();
 
             services.AddTransient<Intitializer>();
-            services.AddTransient<IProfileRepository, ProfileRepository>();
-            services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
-            services.AddTransient<ICredentialRepository, CredentialRepository>();
-            services.AddTransient<IPostRepository, PostRepository>();            
+            services.AddTransient<UnitOfWork>();       
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
