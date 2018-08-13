@@ -64,25 +64,25 @@ namespace SocialNetwork
                     .IsRequired()
                     .HasColumnType("varchar(64)");
 
+                entity.HasMany(d => d.Authorizations)
+                    .WithOne(p => p.Credential)
+                    .HasForeignKey(d => d.CredentialRef)
+                    .OnDelete(DeleteBehavior.Restrict);
+
                 entity.HasOne(d => d.Profile)
                     .WithOne()
                     .HasForeignKey<Credential>(d => d.ProfileRef)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasMany(d => d.Authorizations)
-                    .WithOne(p=>p.Credential)
-                    .HasForeignKey(p=>p.CredentialRef)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Restrict);                 
             });
 
             modelBuilder.Entity<Followings>(entity =>
             {
-                entity.HasKey(e => new { e.SubscriberRef, e.BlogerRef });
+                entity.HasKey(e => e.Id);
 
-                entity.ToTable("followers");
+                entity.ToTable("followings");
 
-                entity.HasIndex(e => e.BlogerRef)
-                    .HasName("idBloger_idx");
+                entity.HasIndex(e => e.BloggerRef)
+                    .HasName("idBlogger_idx");
 
                 entity.HasIndex(e => e.SubscriberRef)
                     .HasName("idSubscriber_idx");
@@ -105,6 +105,8 @@ namespace SocialNetwork
             modelBuilder.Entity<Profile>(entity =>
             {
                 entity.ToTable("profile");
+
+                entity.HasKey(e => e.Id);
 
                 entity.HasIndex(e => e.Id)
                     .HasName("idProfile_idx");
@@ -134,15 +136,27 @@ namespace SocialNetwork
                     .HasForeignKey(d => d.ProfileRef)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasMany(d => d.Blogers)
-                    .WithOne(p => p.Bloger)
-                    .HasForeignKey(d => d.BlogerRef)
+                entity.HasMany(d => d.Bloggers)
+                    .WithOne(p => p.Blogger)
+                    .HasForeignKey(d => d.BloggerRef)
                     .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasMany(d => d.Subscribers)
                     .WithOne(p => p.Subscriber)
                     .HasForeignKey(d => d.SubscriberRef)
                     .OnDelete(DeleteBehavior.Restrict);
+
+                //entity.OwnsOne(typeof(Credential)).ToTable("credential");  
+
+                // entity.HasMany(d => d.Bloggers)
+                //     .WithOne()
+                //     .OnDelete(DeleteBehavior.Restrict)
+                //     .HasConstraintName("IdBlogger");
+
+                // entity.HasMany(d => d.Subscribers)
+                //     .WithOne()
+                //     .OnDelete(DeleteBehavior.Restrict)
+                //     .HasConstraintName("IdSubscriber");
             });
         }
     }
