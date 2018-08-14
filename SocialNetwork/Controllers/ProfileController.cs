@@ -6,8 +6,10 @@ using SocialNetwork.Repositories.GenericRepository;
 
 namespace SocialNetwork.Controllers
 {
+    [ApiController]
+    [Produces("application/json")]
     [Route("/api/[controller]")]
-    public class ProfilesController : Controller
+    public class ProfilesController : ControllerBase
     {
         private readonly IProfileRepository repository;
 
@@ -25,7 +27,7 @@ namespace SocialNetwork.Controllers
             var profile = await repository.GetById(id);
             if(profile != null)
             {
-                return new OkObjectResult(Json(profile));
+                return new OkObjectResult(profile);
             }
             return NotFound();
         }
@@ -40,7 +42,7 @@ namespace SocialNetwork.Controllers
             var profile = await repository.GetByLogin(login);
             if(profile != null)
             {
-                return new OkObjectResult(Json(profile));
+                return new OkObjectResult(profile);
             }
             return NotFound();
         }
@@ -55,7 +57,7 @@ namespace SocialNetwork.Controllers
             var profile = await repository.GetByNameAndLastName(name, lastName);
             if(profile != null)
             {
-                return new OkObjectResult(Json(profile));
+                return new OkObjectResult(profile);
             }
             return NotFound();
         }
