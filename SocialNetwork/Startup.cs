@@ -72,11 +72,11 @@ namespace SocialNetwork
             services.AddTransient<ICredentialRepository, CredentialRepository>();
             services.AddTransient<IPostRepository, PostRepository>();        
 
-            // configure strongly typed settings objects
+            // настраивать объекты с типизированной настройкой
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
  
-            // configure jwt authentication
+            // конфигурация jwt аутентификации
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>

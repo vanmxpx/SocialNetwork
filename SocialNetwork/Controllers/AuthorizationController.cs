@@ -17,8 +17,9 @@ namespace SocialNetwork.Controllers
 {
     //http://localhost:5000/api/authorizations/ - test url
     [Authorize]
+    [ApiController]
     [Route("/api/[controller]")]
-    public class AuthorizationsController : Controller
+    public class AuthorizationsController : ControllerBase
     {
         private readonly IAuthorizationRepository repositoryAuthorization;
         private readonly ICredentialRepository repositoryCredential;
@@ -45,13 +46,14 @@ namespace SocialNetwork.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
+        [Produces("application/json")]
         public async Task<ActionResult<Authorization>> GetAuthorizationById(int id)
         {
             //добавить валидацию id             
             var authorization = await repositoryAuthorization.GetById(id);
             if (authorization != null)
             {
-                return new OkObjectResult(Json(authorization));
+                return Ok(authorization);
             }
             return NotFound();
         }
@@ -60,9 +62,10 @@ namespace SocialNetwork.Controllers
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
+        [Produces("application/json")]
         public async Task<ActionResult<Profile>> AddAuthorization([FromBody]string email, [FromBody]string password)
         {
-            Credential credential = await repositoryCredential.GetByEmail(email);
+            Credential credential = repositoryCredential.Authenticate(email, password);
             if (credential == null)
             {
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -86,20 +89,26 @@ namespace SocialNetwork.Controllers
             Authorization authorization = new Authorization()
             {
                 SystemStatus = "",
-                Credential = await repositoryCredential.GetByEmail(email)             
+                Credential = await repositoryCredential.GetByEmail(email)
             };
             await repositoryAuthorization.Create(authorization);
-            
+
             // возвращаем основную информацию пользователя и токен для хранения клиентской части 
-            Profile profile=await repositoryProfile.GetById(credential.ProfileRef);      
-            return Ok(new 
+            Profile profile = await repositoryProfile.GetById(credential.ProfileRef);
+            return Ok(new
             {
-                Profile=profile,
-                Token=tokenString
+                Name = profile.Name,
+                Login = profile.Login,
+                LastName = profile.LastName,
+                Age = profile.Age,
+                Location = profile.Location,
+                Photo = profile.Photo,
+                Gender = profile.Gender,
+                Token = tokenString
             });
         }
 
-         [HttpDelete("{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id, Authorization authorization)
         {
             repositoryAuthorization.Update(id, authorization);
