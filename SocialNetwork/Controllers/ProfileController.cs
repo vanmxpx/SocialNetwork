@@ -6,6 +6,7 @@ using SocialNetwork.Repositories.GenericRepository;
 
 namespace SocialNetwork.Controllers
 {
+    [Authorize]
     [Route("/api/[controller]")]
     public class ProfilesController : Controller
     {

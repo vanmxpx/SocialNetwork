@@ -62,8 +62,6 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Profile>> AddAuthorization([FromBody]string email, [FromBody]string password)
         {
-            // FIXME: добавить валидацию данных
-            // JWT, OAuth, JSession
             Credential credential = await repositoryCredential.GetByEmail(email);
             if (credential == null)
             {
@@ -88,12 +86,24 @@ namespace SocialNetwork.Controllers
             Authorization authorization = new Authorization()
             {
                 SystemStatus = "",
-                Credential = await repositoryCredential.GetByEmail(email)  //??              
+                Credential = await repositoryCredential.GetByEmail(email)             
             };
             await repositoryAuthorization.Create(authorization);
+            
+            // возвращаем основную информацию пользователя и токен для хранения клиентской части 
+            Profile profile=await repositoryProfile.GetById(credential.ProfileRef);      
+            return Ok(new 
+            {
+                Profile=profile,
+                Token=tokenString
+            });
+        }
 
-            // возвращаем основную информацию пользователя и токен для хранения клиентской части       
-            return Ok(await repositoryProfile.GetById(credential.ProfileRef));
+         [HttpDelete("{id}")]
+        public IActionResult Delete(int id, Authorization authorization)
+        {
+            repositoryAuthorization.Update(id, authorization);
+            return Ok();
         }
     }
 }
