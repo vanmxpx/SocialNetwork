@@ -3,20 +3,42 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System;
+using System.Collections.Generic;
+using AutoMapper;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Options;
+using System.Text;
+
 
 namespace SocialNetwork.Controllers
 {
     //http://localhost:5000/api/authorizations/ - test url
+    [Authorize]
     [Route("/api/[controller]")]
     public class AuthorizationsController : Controller
     {
         private readonly IAuthorizationRepository repositoryAuthorization;
         private readonly ICredentialRepository repositoryCredential;
 
-        public AuthorizationsController(IAuthorizationRepository repositoryAuthorization, ICredentialRepository repositoryCredential)
+        private readonly IProfileRepository repositoryProfile;
+        private readonly IMapper mapper;
+        private readonly AppSettings appSettings;
+
+        public AuthorizationsController(IAuthorizationRepository repositoryAuthorization,
+                                         ICredentialRepository repositoryCredential,
+                                         IProfileRepository repositoryProfile,
+                                         IMapper mapper,
+                                         IOptions<AppSettings> appSettings
+                                         )
         {
             this.repositoryAuthorization = repositoryAuthorization;
             this.repositoryCredential = repositoryCredential;
+            this.repositoryProfile = repositoryProfile;
+            this.mapper = mapper;
+            this.appSettings = appSettings.Value;
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
@@ -34,22 +56,44 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
-        
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
-        public async void AddAuthorization([FromBody]string email, [FromBody]string password)
+        public async Task<ActionResult<Profile>> AddAuthorization([FromBody]string email, [FromBody]string password)
         {
             // FIXME: добавить валидацию данных
             // JWT, OAuth, JSession
+            Credential credential = await repositoryCredential.GetByEmail(email);
+            if (credential == null)
+            {
+                return BadRequest(new { message = "Username or password is incorrect" });
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, credential.Id.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
 
             Authorization authorization = new Authorization()
             {
-                // FIXME: определить статусы
                 SystemStatus = "",
                 Credential = await repositoryCredential.GetByEmail(email)  //??              
             };
             await repositoryAuthorization.Create(authorization);
+
+            // возвращаем основную информацию пользователя и токен для хранения клиентской части       
+            return Ok(await repositoryProfile.GetById(credential.ProfileRef));
         }
     }
 }

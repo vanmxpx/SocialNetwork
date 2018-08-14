@@ -22,8 +22,8 @@ namespace SocialNetwork.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Email == email);
         }
-
-        public async Task<Credential> GetById(int id)
+        
+              public async Task<Credential> GetById(int id)
         {
             return await Context.Set<Credential>()
                 .AsNoTracking()
