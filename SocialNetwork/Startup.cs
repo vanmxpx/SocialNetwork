@@ -220,7 +220,7 @@ namespace SocialNetwork
                     // Первый вариант запустит новое Angular приложение, второй же подключится по ссылке к уже существующему.
                     // Удобно использовать 2ой вариант, потому что два отдельно запущеных приложения клиента/сервера можно одновременно дебажить.
                     //spa.UseAngularCliServer(npmScript: "start");
-                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
 
