@@ -11,7 +11,7 @@ namespace SocialNetworkTests
             if(context == null)
             {
                 var optionsBuilder = new DbContextOptionsBuilder<ShortyContext>();
-                optionsBuilder.UseMySql("server=localhost;port=3306;database=shorty;username=root;password=root");  
+                optionsBuilder.UseInMemoryDatabase(databaseName : "shorty_test");  
                 context = new ShortyContext(optionsBuilder.Options);
             }
             return context;

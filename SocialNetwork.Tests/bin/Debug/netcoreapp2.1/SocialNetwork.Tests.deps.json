@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v2.1": {
       "SocialNetwork.Tests/1.0.0": {
         "dependencies": {
+          "Microsoft.EntityFrameworkCore.InMemory": "2.1.1",
           "Microsoft.NET.Test.Sdk": "15.7.0",
           "SocialNetwork": "1.0.0",
           "xunit": "2.3.1",

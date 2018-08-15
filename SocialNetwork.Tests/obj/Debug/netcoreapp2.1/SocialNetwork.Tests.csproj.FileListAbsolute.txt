@@ -1,3 +1,7 @@
+C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.csprojAssemblyReference.cache
+C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.csproj.CoreCompileInputs.cache
+C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.AssemblyInfoInputs.cache
+C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.AssemblyInfo.cs
 C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\bin\Debug\netcoreapp2.1\SocialNetwork.Views.dll
 C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\bin\Debug\netcoreapp2.1\SocialNetwork.Views.pdb
 C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
@@ -10,10 +14,6 @@ C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests
 C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\bin\Debug\netcoreapp2.1\SocialNetwork.Tests.pdb
 C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\bin\Debug\netcoreapp2.1\SocialNetwork.dll
 C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\bin\Debug\netcoreapp2.1\SocialNetwork.pdb
-C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.csprojAssemblyReference.cache
-C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.csproj.CoreCompileInputs.cache
-C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.AssemblyInfoInputs.cache
-C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.AssemblyInfo.cs
 C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.csproj.CopyComplete
 C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.dll
 C:\Users\Nikita\Desktop\Programming\TwitterMVP\SocialNetwork\SocialNetwork.Tests\obj\Debug\netcoreapp2.1\SocialNetwork.Tests.pdb
