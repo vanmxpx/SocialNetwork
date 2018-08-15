@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System;
 using System.Collections.Generic;
-using AutoMapper;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
 using System.Text;
@@ -23,22 +22,18 @@ namespace SocialNetwork.Controllers
     {
         private readonly IAuthorizationRepository repositoryAuthorization;
         private readonly ICredentialRepository repositoryCredential;
-
         private readonly IProfileRepository repositoryProfile;
-        private readonly IMapper mapper;
         private readonly AppSettings appSettings;
 
         public AuthorizationsController(IAuthorizationRepository repositoryAuthorization,
                                          ICredentialRepository repositoryCredential,
                                          IProfileRepository repositoryProfile,
-                                         IMapper mapper,
                                          IOptions<AppSettings> appSettings
                                          )
         {
             this.repositoryAuthorization = repositoryAuthorization;
             this.repositoryCredential = repositoryCredential;
             this.repositoryProfile = repositoryProfile;
-            this.mapper = mapper;
             this.appSettings = appSettings.Value;
         }
 
@@ -113,6 +108,24 @@ namespace SocialNetwork.Controllers
         {
             repositoryAuthorization.Update(id, authorization);
             return Ok();
+        }
+
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(Authorization))]
+        [ProducesResponseType(404)]
+        [Produces("application/json")]
+        public async Task<ActionResult<ICollection<Authorization>>> GetAllAuthorizationByCredential([FromQuery]int credentialId)
+        {
+            if (credentialId != 0)
+            {
+                var authorizations = await repositoryAuthorization.GetAllAuthorizantionsByCredentialId(credentialId);
+                if (authorizations != null)
+                {
+                    return new OkObjectResult(authorizations);
+                }
+                return NotFound();
+            }
+            return NotFound();
         }
     }
 }
