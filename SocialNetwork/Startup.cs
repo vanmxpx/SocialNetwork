@@ -71,8 +71,7 @@ namespace SocialNetwork
             services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
             services.AddTransient<ICredentialRepository, CredentialRepository>();
             services.AddTransient<IPostRepository, PostRepository>();        
-
-            // настраивать объекты с типизированной настройкой
+            
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
  

@@ -38,6 +38,7 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
+        [AllowAnonymous]//для теста
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -104,6 +105,8 @@ namespace SocialNetwork.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(200, Type = typeof(Authorization))]
+        [ProducesResponseType(404)]
         public IActionResult Delete(int id, Authorization authorization)
         {
             repositoryAuthorization.Update(id, authorization);

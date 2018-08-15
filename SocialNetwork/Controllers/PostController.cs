@@ -19,6 +19,7 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/posts/79
+        [AllowAnonymous]//для теста
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Post))]
         [ProducesResponseType(404)]
