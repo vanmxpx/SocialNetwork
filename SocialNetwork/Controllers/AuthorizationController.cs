@@ -51,7 +51,7 @@ namespace SocialNetwork.Controllers
             {
                 return Ok(authorization);
             }
-            return NotFound();
+            return NotFound();            
         }
 
         [AllowAnonymous]
@@ -59,8 +59,9 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
         [Produces("application/json")]
-        public async Task<ActionResult<Profile>> AddAuthorization([FromBody]string email, [FromBody]string password)
+        public async Task<ActionResult<Profile>> AddAuthorization([FromBody]string email)
         {
+            String password="";
             Credential credential = repositoryCredential.Authenticate(email, password);
             if (credential == null)
             {
