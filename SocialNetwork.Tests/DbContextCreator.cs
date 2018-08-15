@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SocialNetwork;
 
-namespace SocialNetworkTests
+namespace SocialNetwork.Tests
 {
     public class DbContextCreator
     {
