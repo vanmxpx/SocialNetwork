@@ -6,7 +6,7 @@ using SocialNetwork.Repositories.GenericRepository;
 using Xunit;
 
 
-namespace SocialNetworkTests
+namespace SocialNetwork.Tests
 {
     public class ProfileRepositoryTests
     {
@@ -24,15 +24,6 @@ namespace SocialNetworkTests
             Profile profile = repository.GetById(1).Result;
             //THEN
             Assert.True(profile.Login == "Vestibulum");
-        }
-
-        [Fact]
-        public void GetByIdReturnsNullTest()
-        {   
-            //WHEN
-            Profile profile = repository.GetById(0).Result;
-            //THEN
-            Assert.True(profile == null);
         }
 
         [Fact]
