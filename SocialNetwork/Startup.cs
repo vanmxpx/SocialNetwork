@@ -64,24 +64,22 @@ namespace SocialNetwork
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, Intitializer ini, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, Intitializer ini)
         {
             app.UseSignalR(routes =>
             {
                 routes.MapHub< ChatHub>("/chatHub");
             });
             app.UseMvc();
-
-            //Deleting database and filling it with test data
-            if (env.IsDevelopment() && (Configuration.GetValue<string>("DatabaseDataDeleteFillOption")==""))
+            
+            if (Environment.IsDevelopment())
             {
-                // Deleting database and filling it with test data
-                if (Configuration.GetValue<string>("DatabaseDataDeleteFillOption") == "DeleteFill")
+                if(Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill")
                 {
                     ini.DeleteAll().Wait();
                     ini.Seed().Wait();
                 }
-
+                
                 app.UseDeveloperExceptionPage();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
