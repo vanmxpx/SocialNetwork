@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters.Json;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using Microsoft.IdentityModel.Tokens;
@@ -59,10 +60,9 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
         [Produces("application/json")]
-        public async Task<ActionResult<Profile>> AddAuthorization([FromBody]string email)
+        public async Task<ActionResult<Profile>> AddAuthorization([FromBody]CredentialDto credentialDto)
         {
-            String password="";
-            Credential credential = repositoryCredential.Authenticate(email, password);
+            Credential credential = repositoryCredential.Authenticate(credentialDto.Email, credentialDto.Password);
             if (credential == null)
             {
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -86,7 +86,7 @@ namespace SocialNetwork.Controllers
             Authorization authorization = new Authorization()
             {
                 SystemStatus = "",
-                Credential = await repositoryCredential.GetByEmail(email)
+                Credential = await repositoryCredential.GetByEmail(credentialDto.Email)
             };
             await repositoryAuthorization.Create(authorization);
 
