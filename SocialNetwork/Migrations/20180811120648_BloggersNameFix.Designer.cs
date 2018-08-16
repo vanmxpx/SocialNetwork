@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(ShortyContext))]
-    partial class ShortyContextModelSnapshot : ModelSnapshot
+    [Migration("20180811120648_BloggersNameFix")]
+    partial class BloggersNameFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,8 @@ namespace SocialNetwork.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CredentialId");
 
                     b.Property<int>("CredentialRef");
 
@@ -33,6 +37,8 @@ namespace SocialNetwork.Migrations
                         .HasColumnType("varchar(45)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CredentialId");
 
                     b.HasIndex("CredentialRef")
                         .HasName("IdCredential_idx");
@@ -77,14 +83,11 @@ namespace SocialNetwork.Migrations
 
             modelBuilder.Entity("SocialNetwork.Followings", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("SubscriberRef");
 
                     b.Property<int>("BloggerRef");
 
-                    b.Property<int>("SubscriberRef");
-
-                    b.HasKey("Id");
+                    b.HasKey("SubscriberRef", "BloggerRef");
 
                     b.HasIndex("BloggerRef")
                         .HasName("idBlogger_idx");
@@ -92,7 +95,7 @@ namespace SocialNetwork.Migrations
                     b.HasIndex("SubscriberRef")
                         .HasName("idSubscriber_idx");
 
-                    b.ToTable("followings");
+                    b.ToTable("followers");
                 });
 
             modelBuilder.Entity("SocialNetwork.Post", b =>
@@ -159,8 +162,7 @@ namespace SocialNetwork.Migrations
                 {
                     b.HasOne("SocialNetwork.Credential", "Credential")
                         .WithMany("Authorizations")
-                        .HasForeignKey("CredentialRef")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CredentialId");
                 });
 
             modelBuilder.Entity("SocialNetwork.Credential", b =>

@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using SocialNetwork.Repositories;
+using SocialNetwork.Repositories.GenericRepository;
+using SocialNetwork.SignalRChatHub;
 
 namespace SocialNetwork
 {
@@ -25,7 +28,7 @@ namespace SocialNetwork
         private void AddDatabaseConnection(IServiceCollection services, string connection)
         {
             services.AddDbContextPool<ShortyContext>( // replace "YourDbContext" with the class name of your DbContext
-                options => options.UseMySql(Configuration.GetConnectionString(connection), // replace with your Connection String
+                options => options.UseMySql(Configuration.GetConnectionString("LocalDatabase"), // replace with your Connection String
                     mysqlOptions =>
                     {
                         mysqlOptions.ServerVersion(new Version(8, 0, 12), ServerType.MySql); // replace with your Server Version and Type
@@ -42,7 +45,7 @@ namespace SocialNetwork
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "client/dist";
+                configuration.RootPath = "client/dist";                
             });
 
             if (Environment.IsDevelopment())
@@ -53,21 +56,30 @@ namespace SocialNetwork
             {
                 AddDatabaseConnection(services, "RemoteDatabase");
             }
+
+            services.AddSignalR();
+
             services.AddTransient<Intitializer>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();     
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, Intitializer ini)
         {
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub< ChatHub>("/chatHub");
+            });
+            app.UseMvc();
+            
             if (Environment.IsDevelopment())
             {
-                // Deleting database and filling it with test data
-                if (Configuration.GetValue<string>("DatabaseDataDeleteFillOption") == "DeleteFill")
+                if(Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill")
                 {
                     ini.DeleteAll().Wait();
                     ini.Seed().Wait();
                 }
-
+                
                 app.UseDeveloperExceptionPage();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
@@ -89,14 +101,6 @@ namespace SocialNetwork
             // Укажем, что наше приложение будет использовать статические странички, сгенерированые ангуляр приложением.
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
 
             // Для того, что бы наше приложение разворачивалось с Ангуляром, используем опцию,
             // которая позволяет запускать Single Page Application вместо привычных страниц в папке View
