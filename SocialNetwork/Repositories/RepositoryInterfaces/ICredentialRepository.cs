@@ -8,6 +8,6 @@ namespace SocialNetwork.Repositories.GenericRepository
          Task<Credential> GetByEmail(string email);
          Task<Credential> GetById(int id);
          Task<bool> IsExist(string email);
-         Task Delete(Credential entity);
+         void Delete(Credential entity);
     }
 }

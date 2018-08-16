@@ -10,10 +10,9 @@ namespace SocialNetwork.Repositories
         public CredentialRepository(ShortyContext context) : base(context)
         { }
 
-        public async Task Delete(Credential Entity)
+        public void Delete(Credential Entity)
         {
             Context.Set<Credential>().Remove(Entity);
-            await Context.SaveChangesAsync();
         }
 
         public async Task<Credential> GetByEmail(string email)

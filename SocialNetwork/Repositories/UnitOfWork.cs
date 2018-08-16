@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace SocialNetwork.Repositories
 {
@@ -63,9 +64,9 @@ namespace SocialNetwork.Repositories
             }
         }
 
-        // public async void SaveAsync()
-        // {
-        //     await context.SaveChangesAsync();
-        // }
+        public async Task Save()
+        {
+            await context.SaveChangesAsync();
+        }
     }
 }
