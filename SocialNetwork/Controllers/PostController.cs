@@ -8,14 +8,16 @@ using SocialNetwork.Repositories.GenericRepository;
 namespace SocialNetwork.Controllers
 {
     [Authorize]
+    [ApiController]
+    [Produces("application/json")]
     [Route("/api/[controller]")]
-    public class PostsController : Controller
+    public class PostsController : ControllerBase
     {
-        private readonly IPostRepository repository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public PostsController(IPostRepository repository)
+        public PostsController(IUnitOfWork unitOfWork)
         {
-            this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         // GET api/posts/79
@@ -25,24 +27,26 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Post>> GetPostById(int id)
         {
-            var post = await repository.GetById(id);
+            var post = await unitOfWork.PostRepository.GetById(id);
             if (post != null)
             {
-                return new OkObjectResult(Json(post));
+                return new OkObjectResult(post);
             }
             return NotFound();
         }
 
         // GET api/posts/?authorId=2
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<ICollection<Post>>> GetAllPostByAuthor([FromQuery]int authorId)
         {
             if (authorId != 0)
             {
-                var posts = await repository.GetByAuthorId(authorId);
+                var posts = await unitOfWork.PostRepository.GetByAuthorId(authorId);
                 if (posts != null)
                 {
-                    return new OkObjectResult(Json(posts));
+                    return new OkObjectResult(posts);
                 }
                 return NotFound();
             }
@@ -54,7 +58,7 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult> AddPost([FromBody]Post post)
         {
             if (!ModelState.IsValid) return BadRequest();
-            await repository.CreatePost(post);
+            await unitOfWork.PostRepository.Create(post);
             return Created("api/post", post);
         }
 
@@ -64,10 +68,10 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> Delete(int id)
         {
-            var entity = await repository.GetById(id);
+            var entity = await unitOfWork.PostRepository.GetById(id);
             if (entity != null)
             {
-                await repository.Delete(entity);
+                await unitOfWork.PostRepository.Delete(entity);
                 return Ok();
             }
             return NotFound();

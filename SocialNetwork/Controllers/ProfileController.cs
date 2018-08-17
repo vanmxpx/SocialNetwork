@@ -7,14 +7,16 @@ using SocialNetwork.Repositories.GenericRepository;
 namespace SocialNetwork.Controllers
 {
     [Authorize]
+    [ApiController]
+    [Produces("application/json")]
     [Route("/api/[controller]")]
-    public class ProfilesController : Controller
+    public class ProfilesController : ControllerBase
     {
-        private readonly IProfileRepository repository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public ProfilesController(IProfileRepository repository)
+        public ProfilesController(IUnitOfWork unitOfWork)
         {
-            this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         //http://localhost:5000/api/profiles/{id}
@@ -23,10 +25,10 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Profile>> GetProfileById(int id)
         {
-            var profile = await repository.GetById(id);
+            var profile = await unitOfWork.ProfileRepository.GetById(id);
             if(profile != null)
             {
-                return new OkObjectResult(Json(profile));
+                return new OkObjectResult(profile);
             }
             return NotFound();
         }
@@ -38,10 +40,10 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Profile>> GetProfileByLogin([FromQuery]string login)
         {
-            var profile = await repository.GetByLogin(login);
+            var profile = await unitOfWork.ProfileRepository.GetByLogin(login);
             if(profile != null)
             {
-                return new OkObjectResult(Json(profile));
+                return new OkObjectResult(profile);
             }
             return NotFound();
         }
@@ -53,10 +55,10 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Profile>> GetProfileByNameAndLastName([FromQuery]string name, [FromQuery]string lastName)
         {
-            var profile = await repository.GetByNameAndLastName(name, lastName);
+            var profile = await unitOfWork.ProfileRepository.GetByNameAndLastName(name, lastName);
             if(profile != null)
             {
-                return new OkObjectResult(Json(profile));
+                return new OkObjectResult(profile);
             }
             return NotFound();
         }

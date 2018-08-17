@@ -27,12 +27,6 @@ namespace SocialNetwork.Repositories
                 .Where(e => e.ProfileRef == id)
                 .ToListAsync();
         }
-        public async Task CreatePost(Post post)
-        {
-            //Context.Posts.Add(post);
-            Context.Set<Post>().Add(post);
-            await Context.SaveChangesAsync();
-        }
 
         public async Task Delete(Post post)
         {

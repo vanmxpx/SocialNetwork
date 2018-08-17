@@ -16,26 +16,17 @@ using System.Text;
 namespace SocialNetwork.Controllers
 {
     //http://localhost:5000/api/authorizations/ - test url
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("/api/[controller]")]
     public class AuthorizationsController : ControllerBase
     {
-        private readonly IAuthorizationRepository repositoryAuthorization;
-        private readonly ICredentialRepository repositoryCredential;
-        private readonly IProfileRepository repositoryProfile;
+        private readonly IUnitOfWork unitOfWork;
         private readonly AppSettings appSettings;
-
-        public AuthorizationsController(IAuthorizationRepository repositoryAuthorization,
-                                         ICredentialRepository repositoryCredential,
-                                         IProfileRepository repositoryProfile,
-                                         IOptions<AppSettings> appSettings
-                                         )
+        public AuthorizationsController(IUnitOfWork unitOfWork, AppSettings appSettings)
         {
-            this.repositoryAuthorization = repositoryAuthorization;
-            this.repositoryCredential = repositoryCredential;
-            this.repositoryProfile = repositoryProfile;
-            this.appSettings = appSettings.Value;
+            this.unitOfWork = unitOfWork;
+            this.appSettings = appSettings;
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
@@ -47,12 +38,12 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult<Authorization>> GetAuthorizationById(int id)
         {
             //добавить валидацию id             
-            var authorization = await repositoryAuthorization.GetById(id);
+            var authorization = await unitOfWork.AuthorizationRepository.GetById(id);
             if (authorization != null)
             {
                 return Ok(authorization);
             }
-            return NotFound();            
+            return NotFound();
         }
 
         [AllowAnonymous]
@@ -62,7 +53,7 @@ namespace SocialNetwork.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<Profile>> AddAuthorization([FromBody]CredentialDto credentialDto)
         {
-            Credential credential = repositoryCredential.Authenticate(credentialDto.Email, credentialDto.Password);
+            Credential credential = unitOfWork.CredentialRepository.Authenticate(credentialDto.Email, credentialDto.Password);
             if (credential == null)
             {
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -86,12 +77,12 @@ namespace SocialNetwork.Controllers
             Authorization authorization = new Authorization()
             {
                 SystemStatus = "",
-                Credential = await repositoryCredential.GetByEmail(credentialDto.Email)
+                Credential = await unitOfWork.CredentialRepository.GetByEmail(credentialDto.Email)
             };
-            await repositoryAuthorization.Create(authorization);
+            await unitOfWork.AuthorizationRepository.Create(authorization);
 
             // возвращаем основную информацию пользователя и токен для хранения клиентской части 
-            Profile profile = await repositoryProfile.GetById(credential.ProfileRef);
+            Profile profile = await unitOfWork.ProfileRepository.GetById(credential.ProfileRef);
             return Ok(new
             {
                 Name = profile.Name,
@@ -108,10 +99,15 @@ namespace SocialNetwork.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
-        public IActionResult Delete(int id, Authorization authorization)
+        public async Task<IActionResult> Delete(int id)
         {
-            repositoryAuthorization.Update(id, authorization);
-            return Ok();
+            var authorization = await unitOfWork.AuthorizationRepository.GetById(id);
+            if (authorization != null)
+            {
+                await unitOfWork.AuthorizationRepository.Delete(authorization);
+                return Ok();
+            }
+            return NotFound();
         }
 
         [HttpGet]
@@ -122,7 +118,7 @@ namespace SocialNetwork.Controllers
         {
             if (credentialId != 0)
             {
-                var authorizations = await repositoryAuthorization.GetAllAuthorizantionsByCredentialId(credentialId);
+                var authorizations = await unitOfWork.AuthorizationRepository.GetAllAuthorizantionsByCredentialId(credentialId);
                 if (authorizations != null)
                 {
                     return new OkObjectResult(authorizations);

@@ -8,7 +8,6 @@ namespace SocialNetwork.Repositories.GenericRepository
     {
         Task<Post> GetById(int id);
         Task<List<Post>> GetByAuthorId(int id);
-        Task CreatePost(Post post);
         Task Delete(Post post);
     }
 }

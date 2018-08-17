@@ -11,17 +11,17 @@ namespace SocialNetwork.Controllers
     [Route("/api/[controller]")]
     public class CredentialController : Controller
     {
-        private readonly ICredentialRepository CredentialRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public CredentialController(ICredentialRepository repositoryCredential)
+        public CredentialController(IUnitOfWork unitOfWork)
         {
-            this.CredentialRepository = repositoryCredential;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet("{email}")]
         public async Task<ActionResult> GetByEmail(string email)
         {
-            var Credential = await CredentialRepository.GetByEmail(email);
+            var Credential = await unitOfWork.CredentialRepository.GetByEmail(email);
             if(Credential==null)
             return NotFound();
             else

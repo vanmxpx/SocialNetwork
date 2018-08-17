@@ -70,7 +70,8 @@ namespace SocialNetwork
             services.AddTransient<IProfileRepository, ProfileRepository>();
             services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
             services.AddTransient<ICredentialRepository, CredentialRepository>();
-            services.AddTransient<IPostRepository, PostRepository>();        
+            services.AddTransient<IPostRepository, PostRepository>();  
+            services.AddTransient<IUnitOfWork, UnitOfWork>();           
             
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -115,76 +116,24 @@ namespace SocialNetwork
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,IHostingEnvironment env, Intitializer ini)
         {
-            // //Deleting database and filling it with test data
-            // if (env.IsDevelopment())
-            // {
-            //     // Deleting database and filling it with test data
-            //     if (Configuration.GetValue<string>("DatabaseDataDeleteFillOption") == "DeleteFill")
-            //     {
-            //         ini.DeleteAll().Wait();
-            //         ini.Seed().Wait();
-            //     }
-
-            //     app.UseDeveloperExceptionPage();
-
-
-            //     // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
-            //     // запросы на другой домен, порт и т.д.. Все это в целях безопасности)
-            //     app.UseCors(builder =>
-            //         builder.WithOrigins("http://localhost:4200")
-            //             .AllowAnyHeader()
-            //     );
-            // }
-            // else
-            // {
-            //     app.UseExceptionHandler("/Error");
-            //     app.UseHsts();
-            //     // На данный момент контракт HTTP считается устаревшим и не безопасным, 
-            //     // используем HTTPS для всех запросов в продакшене
-            //     app.UseHttpsRedirection();
-            // }
-            //     app.UseMvc();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub< ChatHub>("/chatHub");
+            });
+            app.UseMvc();
+            
             // //используем аутентификацию
-            // app.UseAuthentication();
-
-            // // Укажем, что наше приложение будет использовать статические странички, сгенерированые ангуляр приложением.
-            // app.UseStaticFiles();
-            // app.UseSpaStaticFiles();
-
-            // // Для того, что бы наше приложение разворачивалось с Ангуляром, используем опцию,
-            // // которая позволяет запускать Single Page Application вместо привычных страниц в папке View
-            // app.UseSpa(spa =>
-            // {
-            //     // To learn more about options for serving an Angular SPA from ASP.NET Core,
-            //     // see https://go.microsoft.com/fwlink/?linkid=864501
-
-            //     spa.Options.SourcePath = "client";
-
-            //     if (Environment.IsDevelopment())
-            //     {
-            //         // Первый вариант запустит новое Angular приложение, второй же подключится по ссылке к уже существующему.
-            //         // Удобно использовать 2ой вариант, потому что два отдельно запущеных приложения клиента/сервера можно одновременно дебажить.
-            //         //spa.UseAngularCliServer(npmScript: "start");
-            //         spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-            //     }
-            // });
-
-            //  app.UseSignalR(routes =>
-            // {
-            //     routes.MapHub< ChatHub>("/chatHub");
-            //});
-
-             //Deleting database and filling it with test data
-            if (env.IsDevelopment() && (Configuration.GetValue<string>("DatabaseDataDeleteFillOption")==""))
+            app.UseAuthentication();
+            
+            if (Environment.IsDevelopment())
             {
-                //ini.DeleteAll().Wait();
-                //ini.Seed().Wait();
-            }
-
-            if (env.IsDevelopment())
-            {
+                if(Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill")
+                {
+                    ini.DeleteAll().Wait();
+                    ini.Seed().Wait();
+                }
+                
                 app.UseDeveloperExceptionPage();
-                app.UseMvc();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
                 // запросы на другой домен, порт и т.д.. Все это в целях безопасности)
@@ -222,11 +171,6 @@ namespace SocialNetwork
                     //spa.UseAngularCliServer(npmScript: "start");
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
-            });
-
-             app.UseSignalR(routes =>
-            {
-                routes.MapHub< ChatHub>("/chatHub");
             });
         }
     }
