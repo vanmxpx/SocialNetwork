@@ -8,5 +8,6 @@ namespace SocialNetwork.Repositories.GenericRepository
     {
         Task<Authorization> GetById(int id);
         Task<List<Authorization>> GetAllAuthorizantionsByCredentialId(int id);
+        Task Delete(Authorization authorization);
     }
 }

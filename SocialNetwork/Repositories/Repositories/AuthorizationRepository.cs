@@ -25,5 +25,10 @@ namespace SocialNetwork.Repositories
                 .Where(e => e.CredentialRef == id)
                 .ToListAsync();
         }
+
+        public async Task Delete(Authorization authorization){
+            Context.Set<Authorization>().Remove(authorization);
+            await Context.SaveChangesAsync();
+        }
     }
 }

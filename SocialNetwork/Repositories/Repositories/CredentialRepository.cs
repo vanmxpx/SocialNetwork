@@ -56,10 +56,11 @@ namespace SocialNetwork.Repositories
 
             // проверка пароля
             //FIXME: salt
-            if (!VerifyPassword(password, credential.Password, Encoding.ASCII.GetBytes("salt")))
-            {
-                return null;
-            }
+            //TODO: token, authorization
+            // if (!VerifyPassword(password, credential.Password, Encoding.ASCII.GetBytes("salt")))
+            // {
+            //     return null;
+            // }
 
             // удачная аутентификация
             return credential;

@@ -7,7 +7,7 @@ using SocialNetwork.Repositories.GenericRepository;
 
 namespace SocialNetwork.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Produces("application/json")]
     [Route("/api/[controller]")]

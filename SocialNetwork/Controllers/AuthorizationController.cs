@@ -16,21 +16,21 @@ using System.Text;
 namespace SocialNetwork.Controllers
 {
     //http://localhost:5000/api/authorizations/ - test url
-    //[Authorize]
+   // [Authorize]
     [ApiController]
     [Route("/api/[controller]")]
     public class AuthorizationsController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly AppSettings appSettings;
-        public AuthorizationsController(IUnitOfWork unitOfWork, AppSettings appSettings)
+        public AuthorizationsController(IUnitOfWork unitOfWork, IOptions<AppSettings> appSettings)
         {
             this.unitOfWork = unitOfWork;
-            this.appSettings = appSettings;
+            this.appSettings = appSettings.Value;
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
-        [AllowAnonymous]//для теста
+        //[AllowAnonymous]//для теста
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -46,12 +46,12 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
         [Produces("application/json")]
-        public async Task<ActionResult<Profile>> AddAuthorization([FromBody]CredentialDto credentialDto)
+        public async Task<ActionResult<Authorization>> AddAuthorization([FromBody]CredentialDto credentialDto)
         {
             Credential credential = unitOfWork.CredentialRepository.Authenticate(credentialDto.Email, credentialDto.Password);
             if (credential == null)
