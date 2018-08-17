@@ -7,8 +7,10 @@ using SocialNetwork.Repositories.GenericRepository;
 
 namespace SocialNetwork.Controllers
 {
+    [ApiController]
+    [Produces("application/json")]
     [Route("/api/[controller]")]
-    public class PostsController : Controller
+    public class PostsController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -26,7 +28,7 @@ namespace SocialNetwork.Controllers
             var post = await unitOfWork.PostRepository.GetById(id);
             if (post != null)
             {
-                return new OkObjectResult(Json(post));
+                return new OkObjectResult(post);
             }
             return NotFound();
         }
@@ -42,7 +44,7 @@ namespace SocialNetwork.Controllers
                 var posts = await unitOfWork.PostRepository.GetByAuthorId(authorId);
                 if (posts != null)
                 {
-                    return new OkObjectResult(Json(posts));
+                    return new OkObjectResult(posts);
                 }
                 return NotFound();
             }

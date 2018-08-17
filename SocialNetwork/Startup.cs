@@ -66,17 +66,21 @@ namespace SocialNetwork
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, Intitializer ini)
         {
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub< ChatHub>("/chatHub");
+            });
+            app.UseMvc();
+            
             if (Environment.IsDevelopment())
             {
-                // Deleting database and filling it with test data
-                if (Configuration.GetValue<string>("DatabaseDataDeleteFillOption") == "DeleteFill")
+                if(Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill")
                 {
                     ini.DeleteAll().Wait();
                     ini.Seed().Wait();
                 }
-
+                
                 app.UseDeveloperExceptionPage();
-                app.UseMvc();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
                 // запросы на другой домен, порт и т.д.. Все это в целях безопасности)
@@ -114,11 +118,6 @@ namespace SocialNetwork
                     //spa.UseAngularCliServer(npmScript: "start");
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
-            });
-
-             app.UseSignalR(routes =>
-            {
-                routes.MapHub< ChatHub>("/chatHub");
             });
         }
     }
