@@ -20,7 +20,7 @@ namespace SocialNetwork
 		public async Task AddDataToTestDB()
         {			
             string sqlDatabaseCreate = File.ReadAllText(
-                Directory.GetCurrentDirectory() + "\\DBComponents\\TestData\\shorty_test.sql");
+                Directory.GetCurrentDirectory() + "\\TestData\\shorty_test.sql");
 			SC.Database.ExecuteSqlCommand(sqlDatabaseCreate);
             
             await SC.SaveChangesAsync();

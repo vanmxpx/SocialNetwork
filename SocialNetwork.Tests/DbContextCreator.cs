@@ -17,8 +17,8 @@ namespace SocialNetwork.Tests
                 optionsBuilder.UseMySql("server=localhost;port=3306;database=shorty_test;username=root;password=root");  
                 context = new ShortyContext(optionsBuilder.Options);
                 ini = new TestIntitializer(context);
-                RefreshDBData();
             }
+            RefreshDBData();
             return context;
         }
         private static async void RefreshDBData()

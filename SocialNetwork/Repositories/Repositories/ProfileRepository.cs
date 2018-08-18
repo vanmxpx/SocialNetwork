@@ -31,6 +31,7 @@ namespace SocialNetwork.Repositories
         {
             var entity = await GetById(id);
             Context.Set<Profile>().Remove(entity);
+            await Context.SaveChangesAsync();
         }
     }
 }

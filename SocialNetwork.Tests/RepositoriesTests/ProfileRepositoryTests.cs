@@ -14,108 +14,129 @@ namespace SocialNetwork.Tests
 
         public  ProfileRepositoryTests()
         {
+            //INITIALIZATION
             this.repository = new ProfileRepository(DbContextCreator.GetDbContext());
         }
 
-        [Fact]
-        public void GetByIdTest_Profile_Expected()
+        [Theory]
+        [InlineData(1,"Vestibulum")]
+        [InlineData(11,"lorem")]
+        [InlineData(42,"pharetra.")]
+        [InlineData(50,"adipiscing,")]
+        public void GetByIdTest_Profile_Expected(int id, string login)
         {   
             //WHEN
-            Profile profile = repository.GetById(1).Result;
+            Profile profile = repository.GetById(id).Result;
             //THEN
-            Assert.True(profile.Login == "Vestibulum");
+            Assert.Equal(profile.Login, login);
         }
 
-        [Fact]
-        public void GetByIdTest_Null_Expected()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(50)]
+        public void GetByIdTest_Null_Expected(int id)
         {   
             //WHEN
             Profile profile = repository.GetById(0).Result;
             //THEN
-            Assert.True(profile == null);
+            Assert.Equal(profile, null);
         }
 
-        [Fact]
-        public void GetByNameAndLastNameTest_Profile_Expected()
+        [Theory]
+        [InlineData(21, "Curran", "Pennington")]
+        [InlineData(31, "Galvin", "Alexander")]
+        [InlineData(41, "Kirk", "Chapman")]
+        public void GetByNameAndLastNameTest_Profile_Expected(int id, string name, string lastName)
         {   
             //WHEN
-            Profile profile = repository.GetByNameAndLastName("Curran","Pennington").Result;
+            Profile profile = repository.GetByNameAndLastName(name, lastName).Result;
             //THEN
-            Assert.True(profile.Id == 21);
+            Assert.Equal(profile.Id, id);
         }
 
-        [Fact]
-        public void GetByNameAndLastNameTest_Null_Expected()
+        [Theory]
+        [InlineData("Curran", "Alexander")]
+        [InlineData("Galvin", "Pennington")]
+        [InlineData("Chapman", "Kirk")]
+        public void GetByNameAndLastNameTest_Null_Expected(string name, string lastName)
         {   
             //WHEN
-            Profile profile = repository.GetByNameAndLastName("null","null").Result;
+            Profile profile = repository.GetByNameAndLastName(name, lastName).Result;
             //THEN
-            Assert.True(profile == null);
+            Assert.Equal(profile, null);
         }
 
-        [Fact]
-        public void GetByLoginTest_Profile_Expected()
+        [Theory]
+        [InlineData(41, "iaculis")]
+        [InlineData(13, "Quisque")]
+        [InlineData(24, "quis")]
+        public void GetByLoginTest_Profile_Expected(int id, string login)
         {   
             //WHEN
-            Profile profile = repository.GetByLogin("iaculis").Result;
+            Profile profile = repository.GetByLogin(login).Result;
             //THEN
-            Assert.True(profile.Id == 41);
+            Assert.Equal(profile.Id, id);
         }
 
-        [Fact]
-        public void GetByLoginTest_Null_Expected()
+        [Theory]
+        [InlineData("notExistedLogin")]
+        [InlineData("fakelogin")]
+        [InlineData("")]
+        public void GetByLoginTest_Null_Expected(string login)
         {   
             //WHEN
-            Profile profile = repository.GetByLogin("notExistedLogin").Result;
+            Profile profile = repository.GetByLogin(login).Result;
             //THEN
-            Assert.True(profile == null);
+            Assert.Equal(profile, null);
         }
 
-        [Fact]
-        public async void GetAllTest()
+        [Theory]
+        [InlineData(42, "pharetra.")]
+        [InlineData(23, "vitae")]
+        [InlineData(1, "Vestibulum")]
+        public async void GetAllTest(int id, string login)
         {   
             //WHEN
-           // Profile profile = new Profile{Id = 4, Login = "Aliquam", Name = "Rigel", LastName = "Burks"};
-           // await repository.Create(profile);
-           // await repository.Create(new Profile{Id = 5, Login = "Nullam", Name = "Owen", LastName = "Emerson"});
             var list = await repository.GetAll().ToListAsync();
             //THEN
-            Assert.True(list.Find(p => p.Id == 4).Login == "Aliquam");
+            Assert.True(list.Find(p => p.Id == id).Login == login);
         }
 
         [Fact]
         public async void CreateTest()
         {   
             //WHEN
-           // await repository.Create(new Profile{Id = 13, Login = "Quisque", Name = "Raja", LastName = "Ruiz"});
-            Profile profile = await repository.GetById(13);
+            await repository.Create(new Profile{Id = 99, Login = "QuSDFisque", Name = "Raja", LastName = "Kolpakov"});
+            Profile profile = await repository.GetById(99);
             //THEN
-            Assert.True(profile.Id == 13);
+            Assert.True(profile.LastName == "Kolpakov");
         }
 
         [Fact]
         public async void UpdateTest()
         {   
             // //WHEN
-            Profile profile = new Profile{Id = 15, Login = "newLogin", Name = "Raja", LastName = "Ruiz"};
-            // await repository.Create(profile);
-            // profile.Login = "newLogin";
+            Profile profile = await repository.GetById(15);
+            profile.Login = "newLogin";
             await repository.Update(15, profile);
-            Profile updatedProfile = await repository.GetById(15);
+            profile = await repository.GetById(15);
             // //THEN
             Assert.True(profile.Login == "newLogin");
         }
 
-        //[Fact]
-        // public async void DeleteTest()
-        // {   
-        //     //DbContextCreator.GetDbContext().Database.EnsureDeleted();
-        //     //WHEN
-        //     //await repository.Create(new Profile{Id = 7, Login = "nunc", Name = "Leilani", LastName = "Pena"});
-        //     await repository.Delete(7);
-        //     Profile profile = await repository.GetById(7);
-        //     //THEN
-        //     Assert.True(profile == null);
-        // }
+        [Theory]
+        [InlineData(1)]
+        [InlineData(11)]
+        [InlineData(21)]
+        public async void DeleteTest(int id)
+        {   
+            //WHEN
+            await repository.Delete(id);
+            
+            Profile profile = await repository.GetById(id);
+            //THEN
+            Assert.Equal(profile, null);
+        }
     }
 }
