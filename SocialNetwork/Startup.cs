@@ -83,11 +83,11 @@ namespace SocialNetwork
 
             if (Environment.IsDevelopment())
             {
-                if (Configuration.GetValue<string>("DatabaseDataDeleteFillOption") == "DeleteFill")
-                {
-                    ini.DeleteAll().Wait();
-                    ini.Seed().Wait();
-                }
+                // if (Configuration.GetValue<string>("DatabaseDataDeleteFillOption") == "DeleteFill")
+                // {
+                //     ini.DeleteAll().Wait();
+                //     ini.Seed().Wait();
+                // }
 
                 app.UseDeveloperExceptionPage();
 
