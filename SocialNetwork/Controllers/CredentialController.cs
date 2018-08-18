@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
+using SocialNetwork.Services;
 
 namespace SocialNetwork.Controllers
 {
@@ -19,10 +20,19 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult> GetByEmail(string email)
         {
             var Credential = await unitOfWork.CredentialRepository.GetByEmail(email);
-            if(Credential==null)
-            return NotFound();
+            if (Credential == null)
+                return NotFound();
             else
-            return new OkObjectResult(Json(Credential));
+                return new OkObjectResult(Json(Credential));
+        }
+
+        [HttpPost("{email}")]
+        public async Task<ActionResult> Register(string email)
+        {
+            
+            EmailSender emailService = new EmailSender();
+            await emailService.SendEmailAsync(email, "Tests", "Hello world");
+            return Ok();
         }
 
 
