@@ -29,10 +29,13 @@ namespace SocialNetwork.Controllers
         [HttpPost("{email}")]
         public async Task<ActionResult> Register(string email)
         {
-            
+
             EmailSender emailService = new EmailSender();
+
             await emailService.SendEmailAsync(email, "Confirm email", "Hello world");
-            return Ok();
+            return Ok("Ok");
+
+
         }
 
 
