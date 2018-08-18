@@ -11,6 +11,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using SocialNetwork.SignalRChatHub;
+using SocialNetwork.Configurations;
 
 namespace SocialNetwork
 {
@@ -42,10 +43,16 @@ namespace SocialNetwork
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+
+            services.AddConnectionStringSettings(Configuration);
+            services.AddDatabaseScriptsOptionSettings(Configuration);
+            services.AddSTMPConnectionSettings(Configuration);
+            services.AddLoggingSettings(Configuration);
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "client/dist";                
+                configuration.RootPath = "client/dist";
             });
 
             if (Environment.IsDevelopment())
@@ -60,7 +67,7 @@ namespace SocialNetwork
             services.AddSignalR();
 
             services.AddTransient<Intitializer>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();     
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,18 +75,18 @@ namespace SocialNetwork
         {
             app.UseSignalR(routes =>
             {
-                routes.MapHub< ChatHub>("/chatHub");
+                routes.MapHub<ChatHub>("/chatHub");
             });
             app.UseMvc();
-            
+
             if (Environment.IsDevelopment())
             {
-                if(Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill")
+                if (Configuration.GetValue<string>("DatabaseDataDeleteFillOption") == "DeleteFill")
                 {
                     ini.DeleteAll().Wait();
                     ini.Seed().Wait();
                 }
-                
+
                 app.UseDeveloperExceptionPage();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
