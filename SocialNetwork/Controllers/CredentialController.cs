@@ -31,7 +31,7 @@ namespace SocialNetwork.Controllers
         {
             
             EmailSender emailService = new EmailSender();
-            await emailService.SendEmailAsync(email, "Tests", "Hello world");
+            await emailService.SendEmailAsync(email, "Confirm email", "Hello world");
             return Ok();
         }
 
