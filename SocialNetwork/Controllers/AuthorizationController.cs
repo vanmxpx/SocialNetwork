@@ -77,6 +77,7 @@ namespace SocialNetwork.Controllers
             Authorization authorization = new Authorization()
             {
                 SystemStatus = "",
+                DatetimeStart=DateTime.Now,
                 Credential = await unitOfWork.CredentialRepository.GetByEmail(credentialDto.Email)
             };
             await unitOfWork.AuthorizationRepository.Create(authorization);
