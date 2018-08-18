@@ -71,7 +71,8 @@ namespace SocialNetwork.Controllers
             var entity = await unitOfWork.PostRepository.GetById(id);
             if (entity != null)
             {
-                await unitOfWork.PostRepository.Delete(entity);
+                unitOfWork.PostRepository.Delete(entity);
+                await unitOfWork.Save();
                 return Ok();
             }
             return NotFound();
