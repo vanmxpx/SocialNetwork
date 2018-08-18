@@ -68,7 +68,7 @@ namespace SocialNetwork
 
             services.AddTransient<Intitializer>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();        
-                
+
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
             
@@ -119,7 +119,7 @@ namespace SocialNetwork
 
             app.UseMvc();            
             // //используем аутентификацию
-            //app.UseAuthentication();
+            app.UseAuthentication();
             
             if (Environment.IsDevelopment())
             {

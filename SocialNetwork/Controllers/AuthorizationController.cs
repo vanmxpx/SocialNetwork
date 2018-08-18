@@ -4,11 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters.Json;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
 using System.Text;
 
@@ -16,7 +13,7 @@ using System.Text;
 namespace SocialNetwork.Controllers
 {
     //http://localhost:5000/api/authorizations/ - test url
-   // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("/api/[controller]")]
     public class AuthorizationsController : ControllerBase
@@ -30,7 +27,6 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
-        //[AllowAnonymous]//для теста
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -46,7 +42,7 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -59,42 +55,16 @@ namespace SocialNetwork.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, credential.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
             Authorization authorization = new Authorization()
             {
                 SystemStatus = "",
-                DatetimeStart=DateTime.Now,
+                DatetimeStart = DateTime.Now,
                 Credential = await unitOfWork.CredentialRepository.GetByEmail(credentialDto.Email)
             };
+
             await unitOfWork.AuthorizationRepository.Create(authorization);
 
-            // возвращаем основную информацию пользователя и токен для хранения клиентской части 
-            Profile profile = await unitOfWork.ProfileRepository.GetById(credential.ProfileRef);
-            return Ok(new
-            {
-                Name = profile.Name,
-                Login = profile.Login,
-                LastName = profile.LastName,
-                Age = profile.Age,
-                Location = profile.Location,
-                Photo = profile.Photo,
-                Gender = profile.Gender,
-                Token = tokenString
-            });
+            return Ok(new { Token=new TokenFactory(appSettings, credential).GetStringToken() });
         }
 
         [HttpDelete("{id}")]
