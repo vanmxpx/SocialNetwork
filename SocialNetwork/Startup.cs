@@ -11,6 +11,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using SocialNetwork.SignalRChatHub;
+using SocialNetwork.Services;
 using SocialNetwork.Configurations;
 
 namespace SocialNetwork
@@ -43,11 +44,12 @@ namespace SocialNetwork
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            //services.AddConfigurations(Configuration);
 
-            services.AddConnectionStringSettings(Configuration);
-            services.AddDatabaseScriptsOptionSettings(Configuration);
-            services.AddSTMPConnectionSettings(Configuration);
-            services.AddLoggingSettings(Configuration);
+            IConfigLoader loader = new DafaultConfigLoader();
+            IConfigProvider provider = loader.GetConfigProvider(Configuration);
+            loader.ConfigProvider(services, provider);
+
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
