@@ -64,19 +64,23 @@ namespace SocialNetwork
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Intitializer ini)
+        public void Configure(IApplicationBuilder app, Intitializer ini)
         {
-            //Deleting database and filling it with test data
-            if (env.IsDevelopment() && (Configuration.GetValue<string>("DatabaseDataDeleteFillOption")==""))
+            app.UseSignalR(routes =>
             {
-                ini.DeleteAll().Wait();
-                ini.Seed().Wait();
-            }
-
-            if (env.IsDevelopment())
+                routes.MapHub< ChatHub>("/chatHub");
+            });
+            app.UseMvc();
+            
+            if (Environment.IsDevelopment())
             {
+                if(Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill")
+                {
+                    ini.DeleteAll().Wait();
+                    ini.Seed().Wait();
+                }
+                
                 app.UseDeveloperExceptionPage();
-                app.UseMvc();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
                 // запросы на другой домен, порт и т.д.. Все это в целях безопасности)
@@ -107,18 +111,13 @@ namespace SocialNetwork
 
                 spa.Options.SourcePath = "client";
 
-                if (env.IsDevelopment())
+                if (Environment.IsDevelopment())
                 {
                     // Первый вариант запустит новое Angular приложение, второй же подключится по ссылке к уже существующему.
                     // Удобно использовать 2ой вариант, потому что два отдельно запущеных приложения клиента/сервера можно одновременно дебажить.
                     //spa.UseAngularCliServer(npmScript: "start");
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
-            });
-
-             app.UseSignalR(routes =>
-            {
-                routes.MapHub< ChatHub>("/chatHub");
             });
         }
     }

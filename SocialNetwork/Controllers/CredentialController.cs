@@ -6,11 +6,11 @@ using SocialNetwork.Repositories.GenericRepository;
 namespace SocialNetwork.Controllers
 {
     [Route("/api/[controller]")]
-    public class CredentialController : Controller
+    public class CredentialsController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public CredentialController(IUnitOfWork unitOfWork)
+        public CredentialsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
@@ -24,10 +24,5 @@ namespace SocialNetwork.Controllers
             else
             return new OkObjectResult(Json(Credential));
         }
-
-
-
-
-
     }
 }

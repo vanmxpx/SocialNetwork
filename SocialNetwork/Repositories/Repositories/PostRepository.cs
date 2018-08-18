@@ -28,10 +28,9 @@ namespace SocialNetwork.Repositories
                 .ToListAsync();
         }
 
-        public async Task Delete(Post post)
+        public void Delete(Post post)
         {
             Context.Set<Post>().Remove(post);
-            await Context.SaveChangesAsync();
         }
     }
 }
