@@ -10,6 +10,7 @@ namespace SocialNetwork.Configurations
             SetConfig<IDatabaseScriptsOption>(services,provider.DatabaseScriptsOption);
             SetConfig<IConnectionStrings>(services,provider.ConnectionStrings);
             SetConfig<IDatabaseScriptsOption>(services,provider.DatabaseScriptsOption);
+            SetConfig<ISTMPConnection> (services, provider.STMPConnection);
         }
 
         public IConfigProvider GetConfigProvider(IConfiguration config)
@@ -18,7 +19,8 @@ namespace SocialNetwork.Configurations
             {
                 DatabaseScriptsOption =  GetConf<DatabaseScriptsOption>(config,"DatabaseScriptsOption"),
                 ConnectionStrings =  GetConf<ConnectionStrings>(config,"ConnectionStrings"),
-                Logging =  GetConf<Logging>(config,"Logging")
+                Logging =  GetConf<Logging>(config,"Logging"),
+                STMPConnection = GetConf<STMPConnection>(config,"STMPConnection")
             };
             return configProvider;
         }

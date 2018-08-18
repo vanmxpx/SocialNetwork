@@ -6,6 +6,7 @@ namespace SocialNetwork.Configurations
         private IConnectionStrings connectionString;
         private IDatabaseScriptsOption databaseScriptsOption;
         private ILogging logging;
+        private ISTMPConnection stmpConnection;
 
         public IDatabaseScriptsOption DatabaseScriptsOption
         {
@@ -38,6 +39,17 @@ namespace SocialNetwork.Configurations
             set
             {
                 logging = value;
+            }
+        }
+        public ISTMPConnection STMPConnection
+        {
+            get
+            {
+                return stmpConnection;
+            }
+            set
+            {
+                stmpConnection = value;
             }
         }
     }

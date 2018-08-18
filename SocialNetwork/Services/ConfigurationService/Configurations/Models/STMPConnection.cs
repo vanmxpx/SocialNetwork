@@ -1,5 +1,5 @@
 namespace SocialNetwork.Configurations{
-    public class STMPConnection{
+    public class STMPConnection : ISTMPConnection{
         public string Server {get;set;}
         public string UserName {get;set;}
         public string Password {get;set;}
