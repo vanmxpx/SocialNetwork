@@ -86,7 +86,8 @@ namespace SocialNetwork
                 {
                     OnTokenValidated = context =>
                     {
-                        var credentialRepository = context.HttpContext.RequestServices.GetRequiredService<ICredentialRepository>();
+                        var credentialRepository = context.HttpContext.RequestServices
+                            .GetRequiredService<IUnitOfWork>().CredentialRepository;
                         var Id = int.Parse(context.Principal.Identity.Name);
                         var profile = credentialRepository.GetById(Id);
                         if (profile == null)
