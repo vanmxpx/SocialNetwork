@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace SocialNetwork.Repositories
 {
     public interface IUnitOfWork
@@ -6,5 +8,6 @@ namespace SocialNetwork.Repositories
         ProfileRepository ProfileRepository { get; }
         AuthorizationRepository AuthorizationRepository {get;}
         CredentialRepository CredentialRepository { get; }
+        Task Save();
     }
 }
