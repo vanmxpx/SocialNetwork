@@ -26,14 +26,22 @@ namespace SocialNetwork.Controllers
                 return new OkObjectResult(Json(Credential));
         }
 
-        [HttpPost("{email}")]
-        public async Task<ActionResult> Register(string email)
+        [HttpPost("{email}/{password}")]
+        public async Task<ActionResult> Register(string email, string password)
         {
 
             EmailSender emailService = new EmailSender();
+            if (unitOfWork.CredentialRepository.GetByEmail(email) != null)
+            {
+                await emailService.SendEmailAsync(email, "Confirm email", Sha256Service.Convert(email + password));
+                return Ok("Ok");
+            }
+            else
+            {
+                return Ok("Email already exist");
+            }
 
-            await emailService.SendEmailAsync(email, "Confirm email", "Hello world");
-            return Ok("Ok");
+
 
 
         }
