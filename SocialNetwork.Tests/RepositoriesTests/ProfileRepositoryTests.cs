@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using SocialNetwork;
 using SocialNetwork.Repositories;
@@ -28,7 +29,7 @@ namespace SocialNetwork.Tests
             //WHEN
             Profile profile = repository.GetById(id).Result;
             //THEN
-            Assert.Equal(profile.Login, login);
+            Assert.Equal(login, profile.Login);
         }
 
         [Theory]
@@ -40,7 +41,7 @@ namespace SocialNetwork.Tests
             //WHEN
             Profile profile = repository.GetById(0).Result;
             //THEN
-            Assert.Equal(profile, null);
+            Assert.Equal(null, profile);
         }
 
         [Theory]
@@ -50,9 +51,9 @@ namespace SocialNetwork.Tests
         public void GetByNameAndLastNameTest_Profile_Expected(int id, string name, string lastName)
         {   
             //WHEN
-            Profile profile = repository.GetByNameAndLastName(name, lastName).Result;
+            List<Profile> profiles = repository.GetByNameAndLastName(name, lastName).Result;
             //THEN
-            Assert.Equal(profile.Id, id);
+            Assert.Equal(id, profiles[0].Id);
         }
 
         [Theory]
@@ -62,9 +63,9 @@ namespace SocialNetwork.Tests
         public void GetByNameAndLastNameTest_Null_Expected(string name, string lastName)
         {   
             //WHEN
-            Profile profile = repository.GetByNameAndLastName(name, lastName).Result;
+            List<Profile> profiles = repository.GetByNameAndLastName(name, lastName).Result;
             //THEN
-            Assert.Equal(profile, null);
+            Assert.Equal(null, profiles);
         }
 
         [Theory]
@@ -76,7 +77,7 @@ namespace SocialNetwork.Tests
             //WHEN
             Profile profile = repository.GetByLogin(login).Result;
             //THEN
-            Assert.Equal(profile.Id, id);
+            Assert.Equal(id, profile.Id);
         }
 
         [Theory]
@@ -88,7 +89,7 @@ namespace SocialNetwork.Tests
             //WHEN
             Profile profile = repository.GetByLogin(login).Result;
             //THEN
-            Assert.Equal(profile, null);
+            Assert.Equal(null, profile);
         }
 
         [Theory]
@@ -125,18 +126,18 @@ namespace SocialNetwork.Tests
             Assert.True(profile.Login == "newLogin");
         }
 
-        [Theory]
-        [InlineData(1)]
-        [InlineData(11)]
-        [InlineData(21)]
-        public async void DeleteTest(int id)
-        {   
-            //WHEN
-            await repository.Delete(id);
+        // [Theory]
+        // [InlineData(1)]
+        // [InlineData(11)]
+        // [InlineData(21)]
+        // public async void DeleteTest(int id)
+        // {   
+        //     //WHEN
+        //     await repository.Delete(id);
             
-            Profile profile = await repository.GetById(id);
-            //THEN
-            Assert.Equal(profile, null);
-        }
+        //     Profile profile = await repository.GetById(id);
+        //     //THEN
+        //     Assert.Equal(null, profile);
+        // }
     }
 }
