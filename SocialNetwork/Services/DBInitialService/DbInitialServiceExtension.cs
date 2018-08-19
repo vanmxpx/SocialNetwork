@@ -8,7 +8,7 @@ using System;
 
 namespace SocialNetwork.Services.Extentions
 {
-    public static class DbInitialExtention
+    public static class DbInitialServiceExtention
     {
         public static void AddDbService(this IServiceCollection services,IHostingEnvironment env, IConfigProvider provider)
         {

@@ -49,7 +49,7 @@ namespace SocialNetwork
             checkOnExistingDatabase();
             
             string sqlDatabaseFill = File.ReadAllText(
-                Directory.GetCurrentDirectory() + "\\DBComponents\\TestData\\addTestData.sql");
+                Directory.GetCurrentDirectory() + "\\Services\\DBInitialService\\TestData\\addTestData.sql");
             int numberOfRowInserted = SC.Database.ExecuteSqlCommand(sqlDatabaseFill);
 
             //   if (!SC.Authorizations.Any())
