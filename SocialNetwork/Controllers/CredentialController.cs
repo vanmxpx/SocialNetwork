@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using SocialNetwork.Services;
+using SocialNetwork.Configurations;
 using System;
 using Microsoft.AspNetCore.Authorization;
 
@@ -14,10 +15,12 @@ namespace SocialNetwork.Controllers
     public class CredentialController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IConfigProvider provider; 
 
-        public CredentialController(IUnitOfWork unitOfWork)
+        public CredentialController(IUnitOfWork unitOfWork, IConfigProvider provider)
         {
             this.unitOfWork = unitOfWork;
+            this.provider = provider;
         }
 
 
@@ -39,7 +42,7 @@ namespace SocialNetwork.Controllers
             Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
             Profile prof = await unitOfWork.ProfileRepository.GetByLogin(login);
 
-            EmailSender emailService = new EmailSender();
+            EmailSender emailService = new MailKitSender(provider.STMPConnection);
             if (cred == null && prof == null)
             {
                 await emailService.SendEmailAsync(email, "Confirm email", "http://localhost:5000/api/credential/" + email + "/" + Sha256Service.Convert(email + password));
