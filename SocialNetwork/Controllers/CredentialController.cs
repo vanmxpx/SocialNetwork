@@ -20,7 +20,7 @@ namespace SocialNetwork.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        
+
         [HttpGet("{email}")]
         public async Task<ActionResult> GetByEmail(string email)
         {
@@ -75,7 +75,12 @@ namespace SocialNetwork.Controllers
             if (cred != null)
             {
                 if (hash == Sha256Service.Convert(cred.Email + cred.Password))
+                {
+                    cred.DateRegistration = DateTime.Now;
+                    await unitOfWork.CredentialRepository.Update(cred.Id, cred);
+                    await unitOfWork.Save();
                     return Ok("Yeah it's work");
+                }
                 else
                     return Ok("Broken link");
             }
