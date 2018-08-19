@@ -8,6 +8,7 @@ namespace SocialNetwork.Services.Extentions{
         public static void AddConfigurationProvider(this IServiceCollection services, IConfiguration config){
             IConfigLoader loader = new DafaultConfigLoader();
             provider = loader.GetConfigProvider(config);
+            services.AddSingleton<IConfigProvider>(provider);
         }
 
         public static IConfigProvider GetProvider(this IServiceCollection services){

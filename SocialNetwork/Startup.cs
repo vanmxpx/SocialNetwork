@@ -43,7 +43,7 @@ namespace SocialNetwork
 
 
             services.AddConfigurationProvider(Configuration);
-
+            services.AddDbService(Environment, services.GetProvider());
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -51,7 +51,7 @@ namespace SocialNetwork
                 configuration.RootPath = "client/dist";
             });
 
-            services.AddDbService(Environment,services.GetProvider());
+
 
 
             services.AddSignalR();
@@ -101,7 +101,7 @@ namespace SocialNetwork
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Intitializer ini)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfigProvider provider, Intitializer ini)
         {
             app.UseSignalR(routes =>
             {
@@ -111,14 +111,11 @@ namespace SocialNetwork
             app.UseMvc();
             // //используем аутентификацию
             app.UseAuthentication();
+            app.UseBDScripts(env,provider,ini);
 
             if (Environment.IsDevelopment())
             {
-                // if (Configuration.GetValue<string>("DatabaseDataDeleteFillOption") == "DeleteFill")
-                // {
-                //     ini.DeleteAll().Wait();
-                //     ini.Seed().Wait();
-                // }
+                
 
                 app.UseDeveloperExceptionPage();
 
