@@ -20,6 +20,7 @@ namespace SocialNetwork.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        
         [HttpGet("{email}")]
         public async Task<ActionResult> GetByEmail(string email)
         {
@@ -30,6 +31,7 @@ namespace SocialNetwork.Controllers
                 return new OkObjectResult(Json(Credential));
         }
 
+        [AllowAnonymous]
         [HttpPost("{email}/{Login}/{password}")]
         public async Task<ActionResult> Register(string email, string login, string password)
         {
@@ -40,11 +42,11 @@ namespace SocialNetwork.Controllers
             EmailSender emailService = new EmailSender();
             if (cred == null && prof == null)
             {
-                await emailService.SendEmailAsync(email, "Confirm email", "http://localhost:5000/api/credential/" + email + "\\" + Sha256Service.Convert(email + password));
+                await emailService.SendEmailAsync(email, "Confirm email", "http://localhost:5000/api/credential/" + email + "/" + Sha256Service.Convert(email + password));
 
                 prof = new Profile()
                 {
-                    
+
                     Login = login
                 };
                 cred = new Credential()
@@ -53,9 +55,9 @@ namespace SocialNetwork.Controllers
                     Password = password,
                     Profile = prof
                 };
-                
-               await unitOfWork.ProfileRepository.Create(prof);
-               await unitOfWork.CredentialRepository.Create(cred);
+
+                await unitOfWork.ProfileRepository.Create(prof);
+                await unitOfWork.CredentialRepository.Create(cred);
                 await unitOfWork.Save();
 
                 return Ok("Ok");
@@ -65,6 +67,7 @@ namespace SocialNetwork.Controllers
                 return Ok("Email already exist");
             }
         }
+        [AllowAnonymous]
         [HttpPost("{email}/{hash}")]
         public async Task<ActionResult> ConfirmEmail(string email, string hash)
         {
