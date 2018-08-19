@@ -9,6 +9,7 @@ using SocialNetwork.Configurations;
 
 namespace SocialNetwork.Controllers
 {
+    [Authorize]
     [ApiController]
     [Produces("application/json")]
     [Route("/api/[controller]")]

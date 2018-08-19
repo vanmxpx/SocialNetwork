@@ -4,9 +4,12 @@ using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using SocialNetwork.Services;
 using System;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace SocialNetwork.Controllers
 {
+    [Authorize]
     [Route("/api/[controller]")]
     public class CredentialController : Controller
     {
