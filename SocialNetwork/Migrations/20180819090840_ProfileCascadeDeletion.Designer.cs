@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(ShortyContext))]
-    partial class ShortyContextModelSnapshot : ModelSnapshot
+    [Migration("20180819090840_ProfileCascadeDeletion")]
+    partial class ProfileCascadeDeletion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,7 +160,7 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Credential", "Credential")
                         .WithMany("Authorizations")
                         .HasForeignKey("CredentialRef")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("SocialNetwork.Followings", b =>
@@ -187,7 +189,7 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Credential")
                         .WithOne("Profile")
                         .HasForeignKey("SocialNetwork.Profile", "CredenitialRef")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }
