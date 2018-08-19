@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(ShortyContext))]
-    partial class ShortyContextModelSnapshot : ModelSnapshot
+    [Migration("20180819082741_DeleteCredRef")]
+    partial class DeleteCredRef
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,11 +61,16 @@ namespace SocialNetwork.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(64)");
 
+                    b.Property<int?>("ProfileRef");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasName("Email_UNIQUE");
+
+                    b.HasIndex("ProfileRef")
+                        .IsUnique();
 
                     b.ToTable("credential");
                 });
@@ -117,8 +124,6 @@ namespace SocialNetwork.Migrations
 
                     b.Property<byte?>("Age");
 
-                    b.Property<int>("CredenitialRef");
-
                     b.Property<sbyte>("Gender")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(3)")
@@ -144,9 +149,6 @@ namespace SocialNetwork.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CredenitialRef")
-                        .IsUnique();
-
                     b.HasIndex("Id")
                         .HasName("idProfile_idx");
 
@@ -158,6 +160,14 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Credential", "Credential")
                         .WithMany("Authorizations")
                         .HasForeignKey("CredentialRef")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("SocialNetwork.Credential", b =>
+                {
+                    b.HasOne("SocialNetwork.Profile", "Profile")
+                        .WithOne()
+                        .HasForeignKey("SocialNetwork.Credential", "ProfileRef")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -179,14 +189,6 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Profile", "Profile")
                         .WithMany("Posts")
                         .HasForeignKey("ProfileRef")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("SocialNetwork.Profile", b =>
-                {
-                    b.HasOne("SocialNetwork.Credential")
-                        .WithOne("Profile")
-                        .HasForeignKey("SocialNetwork.Profile", "CredenitialRef")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

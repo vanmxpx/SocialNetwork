@@ -27,11 +27,9 @@ namespace SocialNetwork.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Name == name && e.LastName == lastName);
         }
-        public async Task Delete(int id)
+        public void Delete(Profile profile)
         {
-            var entity = await GetById(id);
-            Context.Set<Profile>().Remove(entity);
-            await Context.SaveChangesAsync();
+            Context.Set<Profile>().Remove(profile);
         }
     }
 }

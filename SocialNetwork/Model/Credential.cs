@@ -15,7 +15,7 @@ namespace SocialNetwork
         public string Password { get; set; }
         public DateTime DateRegistration { get; set; }
 
-        public int ProfileRef { get; set; }
+        //public int ProfileRef { get; set; }
         public Profile Profile { get; set; }
         
         public ICollection<Authorization> Authorizations { get; set; }

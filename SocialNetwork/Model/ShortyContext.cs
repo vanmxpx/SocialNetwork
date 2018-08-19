@@ -46,15 +46,15 @@ namespace SocialNetwork
             {
                 entity.ToTable("credential");
 
-                entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
+                // entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
 
                 entity.HasIndex(e => e.Email)
                     .HasName("Email_UNIQUE")
                     .IsUnique();
 
-                entity.HasIndex(e => e.ProfileRef)
-                    .HasName("ProfileRef_UNIQUE")
-                    .IsUnique();
+                // entity.HasIndex(e => e.ProfileRef)
+                //     .HasName("ProfileRef_UNIQUE")
+                //     .IsUnique();
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -71,7 +71,7 @@ namespace SocialNetwork
 
                 entity.HasOne(d => d.Profile)
                     .WithOne()
-                    .HasForeignKey<Credential>(d => d.ProfileRef)
+                    .HasForeignKey<Profile>(d=> d.CredenitialRef)
                     .OnDelete(DeleteBehavior.Restrict);                 
             });
 
