@@ -12,12 +12,11 @@ namespace SocialNetwork.Tests
     public class ProfileRepositoryTests
     {
         private readonly ProfileRepository repository;
-
-        public  ProfileRepositoryTests()
-        {
+        public  ProfileRepositoryTests(){
             //INITIALIZATION
             this.repository = new ProfileRepository(DbContextCreator.GetDbContext());
-        }
+        }    
+        
 
         [Theory]
         [InlineData(1,"Vestibulum")]
@@ -65,7 +64,7 @@ namespace SocialNetwork.Tests
             //WHEN
             List<Profile> profiles = repository.GetByNameAndLastName(name, lastName).Result;
             //THEN
-            Assert.Equal(null, profiles);
+            Assert.Equal(0, profiles.Count);
         }
 
         [Theory]
