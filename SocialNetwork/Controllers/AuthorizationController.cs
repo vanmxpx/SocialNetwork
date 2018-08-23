@@ -27,6 +27,7 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
+        [AllowAnonymous]
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -64,9 +65,10 @@ namespace SocialNetwork.Controllers
 
             await unitOfWork.AuthorizationRepository.Create(authorization);
 
-            return Ok(new { Token=new TokenFactory(appSettings, credential).GetStringToken() });
+            return Ok(new { Token = new TokenFactory(appSettings, credential).GetStringToken() });
         }
 
+        [AllowAnonymous]
         [HttpDelete("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -81,6 +83,7 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]

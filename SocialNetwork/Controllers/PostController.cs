@@ -21,6 +21,7 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/posts/79
+        [AllowAnonymous]
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Post))]
         [ProducesResponseType(404)]
@@ -35,6 +36,7 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/posts/?authorId=2
+        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
         [ProducesResponseType(404)]
@@ -53,6 +55,7 @@ namespace SocialNetwork.Controllers
         }
 
         // POST api/posts
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> AddPost([FromBody]Post post)
         {
@@ -62,6 +65,7 @@ namespace SocialNetwork.Controllers
         }
 
         // DELETE api/posts/100
+        [AllowAnonymous]
         [HttpDelete("{id}")]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]

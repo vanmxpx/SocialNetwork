@@ -18,6 +18,7 @@ namespace SocialNetwork.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [AllowAnonymous]
         [HttpGet("{email}")]
         public async Task<ActionResult> GetByEmail(string email)
         {
