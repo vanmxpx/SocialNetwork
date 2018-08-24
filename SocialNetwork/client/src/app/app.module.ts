@@ -14,6 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -36,7 +37,8 @@ import { AppRoutingModule } from './app-routing.module';
     MatTabsModule,
     MatListModule,
     AppRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
