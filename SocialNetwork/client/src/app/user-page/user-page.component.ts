@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { PostService } from '../post.service';
 import { Profile } from '../models/profile';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { Post } from '../models/post';
 import { ProfileService } from '../profile.service';
@@ -42,7 +42,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof UserPageComponent) {
+      if (e instanceof NavigationEnd) {
         this.initialiseInvites();
       }
     });

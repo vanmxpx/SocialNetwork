@@ -14,3 +14,9 @@
     height: 52px;
     width: 52px;
 }
+
+.button-row
+{
+  margin-left: 10%;
+  margin-right: 3%;
+}
