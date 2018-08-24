@@ -8,11 +8,17 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class PostService {
-  getPosts(profileId:number): Observable<Post[]> {
-    return this.http.get<Post[]>("http://localhost:5000/api/posts?authorId="+profileId.toString());
+  getPosts(profileId: number): Observable<Post[]> {
+    return this.http.get<Post[]>("http://localhost:5000/api/posts?authorId=" + profileId.toString());
   }
   getProfile(): Observable<Profile> {
     return this.http.get<Profile>("http://localhost:5000/api/profiles/24");
+  }
+  getSubscribers(profileId: number): Observable<Profile[]> {
+    return this.http.get<Profile[]>("http://localhost:5000/api/followings/subscribers/?id=" + profileId.toString());
+  }
+  getBloggers(profileId: number): Observable<Profile[]> {
+    return this.http.get<Profile[]>("http://localhost:5000/api/followings/bloggers/?id=" + profileId.toString());
   }
   constructor(private http: HttpClient) { }
 }

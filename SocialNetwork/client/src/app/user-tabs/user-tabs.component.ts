@@ -9,15 +9,15 @@ import { PostService } from '../post.service';
 })
 export class UserTabsComponent implements OnInit {
   @Input()profile: Profile;
-  followersList: Profile[];
-  followingsList: Profile[];
-  getFollowers(): void {
-    this.postService.getPosts(this.profile.id)
-      .subscribe(posts => this.posts = posts);
+  subscribers: Profile[];
+  bloggers: Profile[];
+  getSubscribers(): void {
+    this.postService.getSubscribers(this.profile.id)
+      .subscribe(profiles => this.subscribers = profiles);
   }
-  getFollowings(): void {
-    this.postService.getPosts(this.profile.id)
-      .subscribe(posts => this.posts = posts);
+  getBloggers(): void {
+    this.postService.getBloggers(this.profile.id)
+      .subscribe(profiles => this.bloggers = profiles);
   }
   constructor(private postService: PostService) { }
 
@@ -25,7 +25,8 @@ export class UserTabsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.getPosts();
+    this.getSubscribers();
+    this.getBloggers();
   }
 
 }

@@ -10,7 +10,9 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { FollowersComponent } from './followers/followers.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { UserTabsComponent } from './user-tabs/user-tabs.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatListModule } from '@angular/material/list';
+import { AppRoutingModule } from './/app-routing.module';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import {MatTabsModule} from '@angular/material/tabs';
     HeaderComponent,
     BrowserAnimationsModule,
     MatGridListModule,
-    MatTabsModule
+    MatTabsModule,
+    MatListModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,14 +4,14 @@
       <app-post [profile]="profile"></app-post>
     </ng-template>
   </mat-tab>
-  <mat-tab label="Following">
+  <mat-tab label="Subscribers">
     <ng-template matTabContent>
-      <app-followers></app-followers>
+      <app-followers [profiles]="subscribers"></app-followers>
     </ng-template>
   </mat-tab>
-  <mat-tab label="Followers">
+  <mat-tab label="Bloggers">
     <ng-template matTabContent>
-      <app-followers></app-followers>
+      <app-followers [profiles]="bloggers"></app-followers>
     </ng-template>
   </mat-tab>
 </mat-tab-group>
