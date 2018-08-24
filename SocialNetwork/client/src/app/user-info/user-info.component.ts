@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { PostService } from '../post.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { Profile } from '../models/profile';
-
-
 
 @Component({
   selector: 'app-user-info',
@@ -10,15 +7,9 @@ import { Profile } from '../models/profile';
   styleUrls: ['./user-info.component.scss']
 })
 export class UserInfoComponent implements OnInit {
-  profile: Profile;
-  getProfile(): void{
-    this.postService.getProfile()
-    .subscribe(profile => this.profile = profile);
-  }
-  constructor(private postService: PostService) { }
+  @Input()profile: Profile;
+  constructor() { }
 
   ngOnInit() {
-    this.getProfile();
   }
-
 }

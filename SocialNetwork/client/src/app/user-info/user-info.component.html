@@ -4,7 +4,7 @@
   </mat-card-header>
   <mat-card-content>
     <img src="./assets/img/user-full.jpg">
-    <h1>{{profile.name}}  {{profile.lastName}}</h1>
+    <h1><span>{{this.profile.name}}</span> <span>{{this.profile.lastName}}</span></h1>
     <p>Login: <span>{{profile.login}}</span></p>
     <h2>About me:</h2>
     <p>{{profile.location}}</p>
@@ -12,5 +12,3 @@
   <mat-card-actions>
   </mat-card-actions>
 </mat-card>
-
-<app-post [profileId]="profile.id"></app-post>

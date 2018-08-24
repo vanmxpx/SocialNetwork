@@ -38,7 +38,7 @@ import {
 
 export class HeaderComponent {
 
-  @Input()
+@Input()
 color: ThemePalette
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

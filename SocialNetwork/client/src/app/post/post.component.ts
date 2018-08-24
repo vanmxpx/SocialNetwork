@@ -9,15 +9,19 @@ import { Profile } from '../models/profile';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
-  @Input() profileId: number;
+  @Input() profile: Profile;
   posts: Post[];
   getPosts(): void {
-    this.postService.getPosts(this.profileId)
+    this.postService.getPosts(this.profile.id)
       .subscribe(posts => this.posts = posts);
   }
   constructor(private postService: PostService) { }
 
   ngOnInit() {
+    
+  }
+
+  ngAfterViewInit() {
     this.getPosts();
   }
 
