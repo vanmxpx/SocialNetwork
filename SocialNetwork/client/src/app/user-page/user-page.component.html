@@ -1,4 +1,27 @@
-<mat-grid-list cols="4" >
-  <mat-grid-tile><app-user-info [profile]="profile"></app-user-info></mat-grid-tile>
-  <mat-grid-tile colspan=3><app-user-tabs [profile]="profile" [posts]="posts"></app-user-tabs></mat-grid-tile>
-</mat-grid-list>
+<div fxLayout="row" fxLayoutAlign="space-evenly">
+  <div fxFlex="20"><app-user-info [profile]="profile"></app-user-info></div>
+  <div fxFlex="80"><app-user-tabs [profile]="profile" [posts]="posts"></app-user-tabs></div>
+</div>
+
+<!-- <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+  <mat-card class="card-picture">
+    <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+      <span fxFlex="80%">picture.title</span>
+      <mat-icon fxFlex="10%">mode_edit</mat-icon>
+      <mat-icon fxFlex="10%">delete</mat-icon>
+    </mat-card-title>
+    <img mat-card-image [src]="picture.img">
+  </mat-card>
+</div> -->
+
+<!-- <div id="layoutContainer" ng-controller="layoutController as ctrl" style="height:100px;" ng-cloak>
+  <div layout="row" layout-xs="column">
+    <div flex class="green box">Row 1: Item 1</div>
+    <div flex="20" class="blue box">Row 1: Item 2</div>
+  </div>
+
+  <div layout="column" layout-xs="column">
+    <div flex="33" class="green box">Column 1: item 1</div>
+    <div flex="66" class="blue box">Column 1: item 2</div>
+  </div>
+</div> -->

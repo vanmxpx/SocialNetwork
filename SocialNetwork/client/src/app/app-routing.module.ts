@@ -5,13 +5,17 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/profile/quis', pathMatch: 'full' },
-  { path: 'profile/:login', component: UserPageComponent },
+  { path: '', redirectTo: 'profile/quis', pathMatch: 'full',  runGuardsAndResolvers: 'always' },
+  {
+    path: 'profile/:login',
+    component: UserPageComponent,
+    runGuardsAndResolvers: 'always'
+  }
 ];
 
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

@@ -12,7 +12,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { UserTabsComponent } from './user-tabs/user-tabs.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 
 
@@ -35,7 +35,8 @@ import { AppRoutingModule } from './app-routing.module';
     MatGridListModule,
     MatTabsModule,
     MatListModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
