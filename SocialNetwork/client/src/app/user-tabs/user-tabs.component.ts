@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Profile } from '../models/profile';
 import { PostService } from '../post.service';
+import { Post } from '../models/post';
 
 @Component({
   selector: 'app-user-tabs',
@@ -8,7 +9,8 @@ import { PostService } from '../post.service';
   styleUrls: ['./user-tabs.component.scss']
 })
 export class UserTabsComponent implements OnInit {
-  @Input()profile: Profile;
+  @Input() profile: Profile;
+  @Input() posts: Post[];
   subscribers: Profile[];
   bloggers: Profile[];
   getSubscribers(): void {

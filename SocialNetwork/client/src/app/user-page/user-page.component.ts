@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { PostService } from '../post.service';
 import { Profile } from '../models/profile';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { Post } from '../models/post';
 
 @Component({
   selector: 'app-user-page',
@@ -10,16 +13,34 @@ import { Profile } from '../models/profile';
 })
 export class UserPageComponent implements OnInit {
   profile: Profile;
+  posts: Post[];
+  login: string;
+  gridHeight: number;
   getProfile(): void {
-    this.postService.getProfile()
+    this.login = this.route.snapshot.paramMap.get('login');
+    this.postService.getProfile(this.login)
       .subscribe(profile => this.profile = profile);
+  }
+  getPosts(): void {
+    this.postService.getPosts(this.profile.id)
+      .subscribe(posts => this.posts = posts);
+    this.gridHeight = this.posts.length*100;
   }
   @Input() color: ThemePalette;
 
-  constructor(private postService: PostService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private postService: PostService
+  ) { }
 
   ngOnInit() {
     this.getProfile();
+    
+  }
+
+  ngAfterViewInit() {
+    this.getPosts();
   }
 
 }

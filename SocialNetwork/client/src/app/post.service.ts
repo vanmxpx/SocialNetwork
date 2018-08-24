@@ -11,8 +11,8 @@ export class PostService {
   getPosts(profileId: number): Observable<Post[]> {
     return this.http.get<Post[]>("http://localhost:5000/api/posts?authorId=" + profileId.toString());
   }
-  getProfile(): Observable<Profile> {
-    return this.http.get<Profile>("http://localhost:5000/api/profiles/24");
+  getProfile(login: string): Observable<Profile> {
+    return this.http.get<Profile>("http://localhost:5000/api/profiles/login/?login=" + login);
   }
   getSubscribers(profileId: number): Observable<Profile[]> {
     return this.http.get<Profile[]>("http://localhost:5000/api/followings/subscribers/?id=" + profileId.toString());
