@@ -5,6 +5,7 @@ import { Profile } from '../models/profile';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Post } from '../models/post';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-user-page',
@@ -18,7 +19,7 @@ export class UserPageComponent implements OnInit {
   gridHeight: number;
   getProfile(): void {
     this.login = this.route.snapshot.paramMap.get('login');
-    this.postService.getProfile(this.login)
+    this.profileService.getProfile(this.login)
       .subscribe(profile => this.profile = profile);
   }
   getPosts(): void {
@@ -31,7 +32,8 @@ export class UserPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private postService: PostService
+    private postService: PostService,
+    private profileService: ProfileService
   ) { }
 
   ngOnInit() {
