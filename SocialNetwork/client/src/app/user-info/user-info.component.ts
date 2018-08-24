@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { PostService } from '../post.service';
+import { Profile } from '../models/profile';
+
+
 
 @Component({
   selector: 'app-user-info',
@@ -6,13 +10,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-info.component.scss']
 })
 export class UserInfoComponent implements OnInit {
-  name: string = "John";
-  lastName: string = "Doe";
-  login: string = "jestro";
-  userInfo: string = "yyyyyyyy djglkdjklgjlfkdjglkjfldkgjlk fgkdgjkldfjglkjdfklgjklfjdgkljdfkljgk;ldfjgijerioghklchjd  gdfghkdfjglk dfjglkdfj lkjdfg kljfgkl jdfkljglkdfjgklj dflkjgkl djfgkl jdlfkgj lkf gjlkgdj lkdfj lkjdf lkjg dlkjg lkdf";
-  constructor() { }
+  profile: Profile;
+  getProfile(): void{
+    this.postService.getProfile()
+    .subscribe(profile => this.profile = profile);
+  }
+  constructor(private postService: PostService) { }
 
   ngOnInit() {
+    this.getProfile();
   }
 
 }
