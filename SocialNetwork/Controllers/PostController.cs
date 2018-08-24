@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
+using AutoMapper;
 
 namespace SocialNetwork.Controllers
 {
@@ -14,10 +15,12 @@ namespace SocialNetwork.Controllers
     public class PostsController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public PostsController(IUnitOfWork unitOfWork)
+        public PostsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         // GET api/posts/79
@@ -25,12 +28,13 @@ namespace SocialNetwork.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Post))]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Post>> GetPostById(int id)
+        public async Task<ActionResult<PostDto>> GetPostById(int id)
         {
             var post = await unitOfWork.PostRepository.GetById(id);
             if (post != null)
             {
-                return new OkObjectResult(post);
+                var postDto = mapper.Map<PostDto>(post);
+                return new OkObjectResult(postDto);
             }
             return NotFound();
         }
