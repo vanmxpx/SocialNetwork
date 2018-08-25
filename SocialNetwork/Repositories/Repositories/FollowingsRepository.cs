@@ -19,6 +19,7 @@ namespace SocialNetwork.Repositories
             return await Context.Set<Followings>()
                 .AsNoTracking()
                 .Where(e => e.BloggerRef == idBloger)
+                .Include(s=> s.Subscriber)
                 .ToListAsync();
         }
         public async Task<List<Followings>> GetBlogersById(int idSuscriber)
@@ -26,6 +27,7 @@ namespace SocialNetwork.Repositories
             return await Context.Set<Followings>()
                 .AsNoTracking()
                 .Where(e => e.SubscriberRef == idSuscriber)
+                .Include(b=>b.Blogger)
                 .ToListAsync();
         }
 

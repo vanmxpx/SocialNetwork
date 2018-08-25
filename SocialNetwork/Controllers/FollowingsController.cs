@@ -29,7 +29,7 @@ namespace SocialNetwork.Controllers
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<ICollection<Profile>>> GetBloggersByProfileId([FromQuery]int id)
+        public async Task<ActionResult<ICollection<ProfileDto>>> GetBloggersByProfileId([FromQuery]int id)
         {
             if (id != 0)
             {
@@ -39,9 +39,9 @@ namespace SocialNetwork.Controllers
                 {
                     foreach (Followings following in followings)
                     {
-                        bloggers.Add(await unitOfWork.ProfileRepository.GetById(following.BloggerRef));
+                        bloggers.Add(following.Blogger);
                     }
-                    return new OkObjectResult(bloggers);
+                    return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(bloggers));
                 }
                 return NotFound();
             }
@@ -64,9 +64,9 @@ namespace SocialNetwork.Controllers
                 {
                     foreach (Followings following in followings)
                     {
-                        subscribers.Add(await unitOfWork.ProfileRepository.GetById(following.SubscriberRef));
+                        subscribers.Add(following.Subscriber);
                     }
-                    return new OkObjectResult(subscribers);
+                    return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(subscribers));
                 }
                 return NotFound();
             }
