@@ -33,7 +33,7 @@ namespace SocialNetwork.Controllers
             var post = await unitOfWork.PostRepository.GetById(id);
             if (post != null)
             {
-                var postDto = mapper.Map<PostDto>(post);
+                var postDto = mapper.Map<Post, PostDto>(post);
                 return new OkObjectResult(postDto);
             }
             return NotFound();
@@ -44,14 +44,14 @@ namespace SocialNetwork.Controllers
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<ICollection<Post>>> GetAllPostByAuthor([FromQuery]int authorId)
+        public async Task<ActionResult<ICollection<PostDto>>> GetAllPostByAuthor([FromQuery]int authorId)
         {
             if (authorId != 0)
             {
                 var posts = await unitOfWork.PostRepository.GetByAuthorId(authorId);
                 if (posts != null)
                 {
-                    return new OkObjectResult(posts);
+                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
                 }
                 return NotFound();
             }
