@@ -12,11 +12,10 @@ import { ProfileService } from '../profile.service';
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.scss']
 })
-export class UserPageComponent implements OnInit, OnDestroy {
+export class UserPageComponent implements OnInit {
   profile: Profile;
   posts: Post[];
   login: string;
-  navigationSubscription;
   getProfile(): void {
     this.login = this.route.snapshot.paramMap.get('login');
     this.profileService.getProfile(this.login)
@@ -37,13 +36,17 @@ export class UserPageComponent implements OnInit, OnDestroy {
     private postService: PostService,
     private profileService: ProfileService
   ) {
-    // subscribe to the router events - storing the subscription so
-    // we can unsubscribe later. 
+    // override the route reuse strategy
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    }
 
-    this.navigationSubscription = this.router.events.subscribe((e: any) => {
-      // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof NavigationEnd) {
-        this.initialiseInvites();
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+        // if you need to scroll back to top, here is the right place
+        window.scrollTo(0, 0);
       }
     });
   }
@@ -59,14 +62,4 @@ export class UserPageComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     this.getPosts();
   }
-
-  ngOnDestroy() {
-    // avoid memory leaks here by cleaning up after ourselves. If we  
-    // don't then we will continue to run our initialiseInvites()   
-    // method on every navigationEnd event.
-    if (this.navigationSubscription) {
-      this.navigationSubscription.unsubscribe();
-    }
-  }
-
 }
