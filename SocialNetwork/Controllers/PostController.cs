@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -52,6 +53,36 @@ namespace SocialNetwork.Controllers
                 if (posts != null)
                 {
                     return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
+                }
+                return NotFound();
+            }
+            return NotFound();
+        }
+
+
+        // GET api/posts/news/?id=2
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("news")]
+        [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ICollection<PostDto>>> GetNewsById([FromQuery]int id)
+        {
+            if (id != 0)
+            {
+                List<Followings> followings = await unitOfWork.FollowingsRepository.GetBlogersByIdWithPosts(id);
+                List<Post> posts = new List<Post>();
+                if (followings != null)
+                {
+                    foreach (Followings following in followings)
+                    {
+                        posts.AddRange(following.Blogger.Posts);
+                    }
+                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(
+                        posts
+                        .OrderByDescending(p => p.Datetime)
+                        .Take(100)
+                        .ToList()));
                 }
                 return NotFound();
             }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Profile } from '../models/profile';
 import { ProfileService } from '../profile.service';
+import { PostService } from '../post.service';
 import { Post } from '../models/post';
 
 @Component({
@@ -10,7 +11,8 @@ import { Post } from '../models/post';
 })
 export class UserTabsComponent implements OnInit {
   @Input() profile: Profile;
-  @Input() posts: Post[];
+  posts: Post[];
+  news: Post[];
   subscribers: Profile[];
   bloggers: Profile[];
   getSubscribers(): void {
@@ -21,14 +23,25 @@ export class UserTabsComponent implements OnInit {
     this.profileService.getBloggers(this.profile.id)
       .subscribe(profiles => this.bloggers = profiles);
   }
-  constructor(private profileService: ProfileService) { }
+  getPosts(): void {
+    this.postService.getPosts(this.profile.id)
+      .subscribe(posts => this.posts = posts);
+  }
+  getNews(): void {
+    this.postService.getNews(this.profile.id)
+      .subscribe(news => this.news = news);
+  }
+  constructor(
+    private profileService: ProfileService,
+    private postService: PostService) { }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
+    this.getPosts();
     this.getSubscribers();
     this.getBloggers();
+    this.getNews();
   }
-
 }
