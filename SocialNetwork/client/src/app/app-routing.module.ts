@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   { path: '', redirectTo: 'profile/quis', pathMatch: 'full',  runGuardsAndResolvers: 'always' },
   { path: 'profile/:login', component: UserPageComponent, runGuardsAndResolvers: 'always'},
-  { path: 'login', component: LoginComponent}
+  { path: 'authorizations', component: LoginComponent}
 ];
 
 

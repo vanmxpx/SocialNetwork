@@ -8,30 +8,31 @@ export class AlertService {
     private keepAfterNavigationChange = false;
 
     constructor(private router: Router) {
-        // clear alert message on route change
+        // очистить сообщение об изменении маршрута
         router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
                 if (this.keepAfterNavigationChange) {
-                    // only keep for a single location change
+                    // сохранить только одно изменение местоположения
                     this.keepAfterNavigationChange = false;
                 } else {
-                    // clear alert
+                    // удаляем сообщение
                     this.subject.next();
                 }
             }
         });
     }
 
+    //callback функция при удачи
     success(message: string, keepAfterNavigationChange = false) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'success', text: message });
     }
-
+    //callback функция при неудачи
     error(message: string, keepAfterNavigationChange = false) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'error', text: message });
     }
-
+    
     getMessage(): Observable<any> {
         return this.subject.asObservable();
     }

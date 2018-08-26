@@ -15,7 +15,7 @@ namespace SocialNetwork.Controllers
     //http://localhost:5000/api/authorizations/ - test url
     [Authorize]
     [ApiController]
-    [Route("/api/login")]
+    [Route("/api/[controller]")]
     public class AuthorizationsController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;

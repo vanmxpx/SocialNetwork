@@ -8,20 +8,21 @@ export class AuthenticationService {
     constructor(private http: HttpClient) { }
  
     login(username: string, password: string) {
-        return this.http.post<any>(`${environment.apiUrl}/authorizations`, { username: username, password: password })
+
+        //FIXME: fix logic always false
+        return this.http.post<any>(`${environment.apiUrl}/api/authorizations/`, { email: username, password: password })
             .pipe(map(user => {
-                // login successful if there's a jwt token in the response
+                // login успешно, если в ответе есть токен jwt
                 if (user && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }
- 
+                    //сохраняем токен jwt в локальном хранилище
+                    localStorage.setItem('user', JSON.stringify(user.token));
+                } 
                 return user;
             }));
     }
  
     logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        // удаляем токен для выхода из системы
+        localStorage.removeItem('user');
     }
 }
