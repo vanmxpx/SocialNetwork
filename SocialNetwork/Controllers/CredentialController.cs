@@ -28,10 +28,5 @@ namespace SocialNetwork.Controllers
             else
             return new OkObjectResult(Json(Credential));
         }
-
-
-
-
-
     }
 }

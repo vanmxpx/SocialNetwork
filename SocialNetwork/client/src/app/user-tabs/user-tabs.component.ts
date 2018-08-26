@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Profile } from '../models/profile';
-import { ProfileService } from '../profile.service';
-import { PostService } from '../post.service';
+import { ProfileService } from '../services/profile.service';
+import { PostService } from '../services/post.service';
 import { Post } from '../models/post';
 
 @Component({

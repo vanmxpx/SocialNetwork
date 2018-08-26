@@ -7,7 +7,7 @@ using AutoMapper;
 
 namespace SocialNetwork.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [ApiController]
     [Produces("application/json")]
     [Route("/api/[controller]")]
@@ -23,7 +23,6 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/profiles/{id}
-        [AllowAnonymous]
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Profile))]
         [ProducesResponseType(404)]
@@ -38,7 +37,6 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/profiles/login/?{login}
-        [AllowAnonymous]
         [HttpGet]
         [Route("login")]
         [ProducesResponseType(200, Type = typeof(Profile))]
@@ -55,7 +53,6 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/profiles/name/?{name}&{lastName}
-        [AllowAnonymous]
         [HttpGet]
         [Route("name")]
         [ProducesResponseType(200, Type = typeof(Profile))]

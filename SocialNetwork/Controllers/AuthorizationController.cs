@@ -15,7 +15,7 @@ namespace SocialNetwork.Controllers
     //http://localhost:5000/api/authorizations/ - test url
     [Authorize]
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("/api/login")]
     public class AuthorizationsController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
@@ -27,7 +27,7 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -68,7 +68,7 @@ namespace SocialNetwork.Controllers
             return Ok(new { Token = new TokenFactory(appSettings, credential).GetStringToken() });
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -83,7 +83,7 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
