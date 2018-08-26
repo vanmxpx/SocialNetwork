@@ -15,6 +15,9 @@ import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import { MatMenuModule } from '@angular/material/menu';
+import { RegistrationComponent } from './registration-form/registration-form.component';
+import { MatInputModule, MatButtonModule, MatCardModule, MatIconModule} from '@angular/material';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
 
 
@@ -26,7 +29,8 @@ import { MatMenuModule } from '@angular/material/menu';
     PostComponent,
     UserPageComponent,
     FollowersComponent,
-    UserTabsComponent
+    UserTabsComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,7 +42,13 @@ import { MatMenuModule } from '@angular/material/menu';
     MatListModule,
     AppRoutingModule,
     FlexLayoutModule,
-    MatMenuModule
+    MatMenuModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule, 
+    MatIconModule, 
+    FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
