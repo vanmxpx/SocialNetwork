@@ -10,7 +10,7 @@ const routes: Routes = [
     path: 'profile/:login',
     component: UserPageComponent,
     runGuardsAndResolvers: 'always'
-  }
+  },
 ];
 
 
