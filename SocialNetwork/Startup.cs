@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,12 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using SocialNetwork.SignalRChatHub;
+using AutoMapper;
+using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 
 namespace SocialNetwork
 {
@@ -41,6 +47,7 @@ namespace SocialNetwork
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddAutoMapper();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -60,17 +67,59 @@ namespace SocialNetwork
             services.AddSignalR();
 
             services.AddTransient<Intitializer>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();     
+            services.AddTransient<IUnitOfWork, UnitOfWork>();        
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+            
+            // конфигурация jwt аутентификации
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var credentialRepository = context.HttpContext.RequestServices
+                            .GetRequiredService<IUnitOfWork>().CredentialRepository;
+                        var Id = int.Parse(context.Principal.Identity.Name);
+                        var profile = credentialRepository.GetById(Id);
+                        if (profile == null)
+                        {
+                            // return unauthorized if user no longer exists
+                            context.Fail("Unauthorized");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });   
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, Intitializer ini)
+        public void Configure(IApplicationBuilder app,IHostingEnvironment env, Intitializer ini)
         {
             app.UseSignalR(routes =>
             {
                 routes.MapHub< ChatHub>("/chatHub");
             });
-            app.UseMvc();
+
+            app.UseAuthentication();// //используем аутентификацию
+            app.UseMvc();            
             
             if (Environment.IsDevelopment())
             {
@@ -111,7 +160,7 @@ namespace SocialNetwork
 
                 spa.Options.SourcePath = "client";
 
-                if (Environment.IsDevelopment())
+                if (env.IsDevelopment())
                 {
                     // Первый вариант запустит новое Angular приложение, второй же подключится по ссылке к уже существующему.
                     // Удобно использовать 2ой вариант, потому что два отдельно запущеных приложения клиента/сервера можно одновременно дебажить.
