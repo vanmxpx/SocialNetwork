@@ -48,7 +48,7 @@ namespace SocialNetwork.Controllers
             if (prof != null)
                 return Ok("The Login already exist");
 
-            int timeout = 4000;
+            int timeout = provider.STMPConnection.TimeOut;
             var task = emailService.SendConfirmEmailAsync(email,password);
             if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
             {

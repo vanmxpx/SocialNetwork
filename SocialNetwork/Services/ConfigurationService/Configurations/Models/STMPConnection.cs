@@ -8,5 +8,6 @@ namespace SocialNetwork.Configurations
         public int Port { get; set; }
         public bool UseSSL { get; set; }
         public string CompanyName { get; set; }
+        public int TimeOut { get; set; }
     }
 }
