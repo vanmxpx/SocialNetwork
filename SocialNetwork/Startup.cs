@@ -11,6 +11,9 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using SocialNetwork.SignalRChatHub;
+using SocialNetwork.Services;
+using SocialNetwork.Configurations;
+using SocialNetwork.Services.Extentions;
 using AutoMapper;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
@@ -31,47 +34,34 @@ namespace SocialNetwork
         public IConfiguration Configuration { get; }
         public IHostingEnvironment Environment { get; }
 
-        private void AddDatabaseConnection(IServiceCollection services, string connection)
-        {
-            services.AddDbContextPool<ShortyContext>( // replace "YourDbContext" with the class name of your DbContext
-                options => options.UseMySql(Configuration.GetConnectionString("LocalDatabase"), // replace with your Connection String
-                    mysqlOptions =>
-                    {
-                        mysqlOptions.ServerVersion(new Version(8, 0, 12), ServerType.MySql); // replace with your Server Version and Type
-                    }
-            ));
-        }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddAutoMapper();
+            services.AddAutoMapper();
+
+
+            services.AddConfigurationProvider(Configuration);
+            services.AddDbService(Environment, services.GetProvider());
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "client/dist";                
+                configuration.RootPath = "client/dist";
             });
 
-            if (Environment.IsDevelopment())
-            {
-                AddDatabaseConnection(services, "LocalDatabase");
-            }
-            else
-            {
-                AddDatabaseConnection(services, "RemoteDatabase");
-            }
+
+
 
             services.AddSignalR();
 
             services.AddTransient<Intitializer>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();        
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-            
+
             // конфигурация jwt аутентификации
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
@@ -107,28 +97,27 @@ namespace SocialNetwork
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
-            });   
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,IHostingEnvironment env, Intitializer ini)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfigProvider provider, Intitializer ini)
         {
             app.UseSignalR(routes =>
             {
-                routes.MapHub< ChatHub>("/chatHub");
+                routes.MapHub<ChatHub>("/chatHub");
             });
 
             app.UseAuthentication(); //используем аутентификацию
-            app.UseMvc();            
-            
+            app.UseMvc();
+
+            app.UseBDScripts(env, provider, ini);
+
+
             if (Environment.IsDevelopment())
             {
-                if(Configuration.GetValue<string>("DatabaseDataDeleteFillOption")=="DeleteFill")
-                {
-                    ini.DeleteAll().Wait();
-                    ini.Seed().Wait();
-                }
-                
+
+
                 app.UseDeveloperExceptionPage();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
