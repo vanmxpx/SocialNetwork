@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
 using SocialNetwork.Configurations;
+using System;
 
 namespace SocialNetwork.Services
 {
     public abstract class EmailSender
     {
         protected  ISTMPConnection settings;
+        public abstract event Action<bool> Finalize;
         public EmailSender(ISTMPConnection settings)
         {
             this.settings = settings;

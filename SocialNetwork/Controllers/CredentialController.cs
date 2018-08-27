@@ -15,7 +15,7 @@ namespace SocialNetwork.Controllers
     public class CredentialController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly IConfigProvider provider; 
+        private readonly IConfigProvider provider;
 
         public CredentialController(IUnitOfWork unitOfWork, IConfigProvider provider)
         {
@@ -35,21 +35,28 @@ namespace SocialNetwork.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("{email}/{Login}/{password}")]
-        public async Task<ActionResult> Register(string email, string login, string password)
+        [HttpPost("{email}/{Login}/{password}/{name}/{lastName}")]
+        public async Task<IActionResult> Register(string email, string login, string password, string name = null, string lastName = null)
         {
 
             Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
             Profile prof = await unitOfWork.ProfileRepository.GetByLogin(login);
-
             EmailSender emailService = new MailKitSender(provider.STMPConnection);
-            if (cred == null && prof == null)
+
+            if (cred != null)
+                return Ok("The Email already exist");
+            if (prof != null)
+                return Ok("The Login already exist");
+
+            int timeout = 4000;
+            var task = emailService.SendEmailAsync(email, "Confirm email", "http://localhost:5000/api/credential/" + email + "/" + Sha256Service.Convert(email + password));
+            if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
             {
-                await emailService.SendEmailAsync(email, "Confirm email", "http://localhost:5000/api/credential/" + email + "/" + Sha256Service.Convert(email + password));
+                if (task.IsFaulted)
+                    return Ok("Incorrect email");
 
                 prof = new Profile()
                 {
-
                     Login = login
                 };
                 cred = new Credential()
@@ -59,17 +66,30 @@ namespace SocialNetwork.Controllers
                     Profile = prof
                 };
 
+                if (name != null)
+                    prof.Name = name;
+                if (lastName != null)
+                    prof.LastName = name;
+
                 await unitOfWork.ProfileRepository.Create(prof);
                 await unitOfWork.CredentialRepository.Create(cred);
                 await unitOfWork.Save();
 
                 return Ok("Ok");
+
             }
             else
             {
-                return Ok("Email already exist");
+                return Ok("TimeOut");
             }
+
+
+
+
         }
+
+
+
         [AllowAnonymous]
         [HttpPost("{email}/{hash}")]
         public async Task<ActionResult> ConfirmEmail(string email, string hash)
