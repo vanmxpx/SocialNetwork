@@ -18,6 +18,7 @@ namespace SocialNetwork.Repositories
         {
             return await Context.Set<Post>()
                 .AsNoTracking()
+                .Include(p=>p.Profile)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
         public async Task<List<Post>> GetByAuthorId(int id)
@@ -25,6 +26,7 @@ namespace SocialNetwork.Repositories
             return await Context.Set<Post>()
                 .AsNoTracking()
                 .Where(e => e.ProfileRef == id)
+                .Include(p=>p.Profile)
                 .ToListAsync();
         }
 

@@ -15,6 +15,7 @@ namespace SocialNetwork.Repositories
         private ProfileRepository profileRepository;
         private CredentialRepository credentialRepository;
         private AuthorizationRepository authorizationRepository;
+        private FollowingsRepository followingsRepository;
 
         public PostRepository PostRepository
         {
@@ -61,6 +62,18 @@ namespace SocialNetwork.Repositories
                     this.credentialRepository = new CredentialRepository(context);
                 }
                 return credentialRepository;
+            }
+        }
+
+        public FollowingsRepository FollowingsRepository
+        {
+            get
+            {
+                if (this.followingsRepository == null)
+                {
+                    this.followingsRepository = new FollowingsRepository(context);
+                }
+                return followingsRepository;
             }
         }
 

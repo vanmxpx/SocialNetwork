@@ -23,7 +23,7 @@ namespace SocialNetwork.Controllers
             this.provider = provider;
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{email}")]
         public async Task<ActionResult> GetByEmail(string email)
         {

@@ -1,0 +1,54 @@
+<div class="wrapper ">
+  <mat-card fxFlex>
+    <h1>Registration</h1>
+    <form class="formwidth" (ngSubmit)="onSubmit()" #myForm="ngForm">
+      <div *ngIf="showEmailNotification" class="tn-box tn-box-color-1">
+          <p>We just sent a confirmation letter to your email </p>
+          <div class="tn-progress"></div>
+      </div>
+      <table class="fullwidth" cellspacing="0">
+        <tr>
+            <td>
+              <mat-form-field class="fullwidth">
+                <input matInput placeholder="Login" name="login" [formControl]="loginValidator" required>
+                <mat-error *ngIf="loginValidator.invalid">{{getLoginErrorMessage()}}</mat-error>
+              </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <mat-form-field class="fullwidth">
+                <input matInput placeholder="Email" name="email" [formControl]="emailValidator"  required>
+                <mat-error *ngIf="emailValidator.invalid">{{getEmailErrorMessage()}}</mat-error>
+              </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+          <td>
+              <mat-form-field>
+                  <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'" [formControl]="passwordValidator" required>
+                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                  <mat-error *ngIf="passwordValidator.invalid">{{getPasswordErrorMessage()}}</mat-error>
+              </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="fullwidth">
+              <input matInput placeholder="First Name" id="firstname" [(ngModel)]="user.firstname" name="firstname">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="fullwidth">
+              <input matInput placeholder="Last Name" id="lastname" [(ngModel)]="user.lastname" name="lastname">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      
+      <p>
+        <button class="fire-check" type="submit" mat-raised-button color="primary"> Sign up</button>
+      </p>
+    </form>
+  </mat-card>
+</div>

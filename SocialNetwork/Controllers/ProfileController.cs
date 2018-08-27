@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
+using AutoMapper;
 
 namespace SocialNetwork.Controllers
 {
@@ -13,13 +14,16 @@ namespace SocialNetwork.Controllers
     public class ProfilesController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public ProfilesController(IUnitOfWork unitOfWork)
+        public ProfilesController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         //http://localhost:5000/api/profiles/{id}
+        [AllowAnonymous]
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Profile))]
         [ProducesResponseType(404)]
@@ -34,6 +38,7 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/profiles/login/?{login}
+        [AllowAnonymous]
         [HttpGet]
         [Route("login")]
         [ProducesResponseType(200, Type = typeof(Profile))]
@@ -43,12 +48,14 @@ namespace SocialNetwork.Controllers
             var profile = await unitOfWork.ProfileRepository.GetByLogin(login);
             if(profile != null)
             {
-                return new OkObjectResult(profile);
+                var profileDto = mapper.Map<ProfileDto>(profile);
+                return new OkObjectResult(profileDto);
             }
             return NotFound();
         }
 
         //http://localhost:5000/api/profiles/name/?{name}&{lastName}
+        [AllowAnonymous]
         [HttpGet]
         [Route("name")]
         [ProducesResponseType(200, Type = typeof(Profile))]
