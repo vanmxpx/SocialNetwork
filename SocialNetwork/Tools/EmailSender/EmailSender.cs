@@ -13,5 +13,6 @@ namespace SocialNetwork.Services
             this.settings = settings;
         }
         public abstract Task SendEmailAsync(string email, string subject, string message);
+        public abstract Task SendConfirmEmailAsync(string email, string password);
     }
 }

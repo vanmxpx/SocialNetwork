@@ -49,7 +49,7 @@ namespace SocialNetwork.Controllers
                 return Ok("The Login already exist");
 
             int timeout = 4000;
-            var task = emailService.SendEmailAsync(email, "Confirm email", "http://localhost:5000/api/credential/" + email + "/" + Sha256Service.Convert(email + password));
+            var task = emailService.SendConfirmEmailAsync(email,password);
             if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
             {
                 if (task.IsFaulted)
