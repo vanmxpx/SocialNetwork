@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Profile } from '../models/profile';
+import { Profile } from '../../../models/profile';
 
 @Component({
   selector: 'app-followers',

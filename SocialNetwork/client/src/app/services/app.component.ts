@@ -7,6 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   constructor() {
-    var test: string = "Debug is working!";
   }
 }

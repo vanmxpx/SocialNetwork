@@ -1,4 +1,4 @@
-export class Profile {
+export interface Profile {
   id: number;
   login: string;
   name: string;

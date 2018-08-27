@@ -1,4 +1,5 @@
 {
+  "strictNullChecks": true,
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Profile } from '../models/profile';
-import { ProfileService } from '../profile.service';
-import { PostService } from '../post.service';
-import { Post } from '../models/post';
+import { Profile } from '../../../models/profile';
+import { Post } from '../../../models/post';
+import { ProfileService } from '../../../services/model-services/profile.service';
+import { PostService } from '../../../services/model-services/post.service';
 
 @Component({
   selector: 'app-user-tabs',
@@ -38,6 +38,7 @@ export class UserTabsComponent implements OnInit {
   ngOnInit() {
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
     this.getPosts();
     this.getSubscribers();

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../models/user';
+import { InputDataValidatorService } from '../../services/validators/input-data-validator.service';
 
-import { User } from '../models/user';
-import {InputDataValidatorService} from '../input-data-validator.service';
+
 
 @Component({
-  selector: 'registration-form',
+  selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.css']
 })
@@ -18,20 +19,20 @@ export class RegistrationComponent implements OnInit {
   private passwordValidator = this.validatorService.getPasswordValidator();
 
   constructor(private validatorService: InputDataValidatorService) { }
-  
+
   ngOnInit() {
   }
-  
+
   onSubmit() {
     this.user.login = this.loginValidator.value;
     this.user.email = this.emailValidator.value;
     this.user.password = this.passwordValidator.value;
-      if(this.loginValidator.status === 'VALID'
-         && this.emailValidator.status === 'VALID'
-         && this.passwordValidator.status === 'VALID'){
-        this.showEmailNotification = true;
-        alert("Request imitation: " + JSON.stringify(this.user));
-      }
+    if (this.loginValidator.status === 'VALID'
+      && this.emailValidator.status === 'VALID'
+      && this.passwordValidator.status === 'VALID') {
+      this.showEmailNotification = true;
+      alert('Request imitation: ' + JSON.stringify(this.user));
+    }
   }
 
   getEmailErrorMessage() {

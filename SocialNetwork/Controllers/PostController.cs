@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using AutoMapper;
+using System;
 
 namespace SocialNetwork.Controllers
 {
@@ -94,9 +95,16 @@ namespace SocialNetwork.Controllers
         [HttpPost]
         public async Task<ActionResult> AddPost([FromBody]Post post)
         {
-            if (!ModelState.IsValid) return BadRequest();
-            await unitOfWork.PostRepository.Create(post);
-            return Created("api/post", post);
+            post.Datetime = DateTime.Now;
+            if (post.Text.Length < 256
+            && post.Text.Length > 0
+            && post.ProfileRef != 0)
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                await unitOfWork.PostRepository.Create(post);
+                return Created("api/post", post);
+            }
+            return BadRequest();
         }
 
         // DELETE api/posts/100

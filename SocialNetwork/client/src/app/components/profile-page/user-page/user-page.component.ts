@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { Profile } from '../models/profile';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
-import { ProfileService } from '../profile.service';
+import { ProfileService } from '../../../services/model-services/profile.service';
+import { Profile } from '../../../models/profile';
 
 @Component({
   selector: 'app-user-page',
@@ -13,25 +13,18 @@ import { ProfileService } from '../profile.service';
 export class UserPageComponent implements OnInit {
   profile: Profile;
   login: string;
-  getProfile(): void {
-    this.login = this.route.snapshot.paramMap.get('login');
-    this.profileService.getProfile(this.login)
-      .subscribe(profile => this.profile = profile);
-  }
+
   @Input() color: ThemePalette;
-
-
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location,
     private profileService: ProfileService
   ) {
     // override the route reuse strategy
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
-    }
+    };
 
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd) {
@@ -42,12 +35,13 @@ export class UserPageComponent implements OnInit {
       }
     });
   }
-
-  ngOnInit() {
-    this.getProfile();
+  getProfile(): void {
+    this.login = this.route.snapshot.paramMap.get('login');
+    this.profileService.getProfile(this.login)
+      .subscribe(profile => this.profile = profile);
   }
 
-  initialiseInvites() {
+  ngOnInit() {
     this.getProfile();
   }
 }
