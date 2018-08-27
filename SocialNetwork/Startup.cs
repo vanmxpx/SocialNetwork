@@ -108,9 +108,10 @@ namespace SocialNetwork
                 routes.MapHub<ChatHub>("/chatHub");
             });
 
+ app.UseAuthentication();
             app.UseMvc();
             // //используем аутентификацию
-            app.UseAuthentication();
+           
             app.UseBDScripts(env,provider,ini);
 
             if (Environment.IsDevelopment())
