@@ -21,13 +21,11 @@ namespace SocialNetwork.Repositories.GenericRepository
         public async Task Create(TEntity entity)
         {
             await Context.Set<TEntity>().AddAsync(entity);
-            await Context.SaveChangesAsync();
         }
 
         public async Task Update(int id, TEntity entity)
         {
             Context.Set<TEntity>().Update(entity);
-            await Context.SaveChangesAsync();
         }
     }
 }
