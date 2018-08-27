@@ -65,7 +65,8 @@ namespace SocialNetwork.Controllers
 
             await unitOfWork.AuthorizationRepository.Create(authorization);
 
-            return Ok(new { Token = new TokenFactory(appSettings, credential).GetStringToken() });
+            String token = new TokenFactory(appSettings, credential).GetStringToken();
+            return Ok(new { Token = token, Id = credential.ProfileRef });
         }
 
         [Authorize]

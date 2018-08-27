@@ -10,6 +10,7 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
     returnUrl: string;
+    login: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -20,12 +21,12 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
+            email: ['', Validators.required],
             password: ['', Validators.required]
         });
 
         // сбросить статус входа в систему
-        this.authenticationService.logout();
+        //this.authenticationService.logout();
 
         //получить URL-адрес возврата из параметров маршрута или по умолчанию '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -45,15 +46,15 @@ export class LoginComponent implements OnInit {
      }
 
         this.loading = true;
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
-            .pipe(first())
+        
+        this.authenticationService.login(this.f.email.value, this.f.password.value)
             .subscribe(
                 //перенаправление
-                //FIXME: не отрабатывеает
+                //FIXME: login!!!!!!!!!!
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    this.router.navigate([this.returnUrl+"profile/nisi"]);
                 },
-                //отображаем сообщение что данные не валидны
+
                 error => {
                     this.alertService.error(error);
                     this.loading = false;

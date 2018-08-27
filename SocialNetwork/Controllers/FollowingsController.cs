@@ -8,7 +8,7 @@ using AutoMapper;
 
 namespace SocialNetwork.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [ApiController]
     [Produces("application/json")]
     [Route("/api/[controller]")]
