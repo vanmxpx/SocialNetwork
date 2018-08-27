@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(ShortyContext))]
-    partial class ShortyContextModelSnapshot : ModelSnapshot
+    [Migration("20180818173354_ProfileNonRequiredNameAndLastName")]
+    partial class ProfileNonRequiredNameAndLastName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,11 +61,18 @@ namespace SocialNetwork.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(64)");
 
+                    b.Property<int>("ProfileRef")
+                        .HasColumnType("int(11)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasName("Email_UNIQUE");
+
+                    b.HasIndex("ProfileRef")
+                        .IsUnique()
+                        .HasName("ProfileRef_UNIQUE");
 
                     b.ToTable("credential");
                 });
@@ -117,8 +126,6 @@ namespace SocialNetwork.Migrations
 
                     b.Property<byte?>("Age");
 
-                    b.Property<int>("CredenitialRef");
-
                     b.Property<sbyte>("Gender")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(3)")
@@ -142,9 +149,6 @@ namespace SocialNetwork.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CredenitialRef")
-                        .IsUnique();
-
                     b.HasIndex("Id")
                         .HasName("idProfile_idx");
 
@@ -156,7 +160,15 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Credential", "Credential")
                         .WithMany("Authorizations")
                         .HasForeignKey("CredentialRef")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("SocialNetwork.Credential", b =>
+                {
+                    b.HasOne("SocialNetwork.Profile", "Profile")
+                        .WithOne()
+                        .HasForeignKey("SocialNetwork.Credential", "ProfileRef")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("SocialNetwork.Followings", b =>
@@ -164,12 +176,12 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Profile", "Blogger")
                         .WithMany("Bloggers")
                         .HasForeignKey("BloggerRef")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("SocialNetwork.Profile", "Subscriber")
                         .WithMany("Subscribers")
                         .HasForeignKey("SubscriberRef")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("SocialNetwork.Post", b =>
@@ -177,15 +189,7 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Profile", "Profile")
                         .WithMany("Posts")
                         .HasForeignKey("ProfileRef")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SocialNetwork.Profile", b =>
-                {
-                    b.HasOne("SocialNetwork.Credential")
-                        .WithOne("Profile")
-                        .HasForeignKey("SocialNetwork.Profile", "CredenitialRef")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

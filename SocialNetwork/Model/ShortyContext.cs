@@ -116,7 +116,7 @@ namespace SocialNetwork
                     .HasDefaultValueSql("2");
 
                 entity.Property(e => e.LastName)
-                    .IsRequired()
+                  //  .IsRequired()
                     .HasColumnType("varchar(32)");
 
                 entity.Property(e => e.Location).HasColumnType("varchar(64)");
@@ -126,7 +126,7 @@ namespace SocialNetwork
                     .HasColumnType("varchar(32)");
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
+                    //.IsRequired()
                     .HasColumnType("varchar(32)");
 
                 entity.Property(e => e.Photo).HasColumnType("varbinary(8001)");
