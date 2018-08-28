@@ -11,9 +11,10 @@
 
 .avatar
 {
-    height: 52px;
-    width: 52px;
-}
+    height: 54px;
+    width: 54px;
+    border-radius: 10px;
+} 
 
 .button-row
 {
