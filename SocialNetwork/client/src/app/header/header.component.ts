@@ -58,4 +58,9 @@ export class HeaderComponent {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
+
+  MyProfile(){
+      let login=JSON.parse(localStorage.getItem('login'));
+      this.router.navigate(['/profile'] + login);
+  }
 }

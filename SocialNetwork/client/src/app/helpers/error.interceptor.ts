@@ -11,12 +11,13 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
+        // localStorage.setItem('token', JSON.stringify("token"));
+        // localStorage.setItem('login', JSON.stringify("login"))
+   
         // let token=JSON.parse(localStorage.getItem('token'));
         // let login=JSON.parse(localStorage.getItem('login'));
        
         // if(request.url.includes("/login") && token && login){
-        //     console.log(token);
-        //     console.log(login);
         //     this.router.navigate(['profile/' + login]);
         // }
         

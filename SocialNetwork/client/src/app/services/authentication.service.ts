@@ -16,7 +16,7 @@ export class AuthenticationService {
                 // login успешно, если в ответе есть токен jwt
                 if (user && user.token) {
                     //сохраняем токен jwt в локальном хранилище
-                    localStorage.setItem('user', JSON.stringify(user.token));
+                    localStorage.setItem('token', JSON.stringify(user.token));
                     localStorage.setItem('login', JSON.stringify(user.login))
                 }
                 return user;
@@ -25,7 +25,7 @@ export class AuthenticationService {
 
     logout() {
         // удаляем токен для выхода из системы
-        localStorage.removeItem('user');
+        localStorage.removeItem('token');
         localStorage.removeItem('login');
     }
 }

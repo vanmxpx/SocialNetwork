@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
             email: ['', Validators.required],
             password: ['', Validators.required]
         });
-
+        
         //получить URL-адрес возврата из параметров маршрута или по умолчанию '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
@@ -39,17 +39,17 @@ export class LoginComponent implements OnInit {
         // данные формы не валидны
         if (this.loginForm.invalid) {
             return;
-     }
+        }
 
         this.loading = true;
-        
+
         this.authenticationService.login(this.f.email.value, this.f.password.value)
             .subscribe(
                 //перенаправление на страницу профиля по login в local Storage
                 data => {
                     this.router.navigate([this.returnUrl+"profile/" + JSON.parse(localStorage.getItem('login'))]);
                 },
-                
+
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
