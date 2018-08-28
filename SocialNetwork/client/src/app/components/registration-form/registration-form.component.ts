@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
 import { InputDataValidatorService } from '../../services/validators/input-data-validator.service';
+import { RegistrationService } from '../../services/registration/registration.service';
 
 
 
@@ -18,7 +19,8 @@ export class RegistrationComponent implements OnInit {
   private emailValidator = this.validatorService.getEmailValidator();
   private passwordValidator = this.validatorService.getPasswordValidator();
 
-  constructor(private validatorService: InputDataValidatorService) { }
+  constructor(private validatorService: InputDataValidatorService,
+              private registrationService: RegistrationService) { }
 
   ngOnInit() {
   }
@@ -31,7 +33,12 @@ export class RegistrationComponent implements OnInit {
       && this.emailValidator.status === 'VALID'
       && this.passwordValidator.status === 'VALID') {
       this.showEmailNotification = true;
-      alert('Request imitation: ' + JSON.stringify(this.user));
+      // alert('Request imitation: ' + JSON.stringify(this.user));
+      this.registrationService.postData(this.user)
+                .subscribe(
+                    (data: User) => {this.user = data; },
+                    error => console.log(error)
+                );
     }
   }
 

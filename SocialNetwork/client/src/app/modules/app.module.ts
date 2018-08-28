@@ -17,6 +17,7 @@ import { MaterialModule } from './material/material.module';
 import { PostService } from '../services/model-services/post.service';
 import { ProfileService } from '../services/model-services/profile.service';
 import { InputDataValidatorService } from '../services/validators/input-data-validator.service';
+import { RegistrationService} from '../services/registration/registration.service';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { InputDataValidatorService } from '../services/validators/input-data-val
   providers: [
     PostService,
     ProfileService,
-    InputDataValidatorService
+    InputDataValidatorService,
+    RegistrationService
   ],
   bootstrap: [AppComponent]
 })
