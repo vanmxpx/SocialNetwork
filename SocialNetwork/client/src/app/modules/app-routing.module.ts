@@ -6,7 +6,7 @@ import { RegistrationComponent } from '../components/registration-form/registrat
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'profile/tacit', pathMatch: 'full', runGuardsAndResolvers: 'always' },
+  { path: '', redirectTo: 'profile/quis', pathMatch: 'full', runGuardsAndResolvers: 'always' },
   {
     path: 'profile/:login',
     component: UserPageComponent,
