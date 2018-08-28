@@ -24,7 +24,6 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/followings/bloggers/?id=24
-        [AllowAnonymous]
         [Route("bloggers")]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
@@ -33,14 +32,9 @@ namespace SocialNetwork.Controllers
         {
             if (id != 0)
             {
-                List<Followings> followings = await unitOfWork.FollowingsRepository.GetBlogersById(id);
-                List<Profile> bloggers = new List<Profile>();
-                if (followings != null)
+                List<Profile> bloggers = await unitOfWork.ProfileRepository.GetBloggersById(id);
+                if (bloggers.Count > 0)
                 {
-                    foreach (Followings following in followings)
-                    {
-                        bloggers.Add(following.Blogger);
-                    }
                     return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(bloggers));
                 }
                 return NotFound();
@@ -49,7 +43,6 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/followings/subscribers/?id=24
-        [AllowAnonymous]
         [Route("subscribers")]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
@@ -58,14 +51,9 @@ namespace SocialNetwork.Controllers
         {
             if (id != 0)
             {
-                List<Followings> followings = await unitOfWork.FollowingsRepository.GetSuscribersById(id);
-                List<Profile> subscribers = new List<Profile>();
-                if (followings != null)
+                List<Profile> subscribers = await unitOfWork.ProfileRepository.GetBloggersById(id);
+                if (subscribers.Count > 0)
                 {
-                    foreach (Followings following in followings)
-                    {
-                        subscribers.Add(following.Subscriber);
-                    }
                     return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(subscribers));
                 }
                 return NotFound();
@@ -74,7 +62,6 @@ namespace SocialNetwork.Controllers
         }
 
         // POST api/followings
-        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> AddRelationship([FromBody]Followings following)
         {

@@ -26,7 +26,6 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/posts/79
-        [AllowAnonymous]
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Post))]
         [ProducesResponseType(404)]
@@ -42,7 +41,6 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/posts/?authorId=2
-        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
         [ProducesResponseType(404)]
@@ -62,7 +60,6 @@ namespace SocialNetwork.Controllers
 
 
         // GET api/posts/news/?id=2
-        [AllowAnonymous]
         [HttpGet]
         [Route("news")]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
@@ -71,19 +68,10 @@ namespace SocialNetwork.Controllers
         {
             if (id != 0)
             {
-                List<Followings> followings = await unitOfWork.FollowingsRepository.GetBlogersByIdWithPosts(id);
-                List<Post> posts = new List<Post>();
-                if (followings != null)
+                List<Post> posts = await unitOfWork.PostRepository.GetNewsById(id);
+                if (posts.Count > 0)
                 {
-                    foreach (Followings following in followings)
-                    {
-                        posts.AddRange(following.Blogger.Posts);
-                    }
-                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(
-                        posts
-                        .OrderByDescending(p => p.Datetime)
-                        .Take(100)
-                        .ToList()));
+                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
                 }
                 return NotFound();
             }
@@ -91,7 +79,6 @@ namespace SocialNetwork.Controllers
         }
 
         // POST api/posts
-        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> AddPost([FromBody]Post post)
         {
@@ -108,7 +95,6 @@ namespace SocialNetwork.Controllers
         }
 
         // DELETE api/posts/100
-        [AllowAnonymous]
         [HttpDelete("{id}")]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
