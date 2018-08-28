@@ -1,6 +1,7 @@
-<div class="flex-container" fxLayoutAlign="space-evenly">
-  <div class="item info" ><app-user-info [profile]="profile"></app-user-info></div>
-  <div class="item tabs"><app-user-tabs [profile]="profile"></app-user-tabs></div>
+<app-header></app-header>
+<div fxLayout="row" fxLayoutAlign="space-evenly">
+  <div fxFlex="20"><app-user-info [profile]="profile"></app-user-info></div>
+  <div fxFlex="80"><app-user-tabs [profile]="profile"></app-user-tabs></div>
 </div>
 
 <!-- <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">

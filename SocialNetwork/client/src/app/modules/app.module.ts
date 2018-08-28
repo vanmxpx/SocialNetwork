@@ -15,10 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material/material.module';
 import { PostService } from '../services/model-services/post.service';
 import { ProfileService } from '../services/model-services/profile.service';
-import { InputDataValidatorService } from '../validators/input-data-validator.service';
-import { AddPostComponent } from '../components/profile-page/add-post/add-post.component';
-import { FooterComponent } from '../components/footer/footer.component';
-
+import { InputDataValidatorService } from '../services/validators/input-data-validator.service';
+import { RegistrationService} from '../services/registration/registration.service';
 
 
 @NgModule({
@@ -30,9 +28,7 @@ import { FooterComponent } from '../components/footer/footer.component';
     UserPageComponent,
     FollowersComponent,
     UserTabsComponent,
-    RegistrationComponent,
-    AddPostComponent,
-    FooterComponent
+    RegistrationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,7 +42,8 @@ import { FooterComponent } from '../components/footer/footer.component';
   providers: [
     PostService,
     ProfileService,
-    InputDataValidatorService
+    InputDataValidatorService,
+    RegistrationService
   ],
   bootstrap: [AppComponent]
 })
