@@ -46,15 +46,15 @@ namespace SocialNetwork
             {
                 entity.ToTable("credential");
 
-                entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
+                // entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
 
                 entity.HasIndex(e => e.Email)
                     .HasName("Email_UNIQUE")
                     .IsUnique();
 
-                entity.HasIndex(e => e.ProfileRef)
-                    .HasName("ProfileRef_UNIQUE")
-                    .IsUnique();
+                // entity.HasIndex(e => e.ProfileRef)
+                //     .HasName("ProfileRef_UNIQUE")
+                //     .IsUnique();
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -67,12 +67,12 @@ namespace SocialNetwork
                 entity.HasMany(d => d.Authorizations)
                     .WithOne(p => p.Credential)
                     .HasForeignKey(d => d.CredentialRef)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.Profile)
                     .WithOne()
-                    .HasForeignKey<Credential>(d => d.ProfileRef)
-                    .OnDelete(DeleteBehavior.Restrict);                 
+                    .HasForeignKey<Profile>(d=> d.CredenitialRef)
+                    .OnDelete(DeleteBehavior.Cascade);                 
             });
 
             modelBuilder.Entity<Followings>(entity =>
@@ -134,19 +134,19 @@ namespace SocialNetwork
                 entity.HasMany(d => d.Posts)
                     .WithOne(p => p.Profile)
                     .HasForeignKey(d => d.ProfileRef)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasMany(d => d.Bloggers)
                     .WithOne(p => p.Blogger)
                     .HasForeignKey(d => d.BloggerRef)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasMany(d => d.Subscribers)
                     .WithOne(p => p.Subscriber)
                     .HasForeignKey(d => d.SubscriberRef)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
-                //entity.OwnsOne(typeof(Credential)).ToTable("credential");  
+                // entity.OwnsOne(typeof(Credential)).ToTable("credential");  
 
                 // entity.HasMany(d => d.Bloggers)
                 //     .WithOne()

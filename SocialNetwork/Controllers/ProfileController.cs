@@ -30,7 +30,7 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult<Profile>> GetProfileById(int id)
         {
             var profile = await unitOfWork.ProfileRepository.GetById(id);
-            if(profile != null)
+            if (profile != null)
             {
                 return new OkObjectResult(profile);
             }
@@ -46,7 +46,7 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult<Profile>> GetProfileByLogin([FromQuery]string login)
         {
             var profile = await unitOfWork.ProfileRepository.GetByLogin(login);
-            if(profile != null)
+            if (profile != null)
             {
                 var profileDto = mapper.Map<ProfileDto>(profile);
                 return new OkObjectResult(profileDto);
@@ -63,9 +63,25 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult<Profile>> GetProfileByNameAndLastName([FromQuery]string name, [FromQuery]string lastName)
         {
             var profile = await unitOfWork.ProfileRepository.GetByNameAndLastName(name, lastName);
-            if(profile != null)
+            if (profile != null)
             {
                 return new OkObjectResult(profile);
+            }
+            return NotFound();
+        }
+
+        // DELETE api/profiles/50
+        [HttpDelete("{id}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var entity = await unitOfWork.ProfileRepository.GetById(id);
+            if (entity != null)
+            {
+                unitOfWork.ProfileRepository.Delete(entity);
+                await unitOfWork.Save();
+                return Ok();
             }
             return NotFound();
         }

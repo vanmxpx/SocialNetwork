@@ -11,6 +11,6 @@ namespace SocialNetwork.Repositories.GenericRepository
 
         Task<Profile> GetByNameAndLastName(string name, string lastName);
     
-        Task Delete(int id);
+        void Delete(Profile profile);
     }    
 }
