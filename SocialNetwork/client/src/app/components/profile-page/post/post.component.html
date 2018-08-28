@@ -8,7 +8,7 @@
       <mat-card-subtitle>{{post.profile.login}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>{{post.text}}</p>
-      <p>Data: <span>{{post.datetime}}</span></p>
+      <p class="content">{{post.text}}</p>
+      <p class="date">Date: <span>{{post.datetime | date:'short'}}</span></p>
     </mat-card-content>
   </mat-card>
