@@ -1,6 +1,7 @@
 <mat-tab-group>
   <mat-tab label="Posts">
     <ng-template matTabContent>
+      <app-add-post profile="profile"></app-add-post>
       <app-post [posts]="posts"></app-post>
     </ng-template>
   </mat-tab>

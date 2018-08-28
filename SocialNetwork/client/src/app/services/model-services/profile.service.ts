@@ -15,4 +15,6 @@ export class ProfileService {
     return this.http.get<Profile[]>('http://localhost:5000/api/followings/bloggers/?id=' + profileId.toString());
   }
   constructor(private http: HttpClient) { }
+
+
 }
