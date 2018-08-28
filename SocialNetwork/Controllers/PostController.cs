@@ -53,7 +53,10 @@ namespace SocialNetwork.Controllers
                 var posts = await unitOfWork.PostRepository.GetByAuthorId(authorId);
                 if (posts != null)
                 {
-                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
+                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(
+                        posts
+                    .OrderByDescending(p => p.Datetime)
+                    .ToList()));
                 }
                 return NotFound();
             }
@@ -102,6 +105,7 @@ namespace SocialNetwork.Controllers
             {
                 if (!ModelState.IsValid) return BadRequest();
                 await unitOfWork.PostRepository.Create(post);
+                await unitOfWork.Save();
                 return Created("api/post", post);
             }
             return BadRequest();
