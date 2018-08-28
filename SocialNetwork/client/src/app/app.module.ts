@@ -11,7 +11,7 @@ import { LoginComponent} from './login/login.component';
 import { AlertComponent } from './directives';
 import { AuthGuard } from './guards';
 import { JwtInterceptor, ErrorInterceptor } from './helpers';
-import { AlertService, AuthenticationService, CredentialService } from './services';
+import { AlertService, AuthenticationService } from './services';
 import { UserPageComponent } from './user-page/user-page.component';
 import { FollowersComponent } from './followers/followers.component';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -53,7 +53,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AuthGuard,
     AlertService,
     AuthenticationService,
-    CredentialService,    
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],

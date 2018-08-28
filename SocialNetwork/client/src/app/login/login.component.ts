@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
 import { AlertService, AuthenticationService } from '../services';
 
 @Component({ templateUrl: 'login.component.html' })
@@ -25,9 +24,6 @@ export class LoginComponent implements OnInit {
             password: ['', Validators.required]
         });
 
-        // сбросить статус входа в систему
-        //this.authenticationService.logout();
-
         //получить URL-адрес возврата из параметров маршрута или по умолчанию '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
@@ -49,12 +45,11 @@ export class LoginComponent implements OnInit {
         
         this.authenticationService.login(this.f.email.value, this.f.password.value)
             .subscribe(
-                //перенаправление
-                //FIXME: login!!!!!!!!!!
+                //перенаправление на страницу профиля по login в local Storage
                 data => {
-                    this.router.navigate([this.returnUrl+"profile/nisi"]);
+                    this.router.navigate([this.returnUrl+"profile/" + JSON.parse(localStorage.getItem('login'))]);
                 },
-
+                
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
