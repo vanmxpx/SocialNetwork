@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialNetwork;
 
 namespace SocialNetwork.Migrations
 {
     [DbContext(typeof(ShortyContext))]
-    partial class ShortyContextModelSnapshot : ModelSnapshot
+    [Migration("20180819091154_CascadeDeletionInCredentials")]
+    partial class CascadeDeletionInCredentials
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,6 +127,7 @@ namespace SocialNetwork.Migrations
                         .HasDefaultValueSql("2");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("varchar(32)");
 
                     b.Property<string>("Location")
@@ -135,6 +138,7 @@ namespace SocialNetwork.Migrations
                         .HasColumnType("varchar(32)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("varchar(32)");
 
                     b.Property<byte[]>("Photo")

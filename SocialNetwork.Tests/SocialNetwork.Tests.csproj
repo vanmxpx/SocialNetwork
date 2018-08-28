@@ -16,6 +16,9 @@
   <ItemGroup>
     <ProjectReference Include="..\SocialNetwork\SocialNetwork.csproj" />
   </ItemGroup>
-
+  
+  <ItemGroup>  
+    <Content Include="..\SocialNetwork.Tests\TestData\shorty_test.sql" Link="shorty_test.sql" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>  
 
 </Project>

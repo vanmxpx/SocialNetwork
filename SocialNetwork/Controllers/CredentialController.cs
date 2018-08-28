@@ -12,12 +12,12 @@ namespace SocialNetwork.Controllers
 {
     [Authorize]
     [Route("/api/[controller]")]
-    public class CredentialController : Controller
+    public class CredentialsController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IConfigProvider provider;
 
-        public CredentialController(IUnitOfWork unitOfWork, IConfigProvider provider)
+        public CredentialsController(IUnitOfWork unitOfWork, IConfigProvider provider)
         {
             this.unitOfWork = unitOfWork;
             this.provider = provider;
@@ -32,6 +32,24 @@ namespace SocialNetwork.Controllers
                 return NotFound();
             else
                 return new OkObjectResult(Json(Credential));
+        }
+
+        // DELETE api/credentials/50
+        [HttpDelete("{id}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Delete(int id)
+        {
+           var entity = await unitOfWork.CredentialRepository.GetById(id);
+           //var profile = await unitOfWork.ProfileRepository.GetById(id);
+            if (entity != null)
+            {
+                //entity.Profile = profile;
+                unitOfWork.CredentialRepository.Delete(entity);
+                await unitOfWork.Save();
+                return Ok();
+            }
+            return NotFound();
         }
 
         [AllowAnonymous]
@@ -82,12 +100,7 @@ namespace SocialNetwork.Controllers
             {
                 return Ok("TimeOut");
             }
-
-
-
-
         }
-
 
 
         [AllowAnonymous]
@@ -100,7 +113,7 @@ namespace SocialNetwork.Controllers
                 if (hash == Sha256Service.Convert(cred.Email + cred.Password))
                 {
                     cred.DateRegistration = DateTime.Now;
-                    await unitOfWork.CredentialRepository.Update(cred.Id, cred);
+                    unitOfWork.CredentialRepository.Update(cred.Id, cred);
                     await unitOfWork.Save();
                     return Ok("Yeah it's work");
                 }
@@ -110,8 +123,5 @@ namespace SocialNetwork.Controllers
             else
                 return Ok("link is outdated");
         }
-
-
-
     }
 }
