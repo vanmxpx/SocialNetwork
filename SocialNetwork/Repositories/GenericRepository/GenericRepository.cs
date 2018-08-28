@@ -25,7 +25,7 @@ namespace SocialNetwork.Repositories.GenericRepository
 
         public async Task Update(int id, TEntity entity)
         {
-            Context.Set<TEntity>().Update(entity);
+            await Context.Set<TEntity>().Update(entity);
         }
     }
 }

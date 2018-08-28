@@ -110,7 +110,6 @@ namespace SocialNetwork
 
  app.UseAuthentication();
             app.UseMvc();
-            // //используем аутентификацию
            
             app.UseBDScripts(env,provider,ini);
 
