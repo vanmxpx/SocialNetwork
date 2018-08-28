@@ -10,30 +10,33 @@ import { PostService } from '../../../services/model-services/post.service';
   styleUrls: ['./user-tabs.component.scss']
 })
 export class UserTabsComponent implements OnInit {
-  @Input() profile: Profile;
-  posts: Post[];
-  news: Post[];
-  subscribers: Profile[];
-  bloggers: Profile[];
-  getSubscribers(): void {
-    this.profileService.getSubscribers(this.profile.id)
-      .subscribe(profiles => this.subscribers = profiles);
-  }
-  getBloggers(): void {
-    this.profileService.getBloggers(this.profile.id)
-      .subscribe(profiles => this.bloggers = profiles);
-  }
-  getPosts(): void {
-    this.postService.getPosts(this.profile.id)
-      .subscribe(posts => this.posts = posts);
-  }
-  getNews(): void {
-    this.postService.getNews(this.profile.id)
-      .subscribe(news => this.news = news);
-  }
+  @Input() public profile: Profile;
+  public posts: Post[];
+  public news: Post[];
+  public subscribers: Profile[];
+  public bloggers: Profile[];
+
   constructor(
     private profileService: ProfileService,
     private postService: PostService) { }
+
+  private getSubscribers(): void {
+    this.profileService.getSubscribers(this.profile.id)
+      .subscribe(profiles => this.subscribers = profiles);
+  }
+  private getBloggers(): void {
+    this.profileService.getBloggers(this.profile.id)
+      .subscribe(profiles => this.bloggers = profiles);
+  }
+  private getPosts(): void {
+    this.postService.getPosts(this.profile.id)
+      .subscribe(posts => this.posts = posts);
+  }
+  private getNews(): void {
+    this.postService.getNews(this.profile.id)
+      .subscribe(news => this.news = news);
+  }
+
 
   ngOnInit() {
   }

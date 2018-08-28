@@ -14,6 +14,9 @@ import { UserTabsComponent } from '../components/profile-page/user-tabs/user-tab
 import { RegistrationComponent } from '../components/registration-form/registration-form.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material/material.module';
+import { PostService } from '../services/model-services/post.service';
+import { ProfileService } from '../services/model-services/profile.service';
+import { InputDataValidatorService } from '../services/validators/input-data-validator.service';
 
 
 @NgModule({
@@ -37,7 +40,11 @@ import { MaterialModule } from './material/material.module';
     ReactiveFormsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+    PostService,
+    ProfileService,
+    InputDataValidatorService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

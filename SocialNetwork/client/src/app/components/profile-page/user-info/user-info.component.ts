@@ -7,7 +7,7 @@ import { Profile } from '../../../models/profile';
   styleUrls: ['./user-info.component.scss']
 })
 export class UserInfoComponent implements OnInit {
-  @Input()profile: Profile;
+  @Input() public profile: Profile;
   constructor() { }
 
   ngOnInit() {

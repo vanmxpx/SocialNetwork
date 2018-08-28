@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { FormControl, Validators } from '@angular/forms';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class InputDataValidatorService {
   private emailValidator = new FormControl('', [Validators.required, Validators.email]);
   private loginValidator = new FormControl('', [Validators.required, Validators.minLength(6)]);

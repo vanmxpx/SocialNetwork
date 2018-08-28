@@ -11,10 +11,11 @@ import { Profile } from '../../../models/profile';
   styleUrls: ['./user-page.component.scss']
 })
 export class UserPageComponent implements OnInit {
-  profile: Profile;
-  login: string;
+  public profile: Profile;
+  private login: string;
 
-  @Input() color: ThemePalette;
+  @Input() private color: ThemePalette;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +36,9 @@ export class UserPageComponent implements OnInit {
       }
     });
   }
-  getProfile(): void {
+
+
+  private getProfile(): void {
     this.login = this.route.snapshot.paramMap.get('login');
     this.profileService.getProfile(this.login)
       .subscribe(profile => this.profile = profile);

@@ -7,7 +7,7 @@ import { Profile } from '../../../models/profile';
   styleUrls: ['./followers.component.scss']
 })
 export class FollowersComponent implements OnInit {
-  @Input() profiles: Profile[];
+  @Input() public profiles: Profile[];
   constructor() { }
 
   ngOnInit() {

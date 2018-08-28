@@ -3,9 +3,7 @@ import { Profile } from '../../models/profile';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ProfileService {
   getProfile(login: string): Observable<Profile> {
     return this.http.get<Profile>('http://localhost:5000/api/profiles/login/?login=' + login);

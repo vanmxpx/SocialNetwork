@@ -13,8 +13,7 @@ import { ThemePalette } from '@angular/material/core';
 
 export class HeaderComponent {
 
-  @Input()
-  color: ThemePalette;
+  @Input() private color: ThemePalette;
 
   // isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   //   .pipe(
