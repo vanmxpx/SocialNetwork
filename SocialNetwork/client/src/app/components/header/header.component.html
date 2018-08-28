@@ -5,9 +5,14 @@
     <!-- This fills the remaining space of the current row -->
     <span class="example-fill-remaining-space"></span>
 
-    <div class="button-row">
+    <!-- <div class="button-row">
       <a mat-stroked-button routerLink=".">Search</a>
-    </div>
+    </div> -->
+<div class = "searchDiv">
+    <app-search-expander></app-search-expander>
+</div>
+    
+
     <img class="avatar" [matMenuTriggerFor]="menu" src="./assets/img/user-full.jpg">
     <mat-menu #menu="matMenu">
       <button mat-menu-item>Profile</button>

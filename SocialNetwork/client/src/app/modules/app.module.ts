@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from '../components/header/header.component';
+import {SearchExpanderComponent} from '../components/header/searchExpander/searchExpander.component';
 import { UserInfoComponent } from '../components/profile-page/user-info/user-info.component';
 import { PostComponent } from '../components/profile-page/post/post.component';
 import { UserPageComponent } from '../components/profile-page/user-page/user-page.component';
@@ -23,6 +24,7 @@ import { InputDataValidatorService } from '../services/validators/input-data-val
   declarations: [
     AppComponent,
     HeaderComponent,
+    SearchExpanderComponent,
     UserInfoComponent,
     PostComponent,
     UserPageComponent,
