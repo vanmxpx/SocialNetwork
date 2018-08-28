@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { NgModule } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ThemePalette } from '@angular/material/core';
+import { AuthenticationService } from '../services';
+import { Router} from '@angular/router';
+
 import {
   MatButtonModule,
   MatMenuModule,
@@ -38,14 +41,21 @@ import {
 
 export class HeaderComponent {
 
-@Input()
-color: ThemePalette
+  @Input()
+  color: ThemePalette
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
-    
-  constructor(private breakpointObserver: BreakpointObserver) {}
-  
+
+  constructor(private breakpointObserver: BreakpointObserver,
+              private authenticationService: AuthenticationService,
+              private router: Router) {
+         }
+
+  Logout(){
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
+}
