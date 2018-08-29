@@ -1,0 +1,16 @@
+.example-form {
+  min-width: 150px;
+  width: 100%;
+}
+
+textarea {
+  max-height: 200px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}

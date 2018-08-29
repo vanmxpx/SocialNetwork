@@ -9,13 +9,6 @@ import { NewPost } from '../../../models/newPost';
   selector: 'app-add-post',
   templateUrl: './add-post.component.html',
   styleUrls: ['./add-post.component.scss'],
-  template: `
-    <input #newPost
-      (keyup.enter)="addPost(newPost.value)"
-       newPost.value=''>
-
-    <button (click)="addPost(newPost.value)">Add</button>
-  `
 })
 export class AddPostComponent implements OnInit {
   @Input() public profile: Profile;
@@ -32,12 +25,14 @@ export class AddPostComponent implements OnInit {
     if (text) {
       this.postService.addPost(newPost)
         .subscribe(
-          (data: NewPost) => { this.recievedPost = data;
-             this.done = true;
-            this.router.navigateByUrl('/profile/' + this.profile.login); },
+          (data: NewPost) => {
+            this.recievedPost = data;
+            this.done = true;
+            this.router.navigateByUrl('/profile/' + this.profile.login);
+          },
           error => console.log(error)
         );
-      
+
     }
   }
 
