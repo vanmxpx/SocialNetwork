@@ -119,24 +119,10 @@ namespace SocialNetwork.Tests
             // //WHEN
             Profile profile = await repository.GetById(15);
             profile.Login = "newLogin";
-            await repository.Update(15, profile);
+            repository.Update(15, profile);
             profile = await repository.GetById(15);
             // //THEN
             Assert.True(profile.Login == "newLogin");
         }
-
-        // [Theory]
-        // [InlineData(1)]
-        // [InlineData(11)]
-        // [InlineData(21)]
-        // public async void DeleteTest(int id)
-        // {   
-        //     //WHEN
-        //     await repository.Delete(id);
-            
-        //     Profile profile = await repository.GetById(id);
-        //     //THEN
-        //     Assert.Equal(null, profile);
-        // }
     }
 }

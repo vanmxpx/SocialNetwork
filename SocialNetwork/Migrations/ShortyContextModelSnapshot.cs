@@ -59,18 +59,11 @@ namespace SocialNetwork.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(64)");
 
-                    b.Property<int>("ProfileRef")
-                        .HasColumnType("int(11)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasName("Email_UNIQUE");
-
-                    b.HasIndex("ProfileRef")
-                        .IsUnique()
-                        .HasName("ProfileRef_UNIQUE");
 
                     b.ToTable("credential");
                 });
@@ -124,13 +117,14 @@ namespace SocialNetwork.Migrations
 
                     b.Property<byte?>("Age");
 
+                    b.Property<int>("CredenitialRef");
+
                     b.Property<sbyte>("Gender")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(3)")
                         .HasDefaultValueSql("2");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("varchar(32)");
 
                     b.Property<string>("Location")
@@ -141,13 +135,15 @@ namespace SocialNetwork.Migrations
                         .HasColumnType("varchar(32)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("varchar(32)");
 
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(8001)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CredenitialRef")
+                        .IsUnique();
 
                     b.HasIndex("Id")
                         .HasName("idProfile_idx");
@@ -160,15 +156,7 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Credential", "Credential")
                         .WithMany("Authorizations")
                         .HasForeignKey("CredentialRef")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("SocialNetwork.Credential", b =>
-                {
-                    b.HasOne("SocialNetwork.Profile", "Profile")
-                        .WithOne()
-                        .HasForeignKey("SocialNetwork.Credential", "ProfileRef")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SocialNetwork.Followings", b =>
@@ -176,12 +164,12 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Profile", "Blogger")
                         .WithMany("Bloggers")
                         .HasForeignKey("BloggerRef")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SocialNetwork.Profile", "Subscriber")
                         .WithMany("Subscribers")
                         .HasForeignKey("SubscriberRef")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SocialNetwork.Post", b =>
@@ -189,7 +177,15 @@ namespace SocialNetwork.Migrations
                     b.HasOne("SocialNetwork.Profile", "Profile")
                         .WithMany("Posts")
                         .HasForeignKey("ProfileRef")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SocialNetwork.Profile", b =>
+                {
+                    b.HasOne("SocialNetwork.Credential")
+                        .WithOne("Profile")
+                        .HasForeignKey("SocialNetwork.Profile", "CredenitialRef")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

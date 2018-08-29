@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
+using Microsoft.Extensions.DependencyInjection;
+using SocialNetwork.Configurations;
 
 namespace SocialNetwork.Controllers
 {
+    [Authorize]
     [ApiController]
     [Produces("application/json")]
     [Route("/api/[controller]")]
@@ -14,9 +17,10 @@ namespace SocialNetwork.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public PostsController(IUnitOfWork unitOfWork)
+        public PostsController(IUnitOfWork unitOfWork, IDatabaseScriptsOption dso)
         {
             this.unitOfWork = unitOfWork;
+            bool a = dso.InitialRemove;
         }
 
         // GET api/posts/79
@@ -75,5 +79,6 @@ namespace SocialNetwork.Controllers
             }
             return NotFound();
         }
+        
     }
 }

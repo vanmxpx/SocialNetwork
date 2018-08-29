@@ -69,10 +69,19 @@ namespace SocialNetworkTests
             //WHEN
             Credential credential = await repository.GetById(50);
             credential.Password = "QWERTY1234";
-            await repository.Update(50, credential);
+            repository.Update(50, credential);
             credential = await repository.GetById(50);
             //THEN
             Assert.Equal("QWERTY1234", credential.Password);
+        }
+
+        [Fact]
+        public async void DeleteCredentionalTest()
+        {   
+            //WHEN
+            Credential credential = await repository.GetById(49);
+            //THEN
+            repository.Delete(credential);
         }
     }
 }

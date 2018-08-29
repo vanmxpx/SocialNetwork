@@ -30,11 +30,9 @@ namespace SocialNetwork.Repositories
                         name, lastName))
                 .ToListAsync();
         }
-        public async Task Delete(int id)
+        public void Delete(Profile profile)
         {
-            var entity = await GetById(id);
-            Context.Set<Profile>().Remove(entity);
-            await Context.SaveChangesAsync();
+            Context.Set<Profile>().Remove(profile);
         }
     }
 }

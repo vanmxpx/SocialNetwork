@@ -45,7 +45,7 @@ namespace SocialNetworkTests
             Authorization authorization = await repository.GetById(50);
             DateTime dateTime = new DateTime();
             authorization.DatetimeRequest = dateTime;
-            await repository.Update(50, authorization);
+            repository.Update(50, authorization);
             authorization = await repository.GetById(50);
             //THEN
             Assert.Equal(dateTime, authorization.DatetimeRequest);
@@ -60,6 +60,5 @@ namespace SocialNetworkTests
             //THEN
             Assert.Equal(5, authorization.CredentialRef);
         }
-
     }
 }

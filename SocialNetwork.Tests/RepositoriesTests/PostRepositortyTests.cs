@@ -36,7 +36,7 @@ namespace SocialNetwork.Tests
         [Theory]
         [InlineData(39, 3)]
         [InlineData(9, 2)]
-        public void GetByIdTest_Profile_Expect(int id, int arrayLenght)
+        public void GetByIdTest_Posts_Expect(int id, int arrayLenght)
         {   
             //WHEN
             ICollection<Post> posts = repository.GetByAuthorId(id).Result;
@@ -58,16 +58,16 @@ namespace SocialNetwork.Tests
         }
 
         [Fact]
-        public async void GetAllTest()
+        public void GetAllTest()
         {   
             //WHEN
-            ICollection<Post> list = await repository.GetAll().ToListAsync();
+            ICollection<Post> list = repository.GetAll().ToListAsync().Result;
             //THEN
             Assert.Equal(100, list.Count);
         }
 
         [Fact]
-        public async void CratePostTest()
+        public async void CreatePostTest()
         {   
             //WHEN
             await repository.Create(new Post{Id = 101, Text = "ased tortor. Integer aliqscing lacus", ProfileRef = 1});
@@ -82,9 +82,18 @@ namespace SocialNetwork.Tests
             //WHEN
             Post post = await repository.GetById(1);
             post.Text = "Lorem ipsum sit amet";
-            await repository.Update(1, post);
+            repository.Update(1, post);
             //THEN
             Assert.Equal("Lorem ipsum sit amet", post.Text);
         }
+
+        [Fact]
+        public void DeletePostTest()
+        {   
+            //WHEN
+            Post post =  repository.GetById(1).Result;
+            repository.Delete(post);
+        }
+
     }
 }
