@@ -17,10 +17,9 @@ namespace SocialNetwork.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public PostsController(IUnitOfWork unitOfWork, IDatabaseScriptsOption dso)
+        public PostsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
-            bool a = dso.InitialRemove;
         }
 
         // GET api/posts/79
