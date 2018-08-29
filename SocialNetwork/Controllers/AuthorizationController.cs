@@ -15,6 +15,7 @@ namespace SocialNetwork.Controllers
     //http://localhost:5000/api/authorizations/ - test url
     [Authorize]
     [ApiController]
+    [Produces("application/json")]
     [Route("/api/[controller]")]
     public class AuthorizationsController : ControllerBase
     {
@@ -64,7 +65,7 @@ namespace SocialNetwork.Controllers
 
             await unitOfWork.AuthorizationRepository.Create(authorization);
 
-            return Ok(new { Token=new TokenFactory(appSettings, credential).GetStringToken() });
+            return Ok(new { Token = new TokenFactory(appSettings, credential).GetStringToken() });
         }
 
         [HttpDelete("{id}")]

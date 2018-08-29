@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using SocialNetwork.Repositories.GenericRepository;
 
 namespace SocialNetwork.Repositories
 {
@@ -11,12 +12,13 @@ namespace SocialNetwork.Repositories
             this.context = context; 
         }
         
-        private PostRepository postRepository;
-        private ProfileRepository profileRepository;
-        private CredentialRepository credentialRepository;
-        private AuthorizationRepository authorizationRepository;
+        private IPostRepository postRepository;
+        private IProfileRepository profileRepository;
+        private ICredentialRepository credentialRepository;
+        private IAuthorizationRepository authorizationRepository;
+        private IFollowingsRepository followingsRepository;
 
-        public PostRepository PostRepository
+        public IPostRepository PostRepository
         {
             get
             {
@@ -28,7 +30,7 @@ namespace SocialNetwork.Repositories
             }
         }
 
-        public ProfileRepository ProfileRepository
+        public IProfileRepository ProfileRepository
         {
             get
             {
@@ -40,7 +42,7 @@ namespace SocialNetwork.Repositories
             }
         }
 
-        public AuthorizationRepository AuthorizationRepository
+        public IAuthorizationRepository AuthorizationRepository
         {
             get
             {
@@ -52,7 +54,7 @@ namespace SocialNetwork.Repositories
             }
         }
 
-        public CredentialRepository CredentialRepository
+        public ICredentialRepository CredentialRepository
         {
             get
             {
@@ -61,6 +63,18 @@ namespace SocialNetwork.Repositories
                     this.credentialRepository = new CredentialRepository(context);
                 }
                 return credentialRepository;
+            }
+        }
+
+        public IFollowingsRepository FollowingsRepository
+        {
+            get
+            {
+                if (this.followingsRepository == null)
+                {
+                    this.followingsRepository = new FollowingsRepository(context);
+                }
+                return followingsRepository;
             }
         }
 

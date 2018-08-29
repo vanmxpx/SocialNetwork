@@ -1,0 +1,17 @@
+  .flex-container {
+    resize: horizontal;
+    overflow: hidden;
+    flex-direction: row;
+    display: flex;
+    margin: 1em;
+  }
+
+  .info {
+    flex: 1;
+   // max-width: 230px;
+  }
+
+  .tabs {
+    flex: 3;
+    flex-grow: 10;
+  }
