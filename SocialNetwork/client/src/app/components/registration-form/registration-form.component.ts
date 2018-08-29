@@ -7,7 +7,7 @@ import { InputDataValidatorService } from '../../validators/input-data-validator
 @Component({
   selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
-  styleUrls: ['./registration-form.component.css']
+  styleUrls: ['./registration-form.component.scss']
 })
 export class RegistrationComponent implements OnInit {
   private hide = true;
