@@ -3,7 +3,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AppComponent } from '../services/app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from '../components/header/header.component';
 import { UserInfoComponent } from '../components/profile-page/user-info/user-info.component';
@@ -16,7 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material/material.module';
 import { PostService } from '../services/model-services/post.service';
 import { ProfileService } from '../services/model-services/profile.service';
-import { InputDataValidatorService } from '../services/validators/input-data-validator.service';
+import { InputDataValidatorService } from '../validators/input-data-validator.service';
 
 
 @NgModule({
@@ -35,7 +34,6 @@ import { InputDataValidatorService } from '../services/validators/input-data-val
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule
