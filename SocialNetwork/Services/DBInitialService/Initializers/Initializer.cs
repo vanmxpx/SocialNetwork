@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SocialNetwork
 {
-    public class Intitializer
+    public class Initializer
     {
         private ShortyContext SC;
-        public Intitializer(ShortyContext SC)
+        public Initializer(ShortyContext SC)
         {
             this.SC = SC;
         }
@@ -47,9 +47,7 @@ namespace SocialNetwork
         public async Task Seed()
         {
             checkOnExistingDatabase();
-            
-            string sqlDatabaseFill = File.ReadAllText(
-                Directory.GetCurrentDirectory() + "\\Services\\DBInitialService\\TestData\\addTestData.sql");
+            string sqlDatabaseFill = File.ReadAllText("addTestData.sql");
             int numberOfRowInserted = SC.Database.ExecuteSqlCommand(sqlDatabaseFill);
 
             //   if (!SC.Authorizations.Any())

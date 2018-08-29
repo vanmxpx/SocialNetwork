@@ -11,7 +11,7 @@ namespace SocialNetwork.Services.Extentions
 {
     public static class DbInitialApplicationExtention
     {
-        public static void UseBDScripts(this IApplicationBuilder app, IHostingEnvironment env, IConfigProvider provider, Intitializer ini)
+        public static void UseBDScripts(this IApplicationBuilder app, IHostingEnvironment env, IConfigProvider provider, Initializer ini)
         {
             if (env.IsDevelopment())
             {

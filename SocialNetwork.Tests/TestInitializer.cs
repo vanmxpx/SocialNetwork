@@ -22,7 +22,6 @@ namespace SocialNetwork
             string sqlDatabaseCreate = File.ReadAllText(
                 Directory.GetCurrentDirectory() + "\\TestData\\shorty_test.sql");
 			SC.Database.ExecuteSqlCommand(sqlDatabaseCreate);
-            
             await SC.SaveChangesAsync();
         }
     }

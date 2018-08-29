@@ -1,142 +1,14 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+INSERT INTO `credential` (`Id`,`Email`,`Password`,`DateRegistration`) VALUES (1,"rutrum.justo.Praesent@nec.net","miiyy","2018-05-16 16:59:28"),(2,"amet.luctus.vulputate@nec.org","vestibulum","2018-01-12 21:27:21"),(3,"ligula.Aenean.euismod@sem.edu","orci","2017-12-20 20:05:42"),(4,"nulla.Integer@nuncsitamet.com","Aenean","2017-09-02 18:03:18"),(5,"netus@orci.com","dictum.","2018-04-28 01:55:51"),(6,"dolor.Donec.fringilla@elit.edu","tortor.","2018-03-30 23:08:34"),(7,"eu.nibh@eteros.edu","et,","2017-08-27 06:34:46"),(8,"Integer.mollis.Integer@Praesentinterdum.ca","ipsum","2017-12-05 00:40:05"),(9,"lobortis@ipsum.co.uk","orci.","2017-11-22 13:01:10"),(10,"neque.pellentesque.massa@orciUt.net","velit.","2018-06-28 01:00:15");
+INSERT INTO `credential` (`Id`,`Email`,`Password`,`DateRegistration`) VALUES (11,"elit@egetmollislectus.com","Namyyy","2018-03-09 14:56:14"),(12,"ac@Phasellusataugue.com","orci.","2017-11-18 07:28:58"),(13,"id@tellus.co.uk","mattis.","2018-07-25 11:59:29"),(14,"convallis@estmauris.net","aiiiiiiij,","2018-04-02 03:26:32"),(15,"dui.Fusce.diam@Integerinmagna.edu","ipsum","2018-07-04 10:00:18"),(16,"ut.dolor.dapibus@Nunc.com","aptent","2018-01-18 05:28:55"),(17,"sed@ipsumprimisin.co.uk","vitae,","2017-12-05 10:13:31"),(18,"Nunc.ut.erat@sit.co.uk","pedejj,","2018-04-22 12:44:26"),(19,"dolor@risusMorbi.net","scelerisque","2018-01-30 12:43:06"),(20,"lacinia@primisin.ca","convallis","2018-04-07 23:33:06");
+INSERT INTO `credential` (`Id`,`Email`,`Password`,`DateRegistration`) VALUES (21,"placerat.orci@hendreritDonecporttitor.edu","ornare.","2017-08-18 02:14:53"),(22,"mi.tempor@lectusa.edu","Nulla","2018-04-04 07:05:13"),(23,"magna@nequevenenatislacus.ca","mollis.","2018-04-25 03:18:39"),(24,"quam.dignissim.pharetra@Duisgravida.edu","Nullam","2018-03-10 07:18:50"),(25,"ante.Vivamus.non@ami.net","imperdiet","2018-05-10 21:41:03"),(26,"Ut.tincidunt.vehicula@risusNuncac.com","tristique","2017-11-27 15:20:10"),(27,"magna.nec@enimgravida.ca","tempus","2018-06-06 05:02:24"),(28,"pede.Cum.sociis@Donec.co.uk","nunch","2018-07-20 18:12:22"),(29,"neque@Donec.ca","volutpat.","2018-07-02 20:07:58"),(30,"ac.mattis.velit@arcuiaculisenim.org","sed,h","2018-07-17 02:18:34");
+INSERT INTO `credential` (`Id`,`Email`,`Password`,`DateRegistration`) VALUES (31,"pede@QuisquevariusNam.net","nuncgyk","2018-01-17 15:43:23"),(32,"quis@dapibusrutrumjusto.com","Suspendisse","2018-05-06 10:07:52"),(33,"commodo.at@mattis.edu","aop6oh,","2017-11-24 16:23:50"),(34,"Nunc.mauris@enimnon.com","mauris,","2017-09-01 00:58:32"),(35,"Sed.auctor@Quisqueimperdiet.net","ultrices.","2018-04-12 14:54:52"),(36,"eget.varius@Suspendissealiquetsem.co.uk","sittt","2018-05-06 13:32:33"),(37,"libero.Morbi.accumsan@Pellentesquetincidunttempus.edu","quis,","2017-10-12 17:02:15"),(38,"vitae.sodales@Maecenasmalesuadafringilla.net","congue,","2018-01-25 04:31:14"),(39,"elit.fermentum.risus@massaMaurisvestibulum.edu","ai567yt","2018-04-08 10:30:36"),(40,"pede.Cras.vulputate@diamDuis.edu","Vivamus","2018-07-20 20:24:32");
+INSERT INTO `credential` (`Id`,`Email`,`Password`,`DateRegistration`) VALUES (41,"In.mi.pede@Morbi.org","tempus","2018-03-20 04:39:59"),(42,"adipiscing.elit@sitamet.org","Morbi","2017-08-31 04:54:49"),(43,"ultricies@Nullamscelerisque.net","dolor,","2018-03-20 01:48:35"),(44,"velit@semperrutrum.com","dictum","2018-01-15 01:34:44"),(45,"justo.Proin.non@sitamet.com","pede.","2017-10-25 12:31:00"),(46,"elit.pharetra@aliquamiaculis.org","Nullam","2018-05-27 12:22:23"),(47,"semper.dui@etmalesuadafames.net","libero","2018-01-07 07:27:47"),(48,"quis.massa@feugiatplacerat.org","lacus.","2018-02-24 13:09:41"),(49,"Vestibulum.ut.eros@faucibusorci.co.uk","Duis","2018-04-07 14:19:17"),(50,"Nulla.semper@purusNullamscelerisque.net","dictum","2018-05-30 11:47:44");
 
-CREATE SCHEMA IF NOT EXISTS `shorty_test` DEFAULT CHARACTER SET utf8 ;
-USE `shorty_test` ;
-
--- -----------------------------------------------------
--- Table `shorty_test`.`__EFMigrationsHistory`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shorty_test`.`__EFMigrationsHistory` (
-  `MigrationId` VARCHAR(95) NOT NULL,
-  `ProductVersion` VARCHAR(32) NOT NULL,
-  PRIMARY KEY (`MigrationId`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `shorty_test`.`profile`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shorty_test`.`profile` (
-  `Id` INT(11) NOT NULL AUTO_INCREMENT,
-  `Login` VARCHAR(32) NOT NULL,
-  `Name` VARCHAR(32) NOT NULL,
-  `LastName` VARCHAR(32) NOT NULL,
-  `Gender` TINYINT(3) NOT NULL DEFAULT '2',
-  `Location` VARCHAR(64) NULL DEFAULT NULL,
-  `Age` TINYINT(3) UNSIGNED NULL DEFAULT NULL,
-  `Photo` VARBINARY(8001) NULL DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  INDEX `idProfile_idx` (`Id` ASC))
-ENGINE = InnoDB
-AUTO_INCREMENT = 51
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `shorty_test`.`credential`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shorty_test`.`credential` (
-  `Id` INT(11) NOT NULL AUTO_INCREMENT,
-  `Email` VARCHAR(64) NOT NULL,
-  `Password` VARCHAR(64) NOT NULL,
-  `DateRegistration` DATETIME(6) NOT NULL,
-  `ProfileRef` INT(11) NOT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC),
-  UNIQUE INDEX `ProfileRef_UNIQUE` (`ProfileRef` ASC),
-  CONSTRAINT `FK_credential_profile_ProfileRef`
-    FOREIGN KEY (`ProfileRef`)
-    REFERENCES `shorty_test`.`profile` (`Id`)
-    ON DELETE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 51
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `shorty_test`.`authorization`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shorty_test`.`authorization` (
-  `Id` INT(11) NOT NULL AUTO_INCREMENT,
-  `SystemStatus` VARCHAR(45) NOT NULL,
-  `DatetimeStart` DATETIME(6) NOT NULL,
-  `DatetimeRequest` DATETIME(6) NOT NULL,
-  `CredentialRef` INT(11) NOT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC),
-  INDEX `IdCredential_idx` (`CredentialRef` ASC),
-  CONSTRAINT `FK_authorization_credential_CredentialRef`
-    FOREIGN KEY (`CredentialRef`)
-    REFERENCES `shorty_test`.`credential` (`Id`)
-    ON DELETE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 101
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `shorty_test`.`followings`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shorty_test`.`followings` (
-  `BloggerRef` INT(11) NOT NULL DEFAULT '0',
-  `SubscriberRef` INT(11) NOT NULL,
-  `Id` INT(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`Id`),
-  INDEX `idBlogger_idx` (`BloggerRef` ASC),
-  INDEX `idSubscriber_idx` (`SubscriberRef` ASC),
-  CONSTRAINT `FK_followings_profile_BloggerRef`
-    FOREIGN KEY (`BloggerRef`)
-    REFERENCES `shorty_test`.`profile` (`Id`)
-    ON DELETE NO ACTION,
-  CONSTRAINT `FK_followings_profile_SubscriberRef`
-    FOREIGN KEY (`SubscriberRef`)
-    REFERENCES `shorty_test`.`profile` (`Id`)
-    ON DELETE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 103
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `shorty_test`.`post`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shorty_test`.`post` (
-  `Id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `Text` VARCHAR(256) NOT NULL,
-  `Datetime` DATETIME NOT NULL,
-  `ProfileRef` INT(11) NOT NULL,
-  PRIMARY KEY (`Id`),
-  INDEX `idProfileAuthor_idx` (`ProfileRef` ASC),
-  CONSTRAINT `FK_post_profile_ProfileRef`
-    FOREIGN KEY (`ProfileRef`)
-    REFERENCES `shorty_test`.`profile` (`Id`)
-    ON DELETE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 101
-DEFAULT CHARACTER SET = utf8;
-
--- deleting table data if exists
-TRUNCATE TABLE profile;
-TRUNCATE TABLE credential;
-TRUNCATE TABLE authorization;
-TRUNCATE TABLE followings;
-TRUNCATE TABLE post;
-
--- insert test data
-INSERT INTO `Profile` (`Id`,`Login`,`Name`,`LastName`) VALUES (1,"Vestibulum","Veronica","Baldwin"),(2,"nisi","Jared","Rasmussen"),(3,"nibh.","Jillian","Hayden"),(4,"Aliquam","Rigel","Burks"),(5,"Nullam","Owen","Emerson"),(6,"et","Bethany","Lloyd"),(7,"nunc","Leilani","Pena"),(8,"Nulla","Teegan","Todd"),(9,"ut","Ramona","Jensen"),(10,"Fusce","Jena","Shields");
-INSERT INTO `Profile` (`Id`,`Login`,`Name`,`LastName`) VALUES (11,"lorem","Charity","Duran"),(12,"nostra,","Martena","Harding"),(13,"Quisque","Raja","Ruiz"),(14,"eleifend","Cheryl","Burgess"),(15,"Phasellus","Solomon","Sweet"),(16,"auctor,","Ulla","Stewart"),(17,"Curabitur","Reese","Pierce"),(18,"orci","Remedios","Hansen"),(19,"risus,","Kay","Holman"),(20,"per","Josiah","Barton");
-INSERT INTO `Profile` (`Id`,`Login`,`Name`,`LastName`) VALUES (21,"rutrum","Curran","Pennington"),(22,"Etiam","Harper","Richards"),(23,"vitae","Tanya","Banks"),(24,"quis","Melvin","Wyatt"),(25,"netus","Aubrey","Moon"),(26,"egestas.","Yuli","Jackson"),(27,"lorem,","Emmanuel","Wise"),(28,"tristique","Aidan","Avery"),(29,"ipsum","Hammett","Howe"),(30,"ut,","Savannah","Delaney");
-INSERT INTO `Profile` (`Id`,`Login`,`Name`,`LastName`) VALUES (31,"Sed","Galvin","Alexander"),(32,"nibh","Tallulah","Mcgee"),(33,"velit.","Leonard","Castro"),(34,"eleifend,","Jasmine","Baker"),(35,"Phasellus","Sarah","Mcconnell"),(36,"montes,","Zelda","Hays"),(37,"molestie","Mariko","Bright"),(38,"dolor.","Hilary","Burton"),(39,"ornare,","Meghan","Howell"),(40,"enim.","Timothy","Vinson");
-INSERT INTO `Profile` (`Id`,`Login`,`Name`,`LastName`) VALUES (41,"iaculis","Kirk","Chapman"),(42,"pharetra.","Neve","Hendrix"),(43,"adipiscing","Velma","Bowers"),(44,"aliquet.","Ariel","Mcguire"),(45,"Aenean","Camden","Dillard"),(46,"vel","Cleo","Ferguson"),(47,"tempus","Sean","Padilla"),(48,"vestibulum","Rebekah","Mills"),(49,"arcu","Holmes","Mckay"),(50,"adipiscing,","Robert","Alford");
-
-INSERT INTO `credential` (`Id`,`ProfileRef`,`Email`,`Password`,`DateRegistration`) VALUES (1,1,"rutrum.justo.Praesent@nec.net","mi","2018-05-16 16:59:28"),(2,2,"amet.luctus.vulputate@nec.org","vestibulum","2018-01-12 21:27:21"),(3,3,"ligula.Aenean.euismod@sem.edu","orci","2017-12-20 20:05:42"),(4,4,"nulla.Integer@nuncsitamet.com","Aenean","2017-09-02 18:03:18"),(5,5,"netus@orci.com","dictum.","2018-04-28 01:55:51"),(6,6,"dolor.Donec.fringilla@elit.edu","tortor.","2018-03-30 23:08:34"),(7,7,"eu.nibh@eteros.edu","et,","2017-08-27 06:34:46"),(8,8,"Integer.mollis.Integer@Praesentinterdum.ca","ipsum","2017-12-05 00:40:05"),(9,9,"lobortis@ipsum.co.uk","orci.","2017-11-22 13:01:10"),(10,10,"neque.pellentesque.massa@orciUt.net","velit.","2018-06-28 01:00:15");
-INSERT INTO `credential` (`Id`,`ProfileRef`,`Email`,`Password`,`DateRegistration`) VALUES (11,11,"elit@egetmollislectus.com","Nam","2018-03-09 14:56:14"),(12,12,"ac@Phasellusataugue.com","orci.","2017-11-18 07:28:58"),(13,13,"id@tellus.co.uk","mattis.","2018-07-25 11:59:29"),(14,14,"convallis@estmauris.net","a,","2018-04-02 03:26:32"),(15,15,"dui.Fusce.diam@Integerinmagna.edu","ipsum","2018-07-04 10:00:18"),(16,16,"ut.dolor.dapibus@Nunc.com","aptent","2018-01-18 05:28:55"),(17,17,"sed@ipsumprimisin.co.uk","vitae,","2017-12-05 10:13:31"),(18,18,"Nunc.ut.erat@sit.co.uk","pede,","2018-04-22 12:44:26"),(19,19,"dolor@risusMorbi.net","scelerisque","2018-01-30 12:43:06"),(20,20,"lacinia@primisin.ca","convallis","2018-04-07 23:33:06");
-INSERT INTO `credential` (`Id`,`ProfileRef`,`Email`,`Password`,`DateRegistration`) VALUES (21,21,"placerat.orci@hendreritDonecporttitor.edu","ornare.","2017-08-18 02:14:53"),(22,22,"mi.tempor@lectusa.edu","Nulla","2018-04-04 07:05:13"),(23,23,"magna@nequevenenatislacus.ca","mollis.","2018-04-25 03:18:39"),(24,24,"quam.dignissim.pharetra@Duisgravida.edu","Nullam","2018-03-10 07:18:50"),(25,25,"ante.Vivamus.non@ami.net","imperdiet","2018-05-10 21:41:03"),(26,26,"Ut.tincidunt.vehicula@risusNuncac.com","tristique","2017-11-27 15:20:10"),(27,27,"magna.nec@enimgravida.ca","tempus","2018-06-06 05:02:24"),(28,28,"pede.Cum.sociis@Donec.co.uk","nunc","2018-07-20 18:12:22"),(29,29,"neque@Donec.ca","volutpat.","2018-07-02 20:07:58"),(30,30,"ac.mattis.velit@arcuiaculisenim.org","sed,","2018-07-17 02:18:34");
-INSERT INTO `credential` (`Id`,`ProfileRef`,`Email`,`Password`,`DateRegistration`) VALUES (31,31,"pede@QuisquevariusNam.net","nunc","2018-01-17 15:43:23"),(32,32,"quis@dapibusrutrumjusto.com","Suspendisse","2018-05-06 10:07:52"),(33,33,"commodo.at@mattis.edu","a,","2017-11-24 16:23:50"),(34,34,"Nunc.mauris@enimnon.com","mauris,","2017-09-01 00:58:32"),(35,35,"Sed.auctor@Quisqueimperdiet.net","ultrices.","2018-04-12 14:54:52"),(36,36,"eget.varius@Suspendissealiquetsem.co.uk","sit","2018-05-06 13:32:33"),(37,37,"libero.Morbi.accumsan@Pellentesquetincidunttempus.edu","quis,","2017-10-12 17:02:15"),(38,38,"vitae.sodales@Maecenasmalesuadafringilla.net","congue,","2018-01-25 04:31:14"),(39,39,"elit.fermentum.risus@massaMaurisvestibulum.edu","at","2018-04-08 10:30:36"),(40,40,"pede.Cras.vulputate@diamDuis.edu","Vivamus","2018-07-20 20:24:32");
-INSERT INTO `credential` (`Id`,`ProfileRef`,`Email`,`Password`,`DateRegistration`) VALUES (41,41,"In.mi.pede@Morbi.org","tempus","2018-03-20 04:39:59"),(42,42,"adipiscing.elit@sitamet.org","Morbi","2017-08-31 04:54:49"),(43,43,"ultricies@Nullamscelerisque.net","dolor,","2018-03-20 01:48:35"),(44,44,"velit@semperrutrum.com","dictum","2018-01-15 01:34:44"),(45,45,"justo.Proin.non@sitamet.com","pede.","2017-10-25 12:31:00"),(46,46,"elit.pharetra@aliquamiaculis.org","Nullam","2018-05-27 12:22:23"),(47,47,"semper.dui@etmalesuadafames.net","libero","2018-01-07 07:27:47"),(48,48,"quis.massa@feugiatplacerat.org","lacus.","2018-02-24 13:09:41"),(49,49,"Vestibulum.ut.eros@faucibusorci.co.uk","Duis","2018-04-07 14:19:17"),(50,50,"Nulla.semper@purusNullamscelerisque.net","dictum","2018-05-30 11:47:44");
+INSERT INTO `Profile` (`Id`,`CredenitialRef`,`Login`,`Name`,`LastName`) VALUES (1,1,"Vestibulum","Veronica","Baldwin"),(2,2,"nisi","Jared","Rasmussen"),(3,3,"nibh","Jillian","Hayden"),(4,4,"Aliquam","Rigel","Burks"),(5,5,"Nullam","Owen","Emerson"),(6,6,"et","Bethany","Lloyd"),(7,7,"nunc","Leilani","Pena"),(8,8,"Nulla","Teegan","Todd"),(9,9,"ut","Ramona","Jensen"),(10,10,"Fusce","Jena","Shields");
+INSERT INTO `Profile` (`Id`,`CredenitialRef`,`Login`,`Name`,`LastName`) VALUES (11,11,"lorem","Charity","Duran"),(12,12,"nostra,","Martena","Harding"),(13,13,"Quisque","Raja","Ruiz"),(14,14,"eleifend","Cheryl","Burgess"),(15,15,"Phasellus","Solomon","Sweet"),(16,16,"auctor","Ulla","Stewart"),(17,17,"Curabitur","Reese","Pierce"),(18,18,"orci","Remedios","Hansen"),(19,19,"risus","Kay","Holman"),(20,20,"pery","Josiah","Barton");
+INSERT INTO `Profile` (`Id`,`CredenitialRef`,`Login`,`Name`,`LastName`) VALUES (21,21,"rutrum","Curran","Pennington"),(22,22,"Etiam","Harper","Richards"),(23,23,"vitae","Tanya","Banks"),(24,24,"quis","Melvin","Wyatt"),(25,25,"netus","Aubrey","Moon"),(26,26,"egestas.","Yuli","Jackson"),(27,27,"lorem","Emmanuel","Wise"),(28,28,"tristique","Aidan","Avery"),(29,29,"ipsum","Hammett","Howe"),(30,30,"utty","Savannah","Delaney");
+INSERT INTO `Profile` (`Id`,`CredenitialRef`,`Login`,`Name`,`LastName`) VALUES (31,31,"Sed","Galvin","Alexander"),(32,32,"nibh","Tallulah","Mcgee"),(33,33,"velit","Leonard","Castro"),(34,34,"eleifend","Jasmine","Baker"),(35,35,"Phasellus","Sarah","Mcconnell"),(36,36,"montes,","Zelda","Hays"),(37,37,"molestie","Mariko","Bright"),(38,38,"dolor","Hilary","Burton"),(39,39,"ornare","Meghan","Howell"),(40,40,"enim","Timothy","Vinson");
+INSERT INTO `Profile` (`Id`,`CredenitialRef`,`Login`,`Name`,`LastName`) VALUES (41,41,"iaculis","Kirk","Chapman"),(42,42,"pharetra","Neve","Hendrix"),(43,43,"adipiscing","Velma","Bowers"),(44,44,"aliquet","Ariel","Mcguire"),(45,45,"Aenean","Camden","Dillard"),(46,46,"vel","Cleo","Ferguson"),(47,47,"tempus","Sean","Padilla"),(48,48,"vestibulum","Rebekah","Mills"),(49,49,"arcu","Holmes","Mckay"),(50,50,"adipiscing","Robert","Alford");
 
 INSERT INTO `post` (`Id`,`ProfileRef`,`Text`,`DateTime`) VALUES (1,30,"vitae, sodales at, velit. Pellentesque ultricies dignissim lacus. Aliquam rutrum","2019-08-25 22:20:39"),(2,10,"id risus quis diam luctus lobortis. Class aptent taciti sociosqu","2019-08-25 00:44:57"),(3,27,"Maecenas mi felis, adipiscing fringilla, porttitor vulputate, posuere vulputate, lacus.","2019-08-17 21:13:45"),(4,13,"odio. Nam interdum enim non nisi. Aenean eget metus. In","2019-08-16 21:00:04"),(5,33,"Fusce fermentum fermentum arcu. Vestibulum ante ipsum primis in faucibus","2019-08-24 09:58:51"),(6,40,"Fusce diam nunc, ullamcorper eu, euismod ac, fermentum vel, mauris.","2019-08-08 16:16:53"),(7,39,"nisi. Cum sociis natoque penatibus et magnis dis parturient montes,","2019-08-11 20:51:49"),(8,39,"imperdiet dictum magna. Ut tincidunt orci quis lectus. Nullam suscipit,","2019-08-27 11:57:34"),(9,28,"faucibus lectus, a sollicitudin orci sem eget massa. Suspendisse eleifend.","2019-08-25 10:57:17"),(10,32,"amet, consectetuer adipiscing elit. Aliquam auctor, velit eget laoreet posuere,","2019-08-20 02:45:55");
 INSERT INTO `post` (`Id`,`ProfileRef`,`Text`,`DateTime`) VALUES (11,44,"dis parturient montes, nascetur ridiculus mus. Donec dignissim magna a","2019-08-19 17:00:14"),(12,38,"mollis dui, in sodales elit erat vitae risus. Duis a","2019-08-26 10:56:46"),(13,34,"mauris a nunc. In at pede. Cras vulputate velit eu","2019-08-16 22:18:01"),(14,28,"tempor, est ac mattis semper, dui lectus rutrum urna, nec","2019-08-21 06:05:52"),(15,49,"auctor quis, tristique ac, eleifend vitae, erat. Vivamus nisi. Mauris","2019-08-13 16:45:00"),(16,13,"Duis gravida. Praesent eu nulla at sem molestie sodales. Mauris","2019-08-26 22:20:36"),(17,14,"mauris, rhoncus id, mollis nec, cursus a, enim. Suspendisse aliquet,","2019-08-12 04:22:18"),(18,28,"arcu. Vestibulum ante ipsum primis in faucibus orci luctus et","2019-08-06 02:04:52"),(19,12,"Suspendisse eleifend. Cras sed leo. Cras vehicula aliquet libero. Integer","2019-08-20 06:14:53"),(20,3,"vulputate dui, nec tempus mauris erat eget ipsum. Suspendisse sagittis.","2019-08-16 21:50:38");
@@ -171,8 +43,3 @@ INSERT INTO `authorization` (`Id`,`CredentialRef`,`SystemStatus`,`DatetimeStart`
 INSERT INTO `authorization` (`Id`,`CredentialRef`,`SystemStatus`,`DatetimeStart`,`DatetimeRequest`) VALUES (71,25,1,"2019-08-20 07:26:56","2019-09-20 01:36:57"),(72,49,0,"2019-08-16 00:09:29","2019-09-12 15:19:53"),(73,45,1,"2019-08-07 11:12:54","2019-09-10 14:33:06"),(74,41,1,"2019-08-07 14:03:01","2019-09-08 00:52:13"),(75,8,0,"2019-08-17 10:04:33","2019-09-06 13:19:52"),(76,25,0,"2019-08-28 04:19:14","2019-09-02 00:59:32"),(77,30,0,"2019-08-24 15:48:53","2019-09-19 05:27:42"),(78,24,1,"2019-08-16 19:09:04","2019-09-28 21:27:39"),(79,21,1,"2019-08-21 17:02:37","2019-09-21 15:12:38"),(80,19,1,"2019-08-27 02:08:14","2019-09-11 06:40:50");
 INSERT INTO `authorization` (`Id`,`CredentialRef`,`SystemStatus`,`DatetimeStart`,`DatetimeRequest`) VALUES (81,43,1,"2019-08-17 18:23:39","2019-09-14 23:15:02"),(82,42,1,"2019-08-12 03:54:25","2019-09-24 10:20:56"),(83,4,0,"2019-08-30 21:00:06","2019-09-17 19:18:08"),(84,48,1,"2019-08-12 03:39:48","2019-09-08 17:28:18"),(85,42,1,"2019-08-14 04:13:11","2019-09-08 09:16:27"),(86,29,0,"2019-08-27 11:49:41","2019-09-05 16:44:43"),(87,18,1,"2019-08-07 18:40:48","2019-09-26 14:56:52"),(88,48,0,"2019-08-29 22:16:47","2019-09-08 03:35:44"),(89,31,0,"2019-08-18 05:05:02","2019-09-14 12:49:35"),(90,41,0,"2019-08-22 03:59:30","2019-09-25 01:12:07");
 INSERT INTO `authorization` (`Id`,`CredentialRef`,`SystemStatus`,`DatetimeStart`,`DatetimeRequest`) VALUES (91,35,1,"2019-08-16 23:32:47","2019-09-03 16:17:08"),(92,38,1,"2019-08-29 05:41:23","2019-09-30 13:19:38"),(93,36,0,"2019-08-31 19:10:51","2019-09-28 21:25:56"),(94,40,0,"2019-08-11 16:20:43","2019-09-30 18:43:14"),(95,25,1,"2019-08-07 19:49:49","2019-09-25 02:09:35"),(96,50,1,"2019-08-27 08:22:37","2019-09-04 12:07:56"),(97,25,1,"2019-08-27 06:14:37","2019-09-15 07:11:59"),(98,6,1,"2019-08-19 07:42:53","2019-09-28 00:53:49"),(99,32,0,"2019-08-06 23:59:36","2019-09-22 09:00:16"),(100,22,0,"2019-08-18 18:39:27","2019-09-30 08:29:19");
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

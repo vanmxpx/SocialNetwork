@@ -71,10 +71,10 @@ namespace SocialNetwork.Tests
         [InlineData(41, "iaculis")]
         [InlineData(13, "Quisque")]
         [InlineData(24, "quis")]
-        public void GetByLoginTest_Profile_Expected(int id, string login)
+        public async void GetByLoginTest_Profile_Expected(int id, string login)
         {   
             //WHEN
-            Profile profile = repository.GetByLogin(login).Result;
+            Profile profile = await repository.GetByLogin(login);
             //THEN
             Assert.Equal(id, profile.Id);
         }
