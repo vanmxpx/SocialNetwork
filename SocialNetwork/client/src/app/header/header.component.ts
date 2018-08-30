@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ThemePalette } from '@angular/material/core';
 import { AuthenticationService } from '../services';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 import {
   MatButtonModule,
@@ -50,17 +50,19 @@ export class HeaderComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver,
-              private authenticationService: AuthenticationService,
-              private router: Router) {
-         }
+    private authenticationService: AuthenticationService,
+    private router: Router) {
+  }
 
-  Logout(){
+  Logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
 
-  MyProfile(){
-      let login=JSON.parse(localStorage.getItem('login'));
-      this.router.navigate(['/profile'] + login);
+  MyProfile() {
+    let login = JSON.parse(localStorage.getItem('login'));
+    if (login) {
+      this.router.navigate(['/profile/'  + login]);
+    }
   }
 }
