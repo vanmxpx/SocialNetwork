@@ -70,7 +70,7 @@ namespace SocialNetwork.Tests
                 }
                 List<Profile> profiles = JsonConvert.DeserializeObject<List<Profile>>(jsonString);
                 Assert.NotNull(profiles);
-                Assert.Equal(1, profiles.Count);
+                Assert.Equal(2, profiles.Count);
             }
         }
 
