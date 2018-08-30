@@ -15,8 +15,6 @@ namespace SocialNetwork.Services
 
         }
 
-        public override event Action<bool> Finalize;
-
         public override async Task SendConfirmEmailAsync(string email, string password)
         {
             await SendEmailAsync(email, "Confirm email", "http://localhost:5000/api/credential/" + email + "/" + Sha256Service.Convert(email + password));

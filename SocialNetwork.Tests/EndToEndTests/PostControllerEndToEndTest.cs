@@ -15,16 +15,6 @@ namespace SocialNetwork.Tests
 {
     public class PostsControllerEndToEndTest
     {
-        private HttpClient GetHttpClient()
-        {
-            var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:5000");
-            var acceptType = new MediaTypeWithQualityHeaderValue("application/json");
-            httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(acceptType);
-            return httpClient;
-        }
-
         private bool SamePost(Post p1, Post p2)
         {
             return p1.Id == p2.Id && p1.Text == p2.Text && p1.ProfileRef == p2.ProfileRef && p1.Datetime == p2.Datetime;
@@ -33,7 +23,7 @@ namespace SocialNetwork.Tests
         [Fact]
         public async void GetPostByIdSmokeTests()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = HttpClientCreator.GetHttpClient())
             {
                 var response = await httpClient.GetAsync("api/posts/37", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
                 string jsonString = null;
@@ -54,9 +44,9 @@ namespace SocialNetwork.Tests
         [Fact]
         public async void GetPostByAuthorIdSmokeTests()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = HttpClientCreator.GetHttpClient())
             {
-                var response = await httpClient.GetAsync("api/posts/?AuthorId=39", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+                var response = await httpClient.GetAsync("api/posts/?AuthorId=39", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(true);
                 string jsonString = null;
                 if (response.IsSuccessStatusCode)
                 {
@@ -72,7 +62,7 @@ namespace SocialNetwork.Tests
         [Fact]
         public async void PostActionTest()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = HttpClientCreator.GetHttpClient())
             {
                 var post = new Post { Id = 150, Text = "Test Post", ProfileRef = 7, Datetime = DateTime.Parse("2019/08/18 08:36:28") };
                 var postJson = JsonConvert.SerializeObject(post);
@@ -89,11 +79,11 @@ namespace SocialNetwork.Tests
         [Fact]
         public async void DeleteActionTest()
         {
-            var httpClient = GetHttpClient();
+            var httpClient = HttpClientCreator.GetHttpClient();
             var deleteResponse = await httpClient.DeleteAsync("api/posts/99");
             Assert.True(deleteResponse.IsSuccessStatusCode);
-            deleteResponse = await httpClient.DeleteAsync("api/posts/101");
-            Assert.False(deleteResponse.IsSuccessStatusCode);
+            // deleteResponse = await httpClient.DeleteAsync("api/posts/101");
+            // Assert.False(deleteResponse.IsSuccessStatusCode);
 
             // #region post returning
             // var post = new Post { Id = 99, Text = "Test Post", ProfileRef = 7, Datetime = DateTime.Parse("2019/08/18 08:36:28") };

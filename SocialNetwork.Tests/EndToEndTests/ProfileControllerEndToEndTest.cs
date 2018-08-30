@@ -15,20 +15,11 @@ namespace SocialNetwork.Tests
 {
     public class ProfileControllerEndToEndTest
     {
-        private HttpClient GetHttpClient()
-        {
-            var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:5000");
-            var acceptType = new MediaTypeWithQualityHeaderValue("application/json");
-            httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(acceptType);
-            return httpClient;
-        }
 
         [Fact]
         public async void GetProfileByIdSmokeTests()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = HttpClientCreator.GetHttpClient())
             {
                 var response = await httpClient.GetAsync("api/profiles/37", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
                 string jsonString = null;
@@ -49,7 +40,7 @@ namespace SocialNetwork.Tests
         [Fact]
         public async void GetProfileByLoginSmokeTests()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = HttpClientCreator.GetHttpClient())
             {
                 var response = await httpClient.GetAsync("api/profiles/login/?login=Fusce", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
                 string jsonString = null;
@@ -68,7 +59,7 @@ namespace SocialNetwork.Tests
         [Fact]
         public async void GetProfileByNameIdSmokeTests()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = HttpClientCreator.GetHttpClient())
             {
                 var response = await httpClient.GetAsync("api/profiles/name/?name=Kirk&lastName=Chapman", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
                 string jsonString = null;
@@ -79,8 +70,16 @@ namespace SocialNetwork.Tests
                 }
                 List<Profile> profiles = JsonConvert.DeserializeObject<List<Profile>>(jsonString);
                 Assert.NotNull(profiles);
-                Assert.Equal(2, profiles.Count);
+                Assert.Equal(1, profiles.Count);
             }
+        }
+
+        [Fact]
+        public async void DeleteActionTest()
+        {
+            var httpClient = HttpClientCreator.GetHttpClient();
+            var deleteResponse = await httpClient.DeleteAsync("api/profiles/50");
+            Assert.True(deleteResponse.IsSuccessStatusCode);
         }
     }
 }

@@ -12,7 +12,8 @@ namespace SocialNetwork.Controllers
 {
     [Authorize]
     [Route("/api/[controller]")]
-    public class CredentialsController : Controller
+    [Produces("application/json")]
+    public class CredentialsController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IConfigProvider provider;
@@ -23,7 +24,6 @@ namespace SocialNetwork.Controllers
             this.provider = provider;
         }
 
-
         [HttpGet("{email}")]
         public async Task<ActionResult> GetByEmail(string email)
         {
@@ -31,7 +31,7 @@ namespace SocialNetwork.Controllers
             if (Credential == null)
                 return NotFound();
             else
-                return new OkObjectResult(Json(Credential));
+                return new OkObjectResult(Credential);
         }
 
         // DELETE api/credentials/50
@@ -56,22 +56,21 @@ namespace SocialNetwork.Controllers
         [HttpPost("{email}/{Login}/{password}/{name}/{lastName}")]
         public async Task<IActionResult> Register(string email, string login, string password, string name = null, string lastName = null)
         {
-
             Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
             Profile prof = await unitOfWork.ProfileRepository.GetByLogin(login);
             EmailSender emailService = new MailKitSender(provider.STMPConnection);
 
             if (cred != null)
-                return Ok("The Email already exist");
+                return BadRequest("The Email already exist");
             if (prof != null)
-                return Ok("The Login already exist");
+                return BadRequest("The Login already exist");
 
             int timeout = provider.STMPConnection.TimeOut;
             var task = emailService.SendConfirmEmailAsync(email,password);
             if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
             {
                 if (task.IsFaulted)
-                    return Ok("Incorrect email");
+                    return BadRequest("Incorrect email");
 
                 prof = new Profile()
                 {
@@ -98,7 +97,7 @@ namespace SocialNetwork.Controllers
             }
             else
             {
-                return Ok("TimeOut");
+                return BadRequest("TimeOut");
             }
         }
 
@@ -118,10 +117,10 @@ namespace SocialNetwork.Controllers
                     return Ok("Yeah it's work");
                 }
                 else
-                    return Ok("Broken link");
+                    return BadRequest("Broken link");
             }
             else
-                return Ok("link is outdated");
+                return BadRequest("link is outdated");
         }
     }
 }
