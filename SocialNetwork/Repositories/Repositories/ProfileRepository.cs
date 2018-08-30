@@ -17,6 +17,12 @@ namespace SocialNetwork.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
+        public async Task<Profile> GetByCredentialId(int id)
+        {
+            return await Context.Set<Profile>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.CredenitialRef == id);
+        }
         public async Task<Profile> GetByLogin(string login)
         {
             return await Context.Set<Profile>()
@@ -29,12 +35,13 @@ namespace SocialNetwork.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Name == name && e.LastName == lastName);
         }
+
         public void Delete(Profile profile)
         {
             Context.Set<Profile>().Remove(profile);
         }
 
-                public async Task<List<Profile>> GetSuscribersById(int idBloger)
+        public async Task<List<Profile>> GetSuscribersById(int idBloger)
         {
             List<Followings> followings = await Context.Set<Followings>()
                 .AsNoTracking()

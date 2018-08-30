@@ -10,11 +10,10 @@
     </div>
     <img class="avatar" [matMenuTriggerFor]="menu" src="./assets/img/user-full.jpg">
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>Profile</button>
+      <button  value="click" (click)="MyProfile()" mat-menu-item >Profile</button>
       <button mat-menu-item routerLink="/settings">Settings</button>
       <mat-divider></mat-divider>
-      <button mat-menu-item>Log out</button>
+      <button value="click" (click)="Logout()" mat-menu-item>Logout</button>
     </mat-menu>
-
   </mat-toolbar>
 </div>

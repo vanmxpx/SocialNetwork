@@ -3,7 +3,9 @@ import { Component, OnInit, Input } from '@angular/core';
 // import { Observable } from 'rxjs';
 // import { map } from 'rxjs/operators';
 import { ThemePalette } from '@angular/material/core';
-
+import { Router } from '@angular/router';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -21,5 +23,17 @@ export class HeaderComponent {
   //   );
 
   // constructor(private breakpointObserver: BreakpointObserver) { }
-  constructor() { }
+  constructor(private breakpointObserver: BreakpointObserver,
+    private authenticationService: AuthenticationService,
+    private router: Router) {
+  }
+  Logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+  }
+
+  MyProfile() {
+    const login = JSON.parse(localStorage.getItem('login'));
+    this.router.navigate(['/profile'] + login);
+  }
 }
