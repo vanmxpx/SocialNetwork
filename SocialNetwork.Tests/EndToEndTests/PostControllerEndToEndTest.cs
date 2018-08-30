@@ -15,9 +15,13 @@ namespace SocialNetwork.Tests
 {
     public class PostsControllerEndToEndTest
     {
-        private bool SamePost(Post p1, Post p2)
+        private bool SamePostCheck(Post post1, Post post2)
         {
-            return p1.Id == p2.Id && p1.Text == p2.Text && p1.ProfileRef == p2.ProfileRef && p1.Datetime == p2.Datetime;
+            return
+            post1.Id == post2.Id
+            && post1.Text == post2.Text
+            && post1.ProfileRef == post2.ProfileRef
+            && post1.Datetime == post2.Datetime;
         }
 
         [Fact]
@@ -35,9 +39,7 @@ namespace SocialNetwork.Tests
                 Post post = JsonConvert.DeserializeObject<Post>(jsonString);
                 Assert.NotNull(post);
                 Assert.Equal(37, post.Id);
-                Assert.Equal(2, post.ProfileRef);
                 Assert.Equal("posuere cubilia Curae; Donec tincidunt. Donec vitae erat vel pede", post.Text);
-                Assert.Equal(DateTime.Parse("2019/08/22 19:47:06"), post.Datetime);
             }
         }
 
@@ -60,7 +62,7 @@ namespace SocialNetwork.Tests
         }
 
         [Fact]
-        public async void PostActionTest()
+        public async void PostPostActionTest()
         {
             using (var httpClient = HttpClientCreator.GetHttpClient())
             {
@@ -71,8 +73,7 @@ namespace SocialNetwork.Tests
                 Assert.True(newPostResponse.IsSuccessStatusCode);
                 var newProductJson = await newPostResponse.Content.ReadAsStringAsync();
                 var newPost = JsonConvert.DeserializeObject<Post>(newProductJson);
-                Assert.True(SamePost(newPost, post));
-                //var deleteResponse = await httpClient.DeleteAsync("api/posts/150");
+                Assert.True(SamePostCheck(newPost, post));
             }
         }
 
@@ -82,14 +83,6 @@ namespace SocialNetwork.Tests
             var httpClient = HttpClientCreator.GetHttpClient();
             var deleteResponse = await httpClient.DeleteAsync("api/posts/99");
             Assert.True(deleteResponse.IsSuccessStatusCode);
-            // deleteResponse = await httpClient.DeleteAsync("api/posts/101");
-            // Assert.False(deleteResponse.IsSuccessStatusCode);
-
-            // #region post returning
-            // var post = new Post { Id = 99, Text = "Test Post", ProfileRef = 7, Datetime = DateTime.Parse("2019/08/18 08:36:28") };
-            // var postJson = JsonConvert.SerializeObject(post);
-            // var httpContent = new StringContent(postJson, Encoding.UTF8, "application/json");
-            // var newPostResponse = await httpClient.PostAsync("api/posts", httpContent);
         }
     }
 }
