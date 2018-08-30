@@ -12,7 +12,8 @@ const routes: Routes = [
     component: UserPageComponent,
     runGuardsAndResolvers: 'always'
   },
-  { path: 'registration', component: RegistrationComponent }
+  { path: 'registration', component: RegistrationComponent },
+//  { path: '**', pathMatch: 'full', component: PathNotFoundComponent },
 ];
 
 

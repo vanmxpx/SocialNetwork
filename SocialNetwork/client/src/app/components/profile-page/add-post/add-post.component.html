@@ -1,0 +1,11 @@
+<form class="example-form">
+    <mat-form-field class="full-width" hintLabel="Max 256 characters">
+      <textarea #newPost
+  (keyup.enter)="addPost(newPost.value)" matInput
+   maxlength="256"
+   placeholder="Create a new post"></textarea>
+      <mat-hint align="end">{{newPost.value?.length || 0}}/256</mat-hint>
+    </mat-form-field>
+    <span class="fill-remaining-space"></span>
+    <button mat-fab color="primary" (click)="addPost(newPost.value)">Add</button>
+  </form>
