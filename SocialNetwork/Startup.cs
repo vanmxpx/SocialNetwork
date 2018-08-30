@@ -135,7 +135,7 @@ namespace SocialNetwork
                 // запросы на другой домен, порт и т.д.. Все это в целях безопасности)
                 app.UseCors(builder =>
                     builder.WithOrigins("http://localhost:4200")
-                        .AllowAnyHeader()
+                        .AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()
                 );
             }
             else

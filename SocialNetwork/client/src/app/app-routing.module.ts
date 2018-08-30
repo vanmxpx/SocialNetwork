@@ -7,10 +7,9 @@ import { AuthGuard } from './guards';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full',  runGuardsAndResolvers: 'always', canActivate:[AuthGuard] },
-  { path: 'profile/:login', component: UserPageComponent, runGuardsAndResolvers: 'always'},
+  { path: 'profile/:login', component: UserPageComponent, runGuardsAndResolvers: 'always', canActivate:[AuthGuard]},
   { path: 'login', component: LoginComponent, runGuardsAndResolvers: 'always'}
 ];
-
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
