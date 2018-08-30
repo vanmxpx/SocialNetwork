@@ -1,0 +1,22 @@
+<mat-tab-group>
+  <mat-tab label="Posts">
+    <ng-template matTabContent>
+      <app-post [posts]="posts"></app-post>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Subscribers">
+    <ng-template matTabContent>
+      <app-followers [profiles]="subscribers"></app-followers>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Bloggers">
+    <ng-template matTabContent>
+      <app-followers [profiles]="bloggers"></app-followers>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="News">
+    <ng-template matTabContent>
+        <app-post [posts]="news"></app-post>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

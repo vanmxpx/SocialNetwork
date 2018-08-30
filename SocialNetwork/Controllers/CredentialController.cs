@@ -12,7 +12,8 @@ namespace SocialNetwork.Controllers
 {
     [Authorize]
     [Route("/api/[controller]")]
-    public class CredentialsController : Controller
+    [Produces("application/json")]
+    public class CredentialsController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IConfigProvider provider;
@@ -23,7 +24,6 @@ namespace SocialNetwork.Controllers
             this.provider = provider;
         }
 
-
         [HttpGet("{email}")]
         public async Task<ActionResult> GetByEmail(string email)
         {
@@ -31,7 +31,7 @@ namespace SocialNetwork.Controllers
             if (Credential == null)
                 return NotFound();
             else
-                return new OkObjectResult(Json(Credential));
+                return new OkObjectResult(Credential);
         }
 
         // DELETE api/credentials/50
