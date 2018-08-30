@@ -7,21 +7,20 @@ namespace SocialNetwork.Tests
 {
     public class DbContextCreator
     {
-        private static ShortyContext context;
+        private ShortyContext context;
         private static Initializer initializer;
-        public  static ShortyContext GetDbContext()
+        public   ShortyContext GetDbContext()
         {
-            if(context == null)
-            {
+
                 var optionsBuilder = new DbContextOptionsBuilder<ShortyContext>();
-                optionsBuilder.UseMySql("server=localhost;port=3306;database=shorty_test;username=root;password=NEWPASSWORD");  
+                optionsBuilder.UseMySql("server=localhost;port=3306;database=shorty_test;username=root;password=root");  
                 context = new ShortyContext(optionsBuilder.Options);
                 initializer = new Initializer(context);
-            }
+          
             RefreshDBData();
             return context;
         }
-        private static async void RefreshDBData()
+        private  async void RefreshDBData()
         {
             await initializer.DeleteAll();
             await initializer.Seed();

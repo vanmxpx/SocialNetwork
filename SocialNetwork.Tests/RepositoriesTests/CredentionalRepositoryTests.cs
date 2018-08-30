@@ -15,7 +15,7 @@ namespace SocialNetworkTests
         public CredentionalRepositoryTests()
         {
              //INITIALIZATION
-             this.repository = new CredentialRepository(DbContextCreator.GetDbContext());
+             this.repository = new CredentialRepository(new DbContextCreator().GetDbContext());
         }
 
         [Theory]

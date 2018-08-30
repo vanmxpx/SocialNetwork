@@ -16,7 +16,7 @@ namespace SocialNetwork.Tests
         public PostRepositoryTests()
         {
             //INITIALIZATION
-             this.repository = new PostRepository(DbContextCreator.GetDbContext());
+             this.repository = new PostRepository(new DbContextCreator().GetDbContext());
         }
 
         [Theory]

@@ -14,7 +14,7 @@ namespace SocialNetworkTests
         public AuthorizationRepositoryTests()
         {
              //INITIALIZATION
-             this.repository = new AuthorizationRepository(DbContextCreator.GetDbContext());
+             this.repository = new AuthorizationRepository(new DbContextCreator().GetDbContext());
         }
 
         [Theory]

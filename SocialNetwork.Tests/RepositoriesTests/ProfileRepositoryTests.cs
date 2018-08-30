@@ -14,7 +14,7 @@ namespace SocialNetwork.Tests
         private readonly ProfileRepository repository;
         public  ProfileRepositoryTests(){
             //INITIALIZATION
-            this.repository = new ProfileRepository(DbContextCreator.GetDbContext());
+            this.repository = new ProfileRepository(new DbContextCreator().GetDbContext());
         }    
         
 
@@ -22,11 +22,11 @@ namespace SocialNetwork.Tests
         [InlineData(1,"Vestibulum")]
         [InlineData(11,"lorem")]
         [InlineData(42,"pharetra.")]
-        [InlineData(50,"adipiscing,")]
-        public void GetByIdTest_Profile_Expected(int id, string login)
+        [InlineData(50,"adipiscing")]
+        public async void GetByIdTest_Profile_Expected(int id, string login)
         {   
             //WHEN
-            Profile profile = repository.GetById(id).Result;
+            Profile profile = await repository.GetById(id);
             //THEN
             Assert.Equal(login, profile.Login);
         }
