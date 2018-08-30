@@ -11,14 +11,14 @@ namespace SocialNetwork.Services.Extentions
 {
     public static class DbInitialApplicationExtention
     {
-        public static void UseBDScripts(this IApplicationBuilder app, IHostingEnvironment env, IConfigProvider provider, Intitializer ini)
+        public static void UseBDScripts(this IApplicationBuilder app, IHostingEnvironment env, IConfigProvider provider, Initializer ini)
         {
             if (env.IsDevelopment())
             {
                 if (provider.DatabaseScriptsOption.InitialRemove)
                     ini.DeleteAll().Wait();
                 if (provider.DatabaseScriptsOption.InitialFill)
-                    ini.Seed().Wait();
+                    ini.Seed(false).Wait();
 
             }
 

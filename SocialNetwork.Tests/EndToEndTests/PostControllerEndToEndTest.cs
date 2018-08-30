@@ -15,25 +15,19 @@ namespace SocialNetwork.Tests
 {
     public class PostsControllerEndToEndTest
     {
-        private HttpClient GetHttpClient()
+        private bool SamePostCheck(Post post1, Post post2)
         {
-            var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:5000");
-            var acceptType = new MediaTypeWithQualityHeaderValue("application/json");
-            httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(acceptType);
-            return httpClient;
-        }
-
-        private bool SamePost(Post p1, Post p2)
-        {
-            return p1.Id == p2.Id && p1.Text == p2.Text && p1.ProfileRef == p2.ProfileRef && p1.Datetime == p2.Datetime;
+            return
+            post1.Id == post2.Id
+            && post1.Text == post2.Text
+            && post1.ProfileRef == post2.ProfileRef
+            && post1.Datetime == post2.Datetime;
         }
 
         [Fact]
         public async void GetPostByIdSmokeTests()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = HttpClientCreator.GetHttpClient())
             {
                 var response = await httpClient.GetAsync("api/posts/37", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
                 string jsonString = null;
@@ -45,18 +39,16 @@ namespace SocialNetwork.Tests
                 Post post = JsonConvert.DeserializeObject<Post>(jsonString);
                 Assert.NotNull(post);
                 Assert.Equal(37, post.Id);
-                Assert.Equal(2, post.ProfileRef);
                 Assert.Equal("posuere cubilia Curae; Donec tincidunt. Donec vitae erat vel pede", post.Text);
-                Assert.Equal(DateTime.Parse("2019/08/22 19:47:06"), post.Datetime);
             }
         }
 
         [Fact]
         public async void GetPostByAuthorIdSmokeTests()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = HttpClientCreator.GetHttpClient())
             {
-                var response = await httpClient.GetAsync("api/posts/?AuthorId=39", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+                var response = await httpClient.GetAsync("api/posts/?AuthorId=39", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(true);
                 string jsonString = null;
                 if (response.IsSuccessStatusCode)
                 {
@@ -70,9 +62,9 @@ namespace SocialNetwork.Tests
         }
 
         [Fact]
-        public async void PostActionTest()
+        public async void PostPostActionTest()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = HttpClientCreator.GetHttpClient())
             {
                 var post = new Post { Id = 150, Text = "Test Post", ProfileRef = 7, Datetime = DateTime.Parse("2019/08/18 08:36:28") };
                 var postJson = JsonConvert.SerializeObject(post);
@@ -81,25 +73,16 @@ namespace SocialNetwork.Tests
                 Assert.True(newPostResponse.IsSuccessStatusCode);
                 var newProductJson = await newPostResponse.Content.ReadAsStringAsync();
                 var newPost = JsonConvert.DeserializeObject<Post>(newProductJson);
-                Assert.True(SamePost(newPost, post));
-                //var deleteResponse = await httpClient.DeleteAsync("api/posts/150");
+                Assert.True(SamePostCheck(newPost, post));
             }
         }
 
         [Fact]
         public async void DeleteActionTest()
         {
-            var httpClient = GetHttpClient();
+            var httpClient = HttpClientCreator.GetHttpClient();
             var deleteResponse = await httpClient.DeleteAsync("api/posts/99");
             Assert.True(deleteResponse.IsSuccessStatusCode);
-            deleteResponse = await httpClient.DeleteAsync("api/posts/101");
-            Assert.False(deleteResponse.IsSuccessStatusCode);
-
-            // #region post returning
-            // var post = new Post { Id = 99, Text = "Test Post", ProfileRef = 7, Datetime = DateTime.Parse("2019/08/18 08:36:28") };
-            // var postJson = JsonConvert.SerializeObject(post);
-            // var httpContent = new StringContent(postJson, Encoding.UTF8, "application/json");
-            // var newPostResponse = await httpClient.PostAsync("api/posts", httpContent);
         }
     }
 }

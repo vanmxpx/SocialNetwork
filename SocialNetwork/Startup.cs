@@ -56,7 +56,7 @@ namespace SocialNetwork
 
             services.AddSignalR();
 
-            services.AddTransient<Intitializer>();
+            services.AddTransient<Initializer>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -101,7 +101,7 @@ namespace SocialNetwork
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfigProvider provider, Intitializer ini)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfigProvider provider, Initializer ini)
         {
             app.UseSignalR(routes =>
             {
