@@ -33,12 +33,12 @@ export class RegistrationComponent implements OnInit {
       && this.emailValidator.status === 'VALID'
       && this.passwordValidator.status === 'VALID') {
       this.showEmailNotification = true;
-      // alert('Request imitation: ' + JSON.stringify(this.user));
-      this.registrationService.postData(this.user)
-                .subscribe(
-                    (data: User) => {this.user = data; },
-                    error => console.log(error)
-                );
+      alert('Request imitation: ' + JSON.stringify(this.user));
+      // this.registrationService.postData(this.user)
+      //           .subscribe(
+      //               (data: User) => {this.user = data; },
+      //               error => console.log(error)
+      //           );
     }
   }
 
