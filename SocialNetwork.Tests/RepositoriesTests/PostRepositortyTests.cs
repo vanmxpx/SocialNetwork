@@ -11,12 +11,14 @@ namespace SocialNetwork.Tests
 {
     public class PostRepositoryTests
     {
+        private ShortyContext context;
         private readonly PostRepository repository;
 
         public PostRepositoryTests()
         {
             //INITIALIZATION
-             this.repository = new PostRepository(new DbContextCreator().GetDbContext());
+            this.context = new DbContextCreator().GetDbContext();
+            this.repository = new PostRepository(context);
         }
 
         [Theory]
@@ -71,6 +73,7 @@ namespace SocialNetwork.Tests
         {   
             //WHEN
             await repository.Create(new Post{Id = 101, Text = "ased tortor. Integer aliqscing lacus", ProfileRef = 1});
+            await context.SaveChangesAsync();
             Post post = await repository.GetById(101);
             //THEN
             Assert.Equal("ased tortor. Integer aliqscing lacus", post.Text);
@@ -83,16 +86,19 @@ namespace SocialNetwork.Tests
             Post post = await repository.GetById(1);
             post.Text = "Lorem ipsum sit amet";
             repository.Update(1, post);
+            await context.SaveChangesAsync();
+            post = await repository.GetById(1);
             //THEN
             Assert.Equal("Lorem ipsum sit amet", post.Text);
         }
 
         [Fact]
-        public void DeletePostTest()
+        public async void DeletePostTest()
         {   
             //WHEN
             Post post =  repository.GetById(1).Result;
             repository.Delete(post);
+            await context.SaveChangesAsync();
         }
 
     }

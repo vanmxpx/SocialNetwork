@@ -11,17 +11,19 @@ namespace SocialNetwork.Tests
 {
     public class ProfileRepositoryTests
     {
+        private readonly ShortyContext context;
         private readonly ProfileRepository repository;
         public  ProfileRepositoryTests(){
             //INITIALIZATION
-            this.repository = new ProfileRepository(new DbContextCreator().GetDbContext());
+           this.context = new DbContextCreator().GetDbContext();
+           this.repository = new ProfileRepository(context);
         }    
         
 
         [Theory]
         [InlineData(1,"Vestibulum")]
         [InlineData(11,"lorem")]
-        [InlineData(42,"pharetra.")]
+        [InlineData(42,"pharetra")]
         [InlineData(50,"adipiscing")]
         public async void GetByIdTest_Profile_Expected(int id, string login)
         {   
@@ -92,7 +94,7 @@ namespace SocialNetwork.Tests
         }
 
         [Theory]
-        [InlineData(42, "pharetra.")]
+        [InlineData(42, "pharetra")]
         [InlineData(23, "vitae")]
         [InlineData(1, "Vestibulum")]
         public async void GetAllTest(int id, string login)
@@ -107,7 +109,11 @@ namespace SocialNetwork.Tests
         public async void CreateTest()
         {   
             //WHEN
-            await repository.Create(new Profile{Id = 99, Login = "QuSDFisque", Name = "Raja", LastName = "Kolpakov"});
+            CredentialRepository creRep = new CredentialRepository(context);
+            await creRep.Create(new Credential{Id = 99, Email="test@gmail.com", Password="testpaswword"});
+            await context.SaveChangesAsync();
+            await repository.Create(new Profile{Id = 99, CredenitialRef = 99, Login = "QuSDFisque", Name = "Raja", LastName = "Kolpakov"});
+            await context.SaveChangesAsync();
             Profile profile = await repository.GetById(99);
             //THEN
             Assert.True(profile.LastName == "Kolpakov");
@@ -120,6 +126,7 @@ namespace SocialNetwork.Tests
             Profile profile = await repository.GetById(15);
             profile.Login = "newLogin";
             repository.Update(15, profile);
+            await context.SaveChangesAsync();
             profile = await repository.GetById(15);
             // //THEN
             Assert.True(profile.Login == "newLogin");

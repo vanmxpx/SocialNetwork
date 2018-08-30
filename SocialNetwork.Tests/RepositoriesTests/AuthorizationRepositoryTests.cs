@@ -10,11 +10,13 @@ namespace SocialNetworkTests
 {
     public class AuthorizationRepositoryTests
     {
+        private readonly ShortyContext context;
         private readonly AuthorizationRepository repository;
         public AuthorizationRepositoryTests()
         {
              //INITIALIZATION
-             this.repository = new AuthorizationRepository(new DbContextCreator().GetDbContext());
+             this.context = new DbContextCreator().GetDbContext();
+             this.repository = new AuthorizationRepository(context);
         }
 
         [Theory]
@@ -46,6 +48,7 @@ namespace SocialNetworkTests
             DateTime dateTime = new DateTime();
             authorization.DatetimeRequest = dateTime;
             repository.Update(50, authorization);
+            await context.SaveChangesAsync();
             authorization = await repository.GetById(50);
             //THEN
             Assert.Equal(dateTime, authorization.DatetimeRequest);
@@ -56,6 +59,7 @@ namespace SocialNetworkTests
         {   
             //WHEN
             await repository.Create(new Authorization{Id = 101, SystemStatus = "1", CredentialRef = 5, DatetimeStart = new DateTime(), DatetimeRequest = new DateTime()});
+            await context.SaveChangesAsync();
             Authorization authorization = await repository.GetById(101);
             //THEN
             Assert.Equal(5, authorization.CredentialRef);

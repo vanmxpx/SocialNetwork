@@ -10,12 +10,14 @@ namespace SocialNetworkTests
 {
     public class CredentionalRepositoryTests
     {
+        private readonly ShortyContext context;
         private readonly CredentialRepository repository;
 
         public CredentionalRepositoryTests()
         {
              //INITIALIZATION
-             this.repository = new CredentialRepository(new DbContextCreator().GetDbContext());
+             this.context = new DbContextCreator().GetDbContext(); 
+             this.repository = new CredentialRepository(context);
         }
 
         [Theory]
@@ -55,21 +57,13 @@ namespace SocialNetworkTests
          }
 
         [Fact]
-        public async void GetAllTest()
-        {   
-            //WHEN
-            ICollection<Credential> list = await repository.GetAll().ToListAsync();
-            //THEN
-            Assert.Equal(50, list.Count);
-        }
-
-        [Fact]
         public async void UpdateCredentionalTest()
         {   
             //WHEN
             Credential credential = await repository.GetById(50);
             credential.Password = "QWERTY1234";
             repository.Update(50, credential);
+            await context.SaveChangesAsync();
             credential = await repository.GetById(50);
             //THEN
             Assert.Equal("QWERTY1234", credential.Password);
@@ -82,6 +76,7 @@ namespace SocialNetworkTests
             Credential credential = await repository.GetById(49);
             //THEN
             repository.Delete(credential);
+            await context.SaveChangesAsync();
         }
     }
 }
