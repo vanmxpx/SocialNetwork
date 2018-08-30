@@ -18,7 +18,7 @@ namespace SocialNetwork.Services.Extentions
                 if (provider.DatabaseScriptsOption.InitialRemove)
                     ini.DeleteAll().Wait();
                 if (provider.DatabaseScriptsOption.InitialFill)
-                    ini.Seed().Wait();
+                    ini.Seed(false).Wait();
 
             }
 

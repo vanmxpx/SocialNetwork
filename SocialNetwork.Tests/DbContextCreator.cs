@@ -23,8 +23,8 @@ namespace SocialNetwork.Tests
         }
         private static async void RefreshDBData()
         {
-            await initializer.DeleteAll();
-            await initializer.Seed();
+            initializer.DeleteAll().Wait();
+            initializer.Seed(true).Wait();
             await context.SaveChangesAsync();
         }
     }
