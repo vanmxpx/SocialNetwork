@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppComponent } from '../services/app.component';
+import { AppComponent } from '../app.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { UserInfoComponent } from '../components/profile-page/user-info/user-info.component';
 import { PostComponent } from '../components/profile-page/post/post.component';
