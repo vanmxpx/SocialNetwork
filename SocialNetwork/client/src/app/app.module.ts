@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,6 +20,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { AlertService } from './services/alert.service';
 import { RegistrationComponent } from './components/registration-form/registration-form.component';
 import { UserPageComponent } from './components/profile-page/user-page/user-page.component';
+import { JwtInterceptor, ErrorInterceptor } from './helpers';
 
 
 @NgModule({
@@ -49,7 +50,9 @@ import { UserPageComponent } from './components/profile-page/user-page/user-page
     ProfileService,
     InputDataValidatorService,
     AuthenticationService,
-    AlertService
+    AlertService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
