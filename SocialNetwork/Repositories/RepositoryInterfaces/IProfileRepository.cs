@@ -13,6 +13,7 @@ namespace SocialNetwork.Repositories.GenericRepository
         Task<List<Profile>> GetByNameAndLastName(string name, string lastName);
         Task<List<Profile>> GetSuscribersById(int idBloger);
         Task<List<Profile>> GetBloggersById(int idSuscriber);
+        Task<Profile> GetByCredentialId(int id);
     
         void Delete(Profile profile);
     }    

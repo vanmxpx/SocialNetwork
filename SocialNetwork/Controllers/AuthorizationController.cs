@@ -28,6 +28,7 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -64,10 +65,13 @@ namespace SocialNetwork.Controllers
             };
 
             await unitOfWork.AuthorizationRepository.Create(authorization);
-
-            return Ok(new { Token = new TokenFactory(appSettings, credential).GetStringToken() });
+            await unitOfWork.Save();
+            String token = new TokenFactory(appSettings, credential).GetStringToken();
+            Profile profile = await unitOfWork.ProfileRepository.GetByCredentialId(credential.Id);
+            return Ok(new { Token = token, login = profile.Login });
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -82,6 +86,7 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
