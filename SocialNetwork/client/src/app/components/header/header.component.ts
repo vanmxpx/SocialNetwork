@@ -34,6 +34,6 @@ export class HeaderComponent {
 
   MyProfile() {
     const login = JSON.parse(localStorage.getItem('login'));
-    this.router.navigate(['/profile'] + login);
+    this.router.navigateByUrl('/profile/' + login);
   }
 }
