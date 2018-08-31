@@ -5,6 +5,7 @@ using SocialNetwork.Repositories.GenericRepository;
 using SocialNetwork.Services;
 using SocialNetwork.Configurations;
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -35,7 +36,16 @@ namespace SocialNetwork.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("{email}/{Login}/{password}/{name}/{lastName}")]
+        [HttpPost]
+        public async Task<IActionResult> TestVoid()
+        {
+            string altitudeString = Request.Form.FirstOrDefault(p => p.Key == "email").Value;
+            int altitude = Int32.Parse(altitudeString);
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("{email}/{login}/{password}/{name}/{lastName}")]
         public async Task<IActionResult> Register(string email, string login, string password, string name = null, string lastName = null)
         {
 
@@ -49,7 +59,7 @@ namespace SocialNetwork.Controllers
                 return Ok("The Login already exist");
 
             int timeout = provider.STMPConnection.TimeOut;
-            var task = emailService.SendConfirmEmailAsync(email,password);
+            var task = emailService.SendConfirmEmailAsync(email, password);
             if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
             {
                 if (task.IsFaulted)
