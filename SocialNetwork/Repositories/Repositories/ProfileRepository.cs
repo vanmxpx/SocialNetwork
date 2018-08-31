@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,11 +30,12 @@ namespace SocialNetwork.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Login == login);
         }
-        public async Task<Profile> GetByNameAndLastName(string name, string lastName)
+        public async Task<List<Profile>> GetByNameAndLastName(string name, string lastName)
         {
-            return await Context.Set<Profile>()
-                .AsNoTracking()
-                .FirstOrDefaultAsync(e => e.Name == name && e.LastName == lastName);
+            return await Context.Profiles
+                .FromSql(String.Format("SELECT * FROM profile WHERE Name LIKE '{0}%' AND LastName LIKE '{1}%'",
+                        name, lastName))
+                .ToListAsync();
         }
 
         public void Delete(Profile profile)
