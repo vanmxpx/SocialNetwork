@@ -32,7 +32,7 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<PostDto>> GetPostById(int id)
         {
-            var post = await unitOfWork.PostRepository.GetById(id);
+            var post = await unitOfWork.PostRepository.GetById(++id);
             if (post != null)
             {
                 var postDto = mapper.Map<Post, PostDto>(post);
@@ -53,7 +53,10 @@ namespace SocialNetwork.Controllers
                 var posts = await unitOfWork.PostRepository.GetByAuthorId(authorId);
                 if (posts != null)
                 {
-                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
+                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(
+                        posts
+                    .OrderByDescending(p => p.Datetime)
+                    .ToList()));
                 }
                 return NotFound();
             }
@@ -93,6 +96,7 @@ namespace SocialNetwork.Controllers
             {
                 if (!ModelState.IsValid) return BadRequest();
                 await unitOfWork.PostRepository.Create(post);
+                await unitOfWork.Save();
                 return Created("api/post", post);
             }
             return BadRequest();

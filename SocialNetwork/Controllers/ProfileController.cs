@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -58,12 +59,12 @@ namespace SocialNetwork.Controllers
         [Route("name")]
         [ProducesResponseType(200, Type = typeof(Profile))]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Profile>> GetProfileByNameAndLastName([FromQuery]string name, [FromQuery]string lastName)
+        public async Task<ActionResult<List<Profile>>> GetProfileByNameAndLastName([FromQuery]string name, [FromQuery]string lastName)
         {
-            var profile = await unitOfWork.ProfileRepository.GetByNameAndLastName(name, lastName);
-            if (profile != null)
+            var profiles = await unitOfWork.ProfileRepository.GetByNameAndLastName(name, lastName);
+            if(profiles != null)
             {
-                return new OkObjectResult(profile);
+                return new OkObjectResult(profiles);
             }
             return NotFound();
         }

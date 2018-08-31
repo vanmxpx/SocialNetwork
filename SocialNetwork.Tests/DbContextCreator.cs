@@ -7,24 +7,24 @@ namespace SocialNetwork.Tests
 {
     public class DbContextCreator
     {
-        private static ShortyContext context;
-        private static TestIntitializer ini;
-        public  static ShortyContext GetDbContext()
+        private ShortyContext context;
+        private static Initializer initializer;
+        public   ShortyContext GetDbContext()
         {
-            if(context == null)
-            {
+
                 var optionsBuilder = new DbContextOptionsBuilder<ShortyContext>();
-                optionsBuilder.UseMySql("server=localhost;port=3306;database=shorty_test;username=root;password=root");  
+                optionsBuilder.UseMySql("server=localhost;port=3306;database=shorty_test;username=root;password=predator5");  
                 context = new ShortyContext(optionsBuilder.Options);
-                ini = new TestIntitializer(context);
-            }
+                initializer = new Initializer(context);
+          
             RefreshDBData();
             return context;
         }
-        private static async void RefreshDBData()
+        private  async void RefreshDBData()
         {
-            await ini.AddDataToTestDB();
-            context.SaveChanges();
+            initializer.DeleteAll().Wait();
+            initializer.Seed(true).Wait();
+            await context.SaveChangesAsync();
         }
     }
 }
