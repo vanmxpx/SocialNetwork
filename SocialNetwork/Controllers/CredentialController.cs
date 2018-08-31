@@ -5,6 +5,7 @@ using SocialNetwork.Repositories.GenericRepository;
 using SocialNetwork.Services;
 using SocialNetwork.Configurations;
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -66,7 +67,7 @@ namespace SocialNetwork.Controllers
                 return BadRequest("The Login already exist");
 
             int timeout = provider.STMPConnection.TimeOut;
-            var task = emailService.SendConfirmEmailAsync(email,password);
+            var task = emailService.SendConfirmEmailAsync(email, password);
             if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
             {
                 if (task.IsFaulted)

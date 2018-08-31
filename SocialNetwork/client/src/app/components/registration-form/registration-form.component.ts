@@ -21,7 +21,7 @@ export class RegistrationComponent implements OnInit {
   private passwordValidator = this.validatorService.getPasswordValidator();
 
   constructor(private validatorService: InputDataValidatorService,
-              private registrationService: RegistrationService) { }
+    private registrationService: RegistrationService) { }
 
   ngOnInit() {
   }
@@ -34,12 +34,15 @@ export class RegistrationComponent implements OnInit {
       && this.emailValidator.status === 'VALID'
       && this.passwordValidator.status === 'VALID') {
       this.showEmailNotification = true;
-      alert('Request imitation: ' + JSON.stringify(this.user));
+      // alert('Request imitation: ' + JSON.stringify(this.user));
+      // tslint:disable-next-line:max-line-length
+      const t = this.registrationService.postEmail(this.user.email);
       // this.registrationService.postData(this.user)
       //           .subscribe(
       //               (data: User) => {this.user = data; },
       //               error => console.log(error)
       //           );
+      // alert('reques');
     }
   }
 
