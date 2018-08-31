@@ -43,6 +43,7 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/followings/subscribers/?id=24
+        [AllowAnonymous]
         [Route("subscribers")]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
@@ -62,6 +63,7 @@ namespace SocialNetwork.Controllers
         }
 
         // POST api/followings
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> AddRelationship([FromBody]Followings following)
         {

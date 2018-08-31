@@ -13,6 +13,7 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   { path: 'registration', component: RegistrationComponent }
+ // { path: 'settings', component:  }
 ];
 
 
