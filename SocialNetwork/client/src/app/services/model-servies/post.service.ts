@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Post } from '../models/post';
-import { Profile } from '../models/profile';
+import { Post } from '../../models/post';
+import { Profile } from '../../models/profile';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 

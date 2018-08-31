@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Profile } from '../models/profile';
-import { ProfileService } from '../services/profile.service';
-import { PostService } from '../services/post.service';
-import { Post } from '../models/post';
+import { Profile } from '../../../models/profile';
+import { ProfileService } from '../../../services/model-servies/profile.service';
+import { PostService } from '../../../services/model-servies/post.service';
+import { Post } from '../../../models/post';
 
 @Component({
   selector: 'app-user-tabs',

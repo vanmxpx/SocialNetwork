@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { Profile } from '../models/profile';
+import { Profile } from '../../../models/profile';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
-import { ProfileService } from '../services/profile.service';
+import { ProfileService } from '../../../services/model-servies/profile.service';
 
 @Component({
   selector: 'app-user-page',
