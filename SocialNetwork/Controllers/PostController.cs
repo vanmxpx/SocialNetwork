@@ -75,11 +75,11 @@ namespace SocialNetwork.Controllers
             if (id != 0)
             {
                 List<Post> posts = await unitOfWork.PostRepository.GetNewsById(id);
-                if (posts.Count > 0)
-                {
+                // if (posts.Count > 0)
+                // {
                     return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
-                }
-                return NotFound();
+                // }
+                // return NotFound();
             }
             return NotFound();
         }

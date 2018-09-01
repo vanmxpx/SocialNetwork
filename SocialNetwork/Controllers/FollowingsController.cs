@@ -34,11 +34,11 @@ namespace SocialNetwork.Controllers
             if (id != 0)
             {
                 List<Profile> bloggers = await unitOfWork.ProfileRepository.GetBloggersById(id);
-                if (bloggers.Count > 0)
-                {
+                // if (bloggers.Count > 0)
+                // {
                     return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(bloggers));
-                }
-                return NotFound();
+                // }
+                // return NotFound();
             }
             return NotFound();
         }
@@ -54,11 +54,11 @@ namespace SocialNetwork.Controllers
             if (id != 0)
             {
                 List<Profile> subscribers = await unitOfWork.ProfileRepository.GetSubscribersById(id);
-                if (subscribers.Count > 0)
-                {
+                // if (subscribers.Count > 0)
+                // {
                     return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(subscribers));
-                }
-                return NotFound();
+                // }
+                // return NotFound();
             }
             return NotFound();
         }
