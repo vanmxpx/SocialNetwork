@@ -11,7 +11,7 @@ namespace SocialNetwork.Repositories.GenericRepository
         Task<Profile> GetByLogin(string login);
 
         Task<List<Profile>> GetByNameAndLastName(string name, string lastName);
-        Task<List<Profile>> GetSuscribersById(int idBloger);
+        Task<List<Profile>> GetSubscribersById(int idBloger);
         Task<List<Profile>> GetBloggersById(int idSuscriber);
         Task<Profile> GetByCredentialId(int id);
     

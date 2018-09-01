@@ -43,7 +43,7 @@ namespace SocialNetwork.Repositories
             Context.Set<Profile>().Remove(profile);
         }
 
-        public async Task<List<Profile>> GetSuscribersById(int idBloger)
+        public async Task<List<Profile>> GetSubscribersById(int idBloger)
         {
             List<Followings> followings = await Context.Set<Followings>()
                 .AsNoTracking()
@@ -55,7 +55,7 @@ namespace SocialNetwork.Repositories
             {
                 foreach (Followings following in followings)
                 {
-                    subscribers.Add(following.Blogger);
+                    subscribers.Add(following.Subscriber);
                 }
             }
             return subscribers;

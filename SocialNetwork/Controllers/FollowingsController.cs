@@ -24,6 +24,7 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/followings/bloggers/?id=24
+        [AllowAnonymous]
         [Route("bloggers")]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
@@ -43,6 +44,7 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/followings/subscribers/?id=24
+        [AllowAnonymous]
         [Route("subscribers")]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
@@ -51,7 +53,7 @@ namespace SocialNetwork.Controllers
         {
             if (id != 0)
             {
-                List<Profile> subscribers = await unitOfWork.ProfileRepository.GetBloggersById(id);
+                List<Profile> subscribers = await unitOfWork.ProfileRepository.GetSubscribersById(id);
                 if (subscribers.Count > 0)
                 {
                     return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(subscribers));
@@ -62,6 +64,7 @@ namespace SocialNetwork.Controllers
         }
 
         // POST api/followings
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> AddRelationship([FromBody]Followings following)
         {
