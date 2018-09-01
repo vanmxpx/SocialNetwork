@@ -38,7 +38,6 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/profiles/login/?{login}
-        [AllowAnonymous]
         [HttpGet]
         [Route("login")]
         [ProducesResponseType(200, Type = typeof(Profile))]
