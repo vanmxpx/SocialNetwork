@@ -9,20 +9,16 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         let login = JSON.parse(localStorage.getItem('login'));
         let token = JSON.parse(localStorage.getItem('token'));
-        console.log(login);
-        console.log(token);
-        console.log(state.url);
+        console.log("AuthGuard is working!");
+        //console.log(login);
+        //console.log(token);
+        //console.log(state.url);
 
         if (token) {
-            // пользователь вошёл в систему 
-            if (state.url.includes("login") && login) {
-                this.router.navigate(['/profile/' + login]);
-            }
             return true;
         }
 
         // пользователь не залогиненый, переадркссовываем его на строницу /login
-        console.log("reload to login AuthGuard")
         this.router.navigate(['/login']);
         return false;
     }

@@ -16,11 +16,11 @@ import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './modules/app-routing.module';
 import { MaterialModule } from './modules/material/material.module';
 import { AuthenticationService } from './services/authentication.service';
-import { AlertService } from './services/alert.service';
 import { RegistrationComponent } from './components/registration-form/registration-form.component';
 import { UserPageComponent } from './components/profile-page/user-page/user-page.component';
 import { JwtInterceptor, ErrorInterceptor } from './helpers';
 import { AppComponent } from './app.component';
+import { AuthGuard } from './guards';
 
 
 @NgModule({
@@ -46,11 +46,11 @@ import { AppComponent } from './app.component';
     MaterialModule
   ],
   providers: [
+    AuthGuard,
     PostService,
     ProfileService,
     InputDataValidatorService,
     AuthenticationService,
-    AlertService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
