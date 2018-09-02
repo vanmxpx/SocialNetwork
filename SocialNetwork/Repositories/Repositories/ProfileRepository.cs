@@ -33,8 +33,7 @@ namespace SocialNetwork.Repositories
         public async Task<List<Profile>> GetByNameAndLastName(string name, string lastName)
         {
             return await Context.Profiles
-                .FromSql(String.Format("SELECT * FROM profile WHERE Name LIKE '{0}%' AND LastName LIKE '{1}%'",
-                        name, lastName))
+                .Where(profile => profile.Name.StartsWith(name) && profile.LastName.StartsWith(lastName))
                 .ToListAsync();
         }
 

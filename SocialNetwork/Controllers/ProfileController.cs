@@ -40,9 +40,9 @@ namespace SocialNetwork.Controllers
         //http://localhost:5000/api/profiles/login/?{login}
         [HttpGet]
         [Route("login")]
-        [ProducesResponseType(200, Type = typeof(Profile))]
+        [ProducesResponseType(200, Type = typeof(ProfileDto))]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Profile>> GetProfileByLogin([FromQuery]string login)
+        public async Task<ActionResult<ProfileDto>> GetProfileByLogin([FromQuery]string login)
         {
             var profile = await unitOfWork.ProfileRepository.GetByLogin(login);
             if (profile != null)
@@ -54,16 +54,23 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/profiles/name/?{name}&{lastName}
+        [AllowAnonymous]
         [HttpGet]
         [Route("name")]
-        [ProducesResponseType(200, Type = typeof(Profile))]
+        [ProducesResponseType(200, Type = typeof(ProfileDto))]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<List<Profile>>> GetProfileByNameAndLastName([FromQuery]string name, [FromQuery]string lastName)
+        public async Task<ActionResult<List<ProfileDto>>> GetProfileByNameAndLastName([FromQuery]string name, [FromQuery]string lastName)
         {
-            var profiles = await unitOfWork.ProfileRepository.GetByNameAndLastName(name, lastName);
+            List<Profile> profiles = await unitOfWork.ProfileRepository.GetByNameAndLastName(name, lastName);
+            List<ProfileDto> profileDTOs;
             if(profiles != null)
             {
-                return new OkObjectResult(profiles);
+                profileDTOs = new List<ProfileDto>(profiles.Count);
+                for (int i = 0; i < profiles.Count; i++)
+                {
+                    profileDTOs.Add(mapper.Map<ProfileDto>(profiles[i]));
+                }
+                return new OkObjectResult(profileDTOs);
             }
             return NotFound();
         }
