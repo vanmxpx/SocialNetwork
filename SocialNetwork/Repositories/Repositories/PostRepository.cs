@@ -27,6 +27,7 @@ namespace SocialNetwork.Repositories
                 .AsNoTracking()
                 .Where(e => e.ProfileRef == id)
                 .Include(p => p.Profile)
+                .OrderByDescending(p => p.Id)
                 .ToListAsync();
         }
 
@@ -49,7 +50,7 @@ namespace SocialNetwork.Repositories
                 }
             }
             return posts
-                    .OrderByDescending(p => p.Datetime)
+                    .OrderByDescending(p => p.Id)
                     .Take(100)
                     .ToList();
         }
