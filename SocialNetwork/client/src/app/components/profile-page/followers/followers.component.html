@@ -1,6 +1,6 @@
   <mat-nav-list>
     <mat-list-item routerLink="/profile/{{profile.login}}" *ngFor="let profile of profiles">
-      <img matListAvatar alt="...">
+      <img matListAvatar src="./assets/img/avatar.png" alt="...">
       <h3 matLine> {{profile.login}} </h3>
       <p matLine>
         <span> {{profile.name}} </span>

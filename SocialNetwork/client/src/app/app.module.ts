@@ -21,6 +21,9 @@ import { UserPageComponent } from './components/profile-page/user-page/user-page
 import { JwtInterceptor, ErrorInterceptor } from './helpers';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './guards';
+import { FooterComponent } from '../components/footer/footer.component';
+
+
 
 
 @NgModule({
@@ -34,7 +37,8 @@ import { AuthGuard } from './guards';
     UserTabsComponent,
     RegistrationComponent,
     AddPostComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
