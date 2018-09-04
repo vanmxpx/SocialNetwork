@@ -1,17 +1,21 @@
+@import '../../../../sass/styles.scss';
+
+@media only screen and (min-width: 900px) {
   .flex-container {
     resize: horizontal;
     overflow: hidden;
-    flex-direction: row;
     display: flex;
     margin: 1em;
+    flex-direction: row;
   }
 
   .info {
     flex: 1;
-   // max-width: 230px;
+    // max-width: 230px;
   }
 
   .tabs {
     flex: 3;
     flex-grow: 10;
   }
+}
