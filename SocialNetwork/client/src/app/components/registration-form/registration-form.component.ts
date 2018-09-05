@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
+<<<<<<< HEAD
 import { InputDataValidatorService } from '../../validators/input-data-validator.service';
 import { RegistrationService } from '../../services/registration/registration.service';
 
+=======
+import { InputDataValidatorService } from '../../services/validators/input-data-validator.service';
+import { RegistrationService } from '../../services/registration/registration.service';
+>>>>>>> 1940cbdac2eeb2ac39c389d2c63d688bd507360b
 
 
 
@@ -36,7 +41,11 @@ export class RegistrationComponent implements OnInit {
       this.showEmailNotification = true;
       // alert('Request imitation: ' + JSON.stringify(this.user));
       // tslint:disable-next-line:max-line-length
+<<<<<<< HEAD
       const t = this.registrationService.Register(this.user);
+=======
+      const t = this.registrationService.postEmail(this.user.email);
+>>>>>>> 1940cbdac2eeb2ac39c389d2c63d688bd507360b
       // this.registrationService.postData(this.user)
       //           .subscribe(
       //               (data: User) => {this.user = data; },

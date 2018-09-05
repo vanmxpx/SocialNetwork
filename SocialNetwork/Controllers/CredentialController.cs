@@ -54,7 +54,20 @@ namespace SocialNetwork.Controllers
         }
 
         [AllowAnonymous]
+<<<<<<< HEAD
         [HttpPost]//("{email}/{Login}/{password}/{name}/{lastName}")
+=======
+        [HttpPost]
+        public async Task<IActionResult> TestVoid()
+        {
+            string altitudeString = Request.Form.FirstOrDefault(p => p.Key == "email").Value;
+            int altitude = Int32.Parse(altitudeString);
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("{email}/{login}/{password}/{name}/{lastName}")]
+>>>>>>> 1940cbdac2eeb2ac39c389d2c63d688bd507360b
         public async Task<IActionResult> Register(string email, string login, string password, string name = null, string lastName = null)
         {
             Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
