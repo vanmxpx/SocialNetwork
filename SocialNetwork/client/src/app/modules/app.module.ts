@@ -15,8 +15,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material/material.module';
 import { PostService } from '../services/model-services/post.service';
 import { ProfileService } from '../services/model-services/profile.service';
-import { InputDataValidatorService } from '../services/validators/input-data-validator.service';
+import { InputDataValidatorService } from '../validators/input-data-validator.service';
 import { RegistrationService} from '../services/registration/registration.service';
+import {FooterComponent} from '../components/footer/footer.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { RegistrationService} from '../services/registration/registration.servic
     UserPageComponent,
     FollowersComponent,
     UserTabsComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
