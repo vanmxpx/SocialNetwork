@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
-import { InputDataValidatorService } from '../../services/validators/input-data-validator.service';
+import { InputDataValidatorService } from '../../validators/input-data-validator.service';
 import { RegistrationService } from '../../services/registration/registration.service';
 
 
@@ -36,7 +36,7 @@ export class RegistrationComponent implements OnInit {
       this.showEmailNotification = true;
       // alert('Request imitation: ' + JSON.stringify(this.user));
       // tslint:disable-next-line:max-line-length
-      const t = this.registrationService.postEmail(this.user.email);
+      const t = this.registrationService.Register(this.user);
       // this.registrationService.postData(this.user)
       //           .subscribe(
       //               (data: User) => {this.user = data; },
