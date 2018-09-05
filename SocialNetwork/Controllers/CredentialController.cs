@@ -53,7 +53,7 @@ namespace SocialNetwork.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("{email}/{Login}/{password}/{name}/{lastName}")]
+        [HttpPost]//("{email}/{Login}/{password}/{name}/{lastName}")
         public async Task<IActionResult> Register(string email, string login, string password, string name = null, string lastName = null)
         {
             Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
