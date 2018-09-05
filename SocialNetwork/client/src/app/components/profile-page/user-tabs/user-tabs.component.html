@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group [dynamicHeight]="dynamicHeight">
   <mat-tab label="Posts">
     <ng-template matTabContent>
       <app-add-post [profile]="profile"></app-add-post>
@@ -16,8 +16,15 @@
     </ng-template>
   </mat-tab>
   <mat-tab label="News">
-    <ng-template matTabContent>
-        <app-post [posts]="news"></app-post>
-    </ng-template>
-  </mat-tab>
+      <!-- <div class = "container"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"s
+      (scrolled)="onScroll()"
+      [scrollWindow]="false">  -->
+      <ng-template matTabContent>
+          <app-post [posts]="news"></app-post>
+      </ng-template>
+      <!-- </div> -->
+    </mat-tab>
 </mat-tab-group>

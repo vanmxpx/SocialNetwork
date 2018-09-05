@@ -15,6 +15,7 @@ export class UserTabsComponent implements OnInit {
   public news: Post[];
   public subscribers: Profile[];
   public bloggers: Profile[];
+  dynamicHeight = false;
 
   constructor(
     private profileService: ProfileService,
@@ -40,6 +41,11 @@ export class UserTabsComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  onScroll()  
+  {  
+    console.log("Scrolled");
+  } 
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
