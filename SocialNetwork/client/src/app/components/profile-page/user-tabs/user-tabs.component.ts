@@ -10,6 +10,7 @@ import { PostService } from '../../../services/model-services/post.service';
   styleUrls: ['./user-tabs.component.scss']
 })
 export class UserTabsComponent implements OnInit {
+  public isAuthorizedUserProfile: boolean;
   @Input() public profile: Profile;
   public posts: Post[];
   public news: Post[];
@@ -36,9 +37,13 @@ export class UserTabsComponent implements OnInit {
     this.postService.getNews(this.profile.id)
       .subscribe(news => this.news = news);
   }
+  private checkOnMine(): void {
+    this.isAuthorizedUserProfile = (localStorage.getItem('login') === JSON.stringify(this.profile.login)) ? true : false;
+  }
 
 
   ngOnInit() {
+    this.checkOnMine();
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
