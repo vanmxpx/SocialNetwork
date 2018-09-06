@@ -1,8 +1,8 @@
-@import '../../../../sass/styles.scss';
+@import '../../../../sass/variables.scss';
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: $tablet) {
   .flex-container {
-    resize: horizontal;
+    // resize: horizontal;
     overflow: hidden;
     display: flex;
     margin: 1em;
@@ -17,5 +17,6 @@
   .tabs {
     flex: 3;
     flex-grow: 10;
+    min-width: 0;
   }
 }
