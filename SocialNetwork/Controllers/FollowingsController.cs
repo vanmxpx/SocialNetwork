@@ -35,7 +35,7 @@ namespace SocialNetwork.Controllers
                 List<Profile> bloggers = await unitOfWork.ProfileRepository.GetBloggersById(id);
                 // if (bloggers.Count > 0)
                 // {
-                    return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(bloggers));
+                return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(bloggers));
                 // }
                 // return NotFound();
             }
@@ -54,7 +54,7 @@ namespace SocialNetwork.Controllers
                 List<Profile> subscribers = await unitOfWork.ProfileRepository.GetSubscribersById(id);
                 // if (subscribers.Count > 0)
                 // {
-                    return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(subscribers));
+                return new OkObjectResult(mapper.Map<List<Profile>, List<ProfileDto>>(subscribers));
                 // }
                 // return NotFound();
             }
@@ -65,6 +65,11 @@ namespace SocialNetwork.Controllers
         [HttpPost]
         public async Task<ActionResult> AddRelationship([FromBody]Followings following)
         {
+            if (User.Identity.Name != following.SubscriberRef.ToString())
+            {
+                return Unauthorized();
+            }
+
             if (!ModelState.IsValid) return BadRequest();
             await unitOfWork.FollowingsRepository.Create(following);
             return Created("api/followers", following);

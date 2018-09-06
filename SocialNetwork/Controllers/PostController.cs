@@ -74,7 +74,7 @@ namespace SocialNetwork.Controllers
                 List<Post> posts = await unitOfWork.PostRepository.GetNewsById(id);
                 // if (posts.Count > 0)
                 // {
-                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
+                return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
                 // }
                 // return NotFound();
             }
@@ -85,6 +85,11 @@ namespace SocialNetwork.Controllers
         [HttpPost]
         public async Task<ActionResult> AddPost([FromBody]Post post)
         {
+            if (User.Identity.Name != post.ProfileRef.ToString())
+            {
+                return Unauthorized();
+            }
+
             post.Datetime = DateTime.Now;
             if (post.Text.Length < 256
             && post.Text.Length > 0
@@ -104,10 +109,17 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> Delete(int id)
         {
-            var entity = await unitOfWork.PostRepository.GetById(id);
-            if (entity != null)
+            var post = await unitOfWork.PostRepository.GetById(id);
+
+            if (User.Identity.Name != post.ProfileRef.ToString())
             {
-                unitOfWork.PostRepository.Delete(entity);
+                return Unauthorized();
+            }
+
+            
+            if (post != null)
+            {
+                unitOfWork.PostRepository.Delete(post);
                 await unitOfWork.Save();
                 return Ok();
             }
