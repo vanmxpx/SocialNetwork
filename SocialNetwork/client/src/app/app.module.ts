@@ -15,7 +15,7 @@ import { AddPostComponent } from './components/profile-page/add-post/add-post.co
 import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './modules/app-routing.module';
 import { MaterialModule } from './modules/material/material.module';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService } from './services/security/authentication.service';
 import { RegistrationComponent } from './components/registration-form/registration-form.component';
 import { UserPageComponent } from './components/profile-page/user-page/user-page.component';
 import { JwtInterceptor, ErrorInterceptor } from './helpers';

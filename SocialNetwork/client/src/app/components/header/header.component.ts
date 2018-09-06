@@ -5,7 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthenticationService } from '../../services/security/authentication.service';
 
 @Component({
   selector: 'app-header',
