@@ -18,6 +18,7 @@ import { ProfileService } from '../services/model-services/profile.service';
 import { InputDataValidatorService } from '../validators/input-data-validator.service';
 import { RegistrationService} from '../services/registration/registration.service';
 import {FooterComponent} from '../components/footer/footer.component';
+import { AddPostComponent} from '../components/profile-page/add-post/add-post.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {FooterComponent} from '../components/footer/footer.component';
     FollowersComponent,
     UserTabsComponent,
     RegistrationComponent,
-    FooterComponent
+    FooterComponent,
+    AddPostComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

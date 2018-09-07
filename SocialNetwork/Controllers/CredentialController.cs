@@ -54,20 +54,7 @@ namespace SocialNetwork.Controllers
         }
 
         [AllowAnonymous]
-<<<<<<< HEAD
-        [HttpPost]//("{email}/{Login}/{password}/{name}/{lastName}")
-=======
-        [HttpPost]
-        public async Task<IActionResult> TestVoid()
-        {
-            string altitudeString = Request.Form.FirstOrDefault(p => p.Key == "email").Value;
-            int altitude = Int32.Parse(altitudeString);
-            return Ok();
-        }
-
-        [AllowAnonymous]
-        [HttpPost("{email}/{login}/{password}/{name}/{lastName}")]
->>>>>>> 1940cbdac2eeb2ac39c389d2c63d688bd507360b
+        [HttpPost("{email}/{Login}/{password}/{name}/{lastName}")]//("{email}/{Login}/{password}/{name}/{lastName}")
         public async Task<IActionResult> Register(string email, string login, string password, string name = null, string lastName = null)
         {
             Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
@@ -117,7 +104,7 @@ namespace SocialNetwork.Controllers
 
 
         [AllowAnonymous]
-        [HttpPost("{email}/{hash}")]
+        [HttpGet("{email}/{hash}")]
         public async Task<ActionResult> ConfirmEmail(string email, string hash)
         {
             Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
@@ -128,7 +115,7 @@ namespace SocialNetwork.Controllers
                     cred.DateRegistration = DateTime.Now;
                     unitOfWork.CredentialRepository.Update(cred.Id, cred);
                     await unitOfWork.Save();
-                    return Ok("Yeah it's work");
+                    return RedirectPermanent("http://localhost:5000/profile/" + cred.Profile.Login);
                 }
                 else
                     return BadRequest("Broken link");
