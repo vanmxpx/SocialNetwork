@@ -1,14 +1,14 @@
+using System;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Formatters.Json;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
-using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Options;
-using System.Text;
-
+using SocialNetwork.Models;
 
 namespace SocialNetwork.Controllers
 {

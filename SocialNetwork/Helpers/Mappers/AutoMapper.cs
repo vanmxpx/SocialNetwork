@@ -1,4 +1,5 @@
 using AutoMapper;
+using SocialNetwork.Models;
 
 namespace SocialNetwork
 {
@@ -7,7 +8,7 @@ namespace SocialNetwork
         public AutoMapperPost()
         {
             CreateMap<Post, PostDto>();
-            CreateMap<Profile, ProfileDto>();
+            CreateMap<SocialNetwork.Models.Profile, ProfileDto>();
         }
     }
 }

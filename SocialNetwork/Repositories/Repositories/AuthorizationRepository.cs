@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SocialNetwork.Models;
 using SocialNetwork.Repositories.GenericRepository;
 using System.Collections.Generic;
 using System.Linq;

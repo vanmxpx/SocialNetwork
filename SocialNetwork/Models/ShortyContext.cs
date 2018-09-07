@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace SocialNetwork
+namespace SocialNetwork.Models
 {
     public class ShortyContext : DbContext
     {

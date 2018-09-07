@@ -1,12 +1,13 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using SocialNetwork.Models;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using AutoMapper;
-using System;
 
 namespace SocialNetwork.Controllers
 {

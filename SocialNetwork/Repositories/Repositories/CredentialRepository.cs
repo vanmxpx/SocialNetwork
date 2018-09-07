@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using SocialNetwork.Models;
 using SocialNetwork.Repositories.GenericRepository;
 using System.Text;
 

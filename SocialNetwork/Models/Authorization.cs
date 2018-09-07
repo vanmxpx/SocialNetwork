@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SocialNetwork
+namespace SocialNetwork.Models
 {
     public class Authorization
     {

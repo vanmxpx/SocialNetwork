@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
+using SocialNetwork.Models;
 using SocialNetwork.Configurations;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System;

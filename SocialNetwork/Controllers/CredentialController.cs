@@ -1,12 +1,13 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using SocialNetwork.Repositories;
-using SocialNetwork.Repositories.GenericRepository;
-using SocialNetwork.Services;
-using SocialNetwork.Configurations;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using SocialNetwork.Models;
+using SocialNetwork.Services;
+using SocialNetwork.Repositories;
+using SocialNetwork.Configurations;
+using SocialNetwork.Repositories.GenericRepository;
 
 
 namespace SocialNetwork.Controllers
@@ -89,8 +90,8 @@ namespace SocialNetwork.Controllers
                 if (lastName != null)
                     prof.LastName = name;
 
-                
-                await unitOfWork.ProfileRepository.Create(prof);               
+
+                await unitOfWork.ProfileRepository.Create(prof);
                 await unitOfWork.CredentialRepository.Create(cred);
                 // await unitOfWork.Save();
                 // cred = await unitOfWork.CredentialRepository.GetByEmail(cred.Email);

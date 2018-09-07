@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using SocialNetwork.Models;
 
 namespace SocialNetwork.Repositories.GenericRepository
 {
