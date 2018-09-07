@@ -90,13 +90,9 @@ namespace SocialNetwork.Controllers
                 if (lastName != null)
                     prof.LastName = name;
 
-
+                cred.Profile = prof;
                 await unitOfWork.ProfileRepository.Create(prof);
                 await unitOfWork.CredentialRepository.Create(cred);
-                // await unitOfWork.Save();
-                // cred = await unitOfWork.CredentialRepository.GetByEmail(cred.Email);
-                // prof = await unitOfWork.ProfileRepository.GetByLogin(prof.Login);
-                // cred.Profile = prof;
                 await unitOfWork.Save();
 
 
@@ -122,7 +118,7 @@ namespace SocialNetwork.Controllers
                     cred.DateRegistration = DateTime.Now;
                     unitOfWork.CredentialRepository.Update(cred.Id, cred);
                     await unitOfWork.Save();
-                    return RedirectPermanent("http://localhost:4200/profile/noderoid");
+                    return RedirectPermanent("http://localhost:4200/profile/" + cred.Profile.Login);
                 }
                 else
                     return BadRequest("Broken link");
