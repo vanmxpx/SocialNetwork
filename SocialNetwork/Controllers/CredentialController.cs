@@ -41,8 +41,8 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> Delete(int id)
         {
-           var entity = await unitOfWork.CredentialRepository.GetById(id);
-           //var profile = await unitOfWork.ProfileRepository.GetById(id);
+            var entity = await unitOfWork.CredentialRepository.GetById(id);
+            //var profile = await unitOfWork.ProfileRepository.GetById(id);
             if (entity != null)
             {
                 //entity.Profile = profile;
@@ -89,9 +89,15 @@ namespace SocialNetwork.Controllers
                 if (lastName != null)
                     prof.LastName = name;
 
-                await unitOfWork.ProfileRepository.Create(prof);
+                
+                await unitOfWork.ProfileRepository.Create(prof);               
                 await unitOfWork.CredentialRepository.Create(cred);
+                // await unitOfWork.Save();
+                // cred = await unitOfWork.CredentialRepository.GetByEmail(cred.Email);
+                // prof = await unitOfWork.ProfileRepository.GetByLogin(prof.Login);
+                // cred.Profile = prof;
                 await unitOfWork.Save();
+
 
                 return Ok("Ok");
 
@@ -115,13 +121,19 @@ namespace SocialNetwork.Controllers
                     cred.DateRegistration = DateTime.Now;
                     unitOfWork.CredentialRepository.Update(cred.Id, cred);
                     await unitOfWork.Save();
-                    return RedirectPermanent("http://localhost:5000/profile/" + cred.Profile.Login);
+                    return RedirectPermanent("http://localhost:4200/profile/noderoid");
                 }
                 else
                     return BadRequest("Broken link");
             }
             else
                 return BadRequest("link is outdated");
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Test()
+        {
+            return RedirectPermanent("http://localhost:4200");
         }
     }
 }
