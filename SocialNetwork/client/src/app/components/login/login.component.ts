@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { AuthenticationService } from '../../services/security/authentication.service';
 
 
@@ -54,7 +55,6 @@ export class LoginComponent implements OnInit {
         data => {
           this.router.navigate([this.returnUrl + 'profile/' + JSON.parse(localStorage.getItem('login'))]);
         },
-
         error => {
           this.loading = false;
         });

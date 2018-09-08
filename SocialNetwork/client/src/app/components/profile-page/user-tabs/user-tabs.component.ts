@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+
 import { Profile } from '../../../models/profile';
 import { Post } from '../../../models/post';
 import { ProfileService } from '../../../services/model-services/profile.service';
