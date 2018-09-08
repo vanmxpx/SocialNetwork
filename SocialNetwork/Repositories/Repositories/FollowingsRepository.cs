@@ -14,6 +14,15 @@ namespace SocialNetwork.Repositories
 
         }
 
+        public async Task<Followings> GetByBloggerAndSubscriberId(int idBlogger, int idSubscriber)
+        {
+            return await Context.Set<Followings>()
+                .AsNoTracking()
+                .Where(f => f.BloggerRef == idBlogger)
+                .Where(f => f.SubscriberRef == idSubscriber)
+                .FirstOrDefaultAsync();
+        }
+
         public void Delete(Followings Followings)
         {
             Context.Set<Followings>().Remove(Followings);

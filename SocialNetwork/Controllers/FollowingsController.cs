@@ -61,6 +61,27 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
+        // GET api/followings/?idBlogger=1&idSubscriber=2
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<bool>> GetIsRelationExist([FromQuery]int idBlogger, [FromQuery]int idSubscriber)
+        {
+            if (idBlogger != 0 && idSubscriber != 0)
+            {
+                Followings following = await unitOfWork.FollowingsRepository.GetByBloggerAndSubscriberId(idBlogger, idSubscriber);
+                if (following != null)
+                {
+                    return new OkObjectResult(true);
+                }
+                else
+                {
+                    return new OkObjectResult(false);
+                }
+            }
+            return BadRequest();
+        }
+
         // POST api/followings
         [HttpPost]
         public async Task<ActionResult> AddRelationship([FromBody]Followings following)
@@ -70,9 +91,37 @@ namespace SocialNetwork.Controllers
                 return Unauthorized();
             }
 
+            var relationship = await unitOfWork.FollowingsRepository.GetByBloggerAndSubscriberId(following.BloggerRef, following.SubscriberRef);
+
             if (!ModelState.IsValid) return BadRequest();
+            if (relationship != null) return BadRequest();
+            if (following.BloggerRef == following.SubscriberRef) return BadRequest();
+
             await unitOfWork.FollowingsRepository.Create(following);
+            await unitOfWork.Save();
             return Created("api/followers", following);
+        }
+
+        // DELETE api/followings/?idBlogger=1&idSubscriber=2
+        [HttpDelete]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Delete([FromQuery]int idBlogger, [FromQuery]int idSubscriber)
+        {
+            var relationship = await unitOfWork.FollowingsRepository.GetByBloggerAndSubscriberId(idBlogger, idSubscriber);
+
+            if (User.Identity.Name != relationship.SubscriberRef.ToString())
+            {
+                return Unauthorized();
+            }
+
+            if (relationship != null)
+            {
+                unitOfWork.FollowingsRepository.Delete(relationship);
+                await unitOfWork.Save();
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }

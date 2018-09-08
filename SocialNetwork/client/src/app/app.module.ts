@@ -22,6 +22,7 @@ import { JwtInterceptor, ErrorInterceptor } from './helpers';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './guards';
 import { FooterComponent } from './components/footer/footer.component';
+import { FollowingsService } from './services/model-services/followings.service';
 
 
 
@@ -56,6 +57,7 @@ import { FooterComponent } from './components/footer/footer.component';
     ProfileService,
     InputDataValidatorService,
     AuthenticationService,
+    FollowingsService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
