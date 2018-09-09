@@ -30,6 +30,21 @@ namespace SocialNetwork.Repositories
                 .ToListAsync();
         }
 
+         public async Task<List<Post>> GetByAuthorIdAndPage(int id, int page)
+         {
+            var pageSize = 5;
+            var skip = pageSize * (page - 1);
+
+            return await Context.Set<Post>()
+                .AsNoTracking()
+                .OrderByDescending(p => p.Datetime)
+                .Where(e => e.ProfileRef == id)
+                .Include(p => p.Profile)
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
         public async Task<List<Post>> GetNewsById(int idSuscriber)
         {
             List<Followings> followings = await Context.Set<Followings>()
@@ -51,6 +66,35 @@ namespace SocialNetwork.Repositories
             return posts
                     .OrderByDescending(p => p.Datetime)
                     .Take(100)
+                    .ToList();
+        }
+
+        public async Task<List<Post>> GetNewsByIdAndPage(int idSuscriber, int page)
+        {
+            var pageSize = 5;
+            var skip = pageSize * (page - 1);
+
+            List<Followings> followings = await Context.Set<Followings>()
+            .AsNoTracking()
+            .Where(e => e.SubscriberRef == idSuscriber)
+            .Include(b => b.Blogger)
+            .ThenInclude(p => p.Posts)
+            .ThenInclude(pr => pr.Profile)
+            .ToListAsync();
+
+            List<Post> posts = new List<Post>();
+            if (followings != null)
+            {
+                foreach (Followings following in followings)
+                {
+                    posts.AddRange(following.Blogger.Posts);
+                }
+            }
+
+            return posts
+                    .OrderByDescending(p => p.Datetime)
+                    .Skip(skip)
+                    .Take(pageSize)
                     .ToList();
         }
 

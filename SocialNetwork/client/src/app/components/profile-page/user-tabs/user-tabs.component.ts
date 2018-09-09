@@ -3,6 +3,7 @@ import { Profile } from '../../../models/profile';
 import { Post } from '../../../models/post';
 import { ProfileService } from '../../../services/model-services/profile.service';
 import { PostService } from '../../../services/model-services/post.service';
+import { MatTabChangeEvent } from '@angular/material';
 
 @Component({
   selector: 'app-user-tabs',
@@ -11,11 +12,13 @@ import { PostService } from '../../../services/model-services/post.service';
 })
 export class UserTabsComponent implements OnInit {
   @Input() public profile: Profile;
-  public posts: Post[];
-  public news: Post[];
-  public subscribers: Profile[];
-  public bloggers: Profile[];
-  dynamicHeight = false;
+  public posts: Post[] = [];
+  public news: Post[] = [];
+  public subscribers: Profile[] = [];
+  public bloggers: Profile[] = [];
+  postsPage: number = 1;
+  newsPage: number = 1;
+  status: number = 0;
 
   constructor(
     private profileService: ProfileService,
@@ -29,29 +32,65 @@ export class UserTabsComponent implements OnInit {
     this.profileService.getBloggers(this.profile.id)
       .subscribe(profiles => this.bloggers = profiles);
   }
-  private getPosts(): void {
-    this.postService.getPosts(this.profile.id)
-      .subscribe(posts => this.posts = posts);
+  private getPostsByPage(): void {
+    this.postService.getPostsByPage(this.profile.id, this.postsPage)
+      .subscribe((res) => this.onPostsSuccess(res));
   }
-  private getNews(): void {
-    this.postService.getNews(this.profile.id)
-      .subscribe(news => this.news = news);
+  private getNewsByPage(): void {
+    this.postService.getNewsByPage(this.profile.id, this.newsPage)
+      .subscribe((res) => this.onNewsSuccess(res));
+  }
+
+  onPostsSuccess(res) {
+    console.log("Post page" + this.postsPage);
+    console.log(res);
+    if (res != undefined) {
+      res.forEach(item => {
+        this.posts.push(item);
+      });
+    }
+  }
+
+  onNewsSuccess(res) {
+    console.log("News page" + this.newsPage);
+    console.log(res);
+    if (res != undefined) {
+      res.forEach(item => {
+        this.news.push(item);
+      });
+    }
   }
 
 
-  ngOnInit() {
+  ngOnInit() { 
   }
 
   onScroll()  
   {  
     console.log("Scrolled");
+    switch(+this.status)
+    {
+      case 0:
+        this.postsPage = this.postsPage + 1;
+        this.getPostsByPage();
+        break;
+      case 3:
+        this.newsPage = this.newsPage + 1;
+        this.getNewsByPage();
+        break;
+    }
   } 
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
-    this.getPosts();
+    this.getPostsByPage();
     this.getSubscribers();
     this.getBloggers();
-    this.getNews();
+    this.getNewsByPage();
+  }
+
+  onOtherTabClick(event: MatTabChangeEvent) {
+    this.status = event.index;
+    //this.page = 1;
   }
 }
