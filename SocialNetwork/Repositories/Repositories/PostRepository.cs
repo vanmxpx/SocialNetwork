@@ -35,14 +35,13 @@ namespace SocialNetwork.Repositories
             var pageSize = 5;
             var skip = pageSize * (page - 1);
 
-            return await Context.Set<Post>()
-                .AsNoTracking()
-                .OrderByDescending(p => p.Datetime)
-                .Where(e => e.ProfileRef == id)
-                .Include(p => p.Profile)
+            List<Post> posts = await GetByAuthorId(id);
+
+            return posts
+                .OrderByDescending(p => p.Id)
                 .Skip(skip)
                 .Take(pageSize)
-                .ToListAsync();
+                .ToList();
         }
 
         public async Task<List<Post>> GetNewsById(int idSuscriber)
@@ -92,7 +91,7 @@ namespace SocialNetwork.Repositories
             }
 
             return posts
-                    .OrderByDescending(p => p.Datetime)
+                    .OrderByDescending(p => p.Id)
                     .Skip(skip)
                     .Take(pageSize)
                     .ToList();

@@ -1,8 +1,8 @@
-<mat-tab-group (selectedTabChange)="onOtherTabClick($event)">
-  <mat-tab label="Posts" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"  (scrolled)="onScroll()">
+<mat-tab-group>
+  <mat-tab label="Posts">
     <ng-template matTabContent>
       <app-add-post [profile]="profile"></app-add-post>
-      <app-post [posts]="posts"></app-post>
+      <app-post  [isNews]="false" [profileId]="this.profile.id"></app-post>
     </ng-template>
   </mat-tab>
   <mat-tab label="Subscribers">
@@ -15,9 +15,9 @@
       <app-followers [profiles]="bloggers"></app-followers>
     </ng-template>
   </mat-tab>
-  <mat-tab label="News" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"  (scrolled)="onScroll()">
+  <mat-tab label="News" >
     <ng-template matTabContent>
-      <app-post [posts]="news"></app-post>
+      <app-post  [isNews]="true" [profileId]="this.profile.id"></app-post>
     </ng-template>
     </mat-tab>
 </mat-tab-group>
