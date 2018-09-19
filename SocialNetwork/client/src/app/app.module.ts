@@ -23,7 +23,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './guards';
 import { FooterComponent } from './components/footer/footer.component';
 import { FollowingsService } from './services/model-services/followings.service';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 
