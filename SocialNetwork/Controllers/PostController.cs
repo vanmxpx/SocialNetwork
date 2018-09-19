@@ -40,6 +40,22 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
+        // GET /api/posts/postsByPage?authorId=24&page=1
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("postsByPage")]
+        [ProducesResponseType(200, Type = typeof(Post))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ICollection<PostDto>>> GetPostsByAuthorIdIdAndPage([FromQuery]int authorId, [FromQuery]int page)
+        {
+            var posts = await unitOfWork.PostRepository.GetByAuthorIdAndPage(authorId, page);
+            if (posts != null)
+            {
+                return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
+            }
+            return new OkObjectResult(new List<PostDto>());
+        }
+
         // GET api/posts/?authorId=2
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
@@ -79,6 +95,26 @@ namespace SocialNetwork.Controllers
                 // return NotFound();
             }
             return NotFound();
+        }
+
+         //GET api/posts/newsByPage/?id=2&page=24
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("newsByPage")]
+        [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ICollection<PostDto>>> GetNewsByIdAndPage([FromQuery]int id, [FromQuery]int page)
+        {
+            if (id != 0)
+            {
+                List<Post> posts = await unitOfWork.PostRepository.GetNewsByIdAndPage(id, page);
+                if (posts.Count > 0)
+                {
+                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
+                }
+                return new OkObjectResult(new List<PostDto>());
+            }
+            return new OkObjectResult(new List<PostDto>());
         }
 
         // POST api/posts
