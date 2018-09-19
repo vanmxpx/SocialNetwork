@@ -31,7 +31,7 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<PostDto>> GetPostById(int id)
         {
-            var post = await unitOfWork.PostRepository.GetById(++id);
+            var post = await unitOfWork.PostRepository.GetById(id);
             if (post != null)
             {
                 var postDto = mapper.Map<Post, PostDto>(post);
@@ -116,7 +116,7 @@ namespace SocialNetwork.Controllers
             }
             return new OkObjectResult(new List<PostDto>());
         }
-
+        
         // POST api/posts
         [HttpPost]
         public async Task<ActionResult> AddPost([FromBody]Post post)
