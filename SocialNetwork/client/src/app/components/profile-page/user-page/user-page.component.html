@@ -1,4 +1,4 @@
-<div class="flex-container" fxLayoutAlign="space-evenly">
+<div *ngIf="profile" class="flex-container" fxLayoutAlign="space-evenly">
   <div class="item info" ><app-user-info [profile]="profile"></app-user-info></div>
   <div class="item tabs"><app-user-tabs [profile]="profile"></app-user-tabs></div>
 </div>

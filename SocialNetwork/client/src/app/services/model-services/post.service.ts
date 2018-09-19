@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Post } from '../../models/post';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { NewPost } from '../../models/newPost';
+import { Post } from '../../models/post';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -12,27 +13,28 @@ const httpOptions = {
 
 @Injectable()
 export class PostService {
-  getPosts(profileId: number): Observable<Post[]> {
+
+  constructor(private http: HttpClient) { }
+
+ public getPosts(profileId: number): Observable<Post[]> {
     return this.http.get<Post[]>('http://localhost:5000/api/posts?authorId=' + profileId.toString());
   }
-  getNews(profileId: number): Observable<Post[]> {
+  public getNews(profileId: number): Observable<Post[]> {
     return this.http.get<Post[]>('http://localhost:5000/api/posts/news/?id=' + profileId.toString());
   }
-  addPost(post: NewPost): Observable<NewPost> {
+  public addPost(post: NewPost): Observable<NewPost> {
     return this.http.post<NewPost>('http://localhost:5000/api/posts', post, httpOptions);
       // .pipe(
       //   catchError(this.handleError('addHero', post))
       // );
   }
 
-  constructor(private http: HttpClient) { }
-
-  private extractData(res: Response) {
-    const body = res.json();
-    return body || {};
-  }
-  private handleErrorObservable(error: Response | any) {
-    console.error(error.message || error);
-    return Observable.throw(error.message || error);
-  }
+  // private extractData(res: Response) {
+  //   const body = res.json();
+  //   return body || {};
+  // }
+  // private handleErrorObservable(error: Response | any) {
+  //   console.error(error.message || error);
+  //   return Observable.throw(error.message || error);
+  // }
 }

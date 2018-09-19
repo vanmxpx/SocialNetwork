@@ -1,17 +1,22 @@
+@import '../../../../sass/variables.scss';
+
+@media only screen and (min-width: $tablet) {
   .flex-container {
-    resize: horizontal;
+    // resize: horizontal;
     overflow: hidden;
-    flex-direction: row;
     display: flex;
     margin: 1em;
+    flex-direction: row;
   }
 
   .info {
     flex: 1;
-   // max-width: 230px;
+    // max-width: 230px;
   }
 
   .tabs {
     flex: 3;
     flex-grow: 10;
+    min-width: 0;
   }
+}

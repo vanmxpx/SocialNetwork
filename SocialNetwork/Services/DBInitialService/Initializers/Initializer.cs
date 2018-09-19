@@ -19,34 +19,36 @@ namespace SocialNetwork
 
         private void checkOnExistingDatabase()
         {
-            SC.Database.EnsureCreated();
+            
         }
 
         public async Task DeleteAll()
         {
-            checkOnExistingDatabase();
+            await SC.Database.EnsureDeletedAsync();
+            // checkOnExistingDatabase();
 
-            if (SC.Authorizations.Any())
-                SC.Authorizations.RemoveRange(SC.Authorizations);
+            // if (SC.Authorizations.Any())
+            //     SC.Authorizations.RemoveRange(SC.Authorizations);
 
-            if (SC.Followers.Any())
-                SC.Followers.RemoveRange(SC.Followers);
+            // if (SC.Followers.Any())
+            //     SC.Followers.RemoveRange(SC.Followers);
 
-            if (SC.Posts.Any())
-                SC.Posts.RemoveRange(SC.Posts);
+            // if (SC.Posts.Any())
+            //     SC.Posts.RemoveRange(SC.Posts);
 
-            if (SC.Credentials.Any())
-                SC.Credentials.RemoveRange(SC.Credentials);
+            // if (SC.Credentials.Any())
+            //     SC.Credentials.RemoveRange(SC.Credentials);
 
-            if (SC.Profiles.Any())
-                SC.Profiles.RemoveRange(SC.Profiles);
+            // if (SC.Profiles.Any())
+            //     SC.Profiles.RemoveRange(SC.Profiles);
 
             await SC.SaveChangesAsync();
         }
 
         public async Task Seed(bool isTests)
         {
-            checkOnExistingDatabase();
+            await SC.Database.EnsureCreatedAsync();
+            // checkOnExistingDatabase();
             string sqlDatabaseFill = isTests ?
             File.ReadAllText("addTestData.sql")
             : File.ReadAllText(

@@ -26,7 +26,6 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/posts/79
-        [AllowAnonymous]
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Post))]
         [ProducesResponseType(404)]
@@ -42,7 +41,6 @@ namespace SocialNetwork.Controllers
         }
 
         // GET api/posts/?authorId=2
-        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
         [ProducesResponseType(404)]
@@ -65,7 +63,6 @@ namespace SocialNetwork.Controllers
 
 
         // GET api/posts/news/?id=2
-        [AllowAnonymous]
         [HttpGet]
         [Route("news")]
         [ProducesResponseType(200, Type = typeof(ICollection<Post>))]
@@ -75,20 +72,24 @@ namespace SocialNetwork.Controllers
             if (id != 0)
             {
                 List<Post> posts = await unitOfWork.PostRepository.GetNewsById(id);
-                if (posts.Count > 0)
-                {
-                    return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
-                }
-                return NotFound();
+                // if (posts.Count > 0)
+                // {
+                return new OkObjectResult(mapper.Map<List<Post>, List<PostDto>>(posts));
+                // }
+                // return NotFound();
             }
             return NotFound();
         }
 
         // POST api/posts
-        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> AddPost([FromBody]Post post)
         {
+            if (User.Identity.Name != post.ProfileRef.ToString())
+            {
+                return Unauthorized();
+            }
+
             post.Datetime = DateTime.Now;
             if (post.Text.Length < 256
             && post.Text.Length > 0
@@ -103,16 +104,22 @@ namespace SocialNetwork.Controllers
         }
 
         // DELETE api/posts/100
-        [AllowAnonymous]
         [HttpDelete("{id}")]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> Delete(int id)
         {
-            var entity = await unitOfWork.PostRepository.GetById(id);
-            if (entity != null)
+            var post = await unitOfWork.PostRepository.GetById(id);
+
+            if (User.Identity.Name != post.ProfileRef.ToString())
             {
-                unitOfWork.PostRepository.Delete(entity);
+                return Unauthorized();
+            }
+
+            
+            if (post != null)
+            {
+                unitOfWork.PostRepository.Delete(post);
                 await unitOfWork.Save();
                 return Ok();
             }

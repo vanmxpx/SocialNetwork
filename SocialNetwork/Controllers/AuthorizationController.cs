@@ -28,6 +28,7 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -36,6 +37,12 @@ namespace SocialNetwork.Controllers
         {
             //добавить валидацию id             
             var authorization = await unitOfWork.AuthorizationRepository.GetById(id);
+
+            if (User.Identity.Name != authorization.CredentialRef.ToString())
+            {
+                return Unauthorized();
+            }
+
             if (authorization != null)
             {
                 return Ok(authorization);
@@ -64,10 +71,13 @@ namespace SocialNetwork.Controllers
             };
 
             await unitOfWork.AuthorizationRepository.Create(authorization);
-
-            return Ok(new { Token = new TokenFactory(appSettings, credential).GetStringToken() });
+            await unitOfWork.Save();
+            String token = new TokenFactory(appSettings, credential).GetStringToken();
+            Profile profile = await unitOfWork.ProfileRepository.GetByCredentialId(credential.Id);
+            return Ok(new { Token = token, login = profile.Login });
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
@@ -76,18 +86,28 @@ namespace SocialNetwork.Controllers
             var authorization = await unitOfWork.AuthorizationRepository.GetById(id);
             if (authorization != null)
             {
+                if (User.Identity.Name != authorization.CredentialRef.ToString())
+                {
+                    return Unauthorized();
+                }
                 await unitOfWork.AuthorizationRepository.Delete(authorization);
                 return Ok();
             }
             return NotFound();
         }
 
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
         [Produces("application/json")]
         public async Task<ActionResult<ICollection<Authorization>>> GetAllAuthorizationByCredential([FromQuery]int credentialId)
         {
+            if (User.Identity.Name != credentialId.ToString())
+            {
+                return Unauthorized();
+            }
+
             if (credentialId != 0)
             {
                 var authorizations = await unitOfWork.AuthorizationRepository.GetAllAuthorizantionsByCredentialId(credentialId);

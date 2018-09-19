@@ -38,7 +38,6 @@ namespace SocialNetwork.Controllers
         }
 
         //http://localhost:5000/api/profiles/login/?{login}
-        [AllowAnonymous]
         [HttpGet]
         [Route("login")]
         [ProducesResponseType(200, Type = typeof(ProfileDto))]
@@ -82,10 +81,19 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> Delete(int id)
         {
-            var entity = await unitOfWork.ProfileRepository.GetById(id);
-            if (entity != null)
+            var profile = await unitOfWork.ProfileRepository.GetById(id);
+
+            if (User.Identity.Name != profile.Id.ToString())
             {
-                unitOfWork.ProfileRepository.Delete(entity);
+                return Unauthorized();
+            }
+
+            var credential = await unitOfWork.CredentialRepository.GetById(id);
+            
+            if (profile != null)
+            {
+                unitOfWork.ProfileRepository.Delete(profile);
+                unitOfWork.CredentialRepository.Delete(credential);
                 await unitOfWork.Save();
                 return Ok();
             }
