@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.SignalR;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
+
 
 namespace SocialNetwork.SignalRChatHub
 {
-    public class ChatHub : Hub
+    public class ChatHub : Hub<INotifyHubClient>
     {
-        public async Task SendMessage(string user, string message)
-        {
-
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
-        }
+        
     }
 }
