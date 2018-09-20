@@ -70,14 +70,7 @@ namespace SocialNetwork.Controllers
             if (idBlogger != 0 && idSubscriber != 0)
             {
                 Followings following = await unitOfWork.FollowingsRepository.GetByBloggerAndSubscriberId(idBlogger, idSubscriber);
-                if (following != null)
-                {
-                    return new OkObjectResult(true);
-                }
-                else
-                {
-                    return new OkObjectResult(false);
-                }
+                return (following != null) ? new OkObjectResult(true) : new OkObjectResult(false);
             }
             return BadRequest();
         }
