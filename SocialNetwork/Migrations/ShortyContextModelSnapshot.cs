@@ -39,7 +39,7 @@ namespace SocialNetwork.Migrations
 
                     b.HasIndex("Id")
                         .IsUnique()
-                        .HasName("Id_UNIQUE");
+                        .HasName("IdAuthorization_idx");
 
                     b.ToTable("authorization");
                 });
@@ -65,6 +65,10 @@ namespace SocialNetwork.Migrations
                         .IsUnique()
                         .HasName("Email_UNIQUE");
 
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasName("Id_UNIQUE");
+
                     b.ToTable("credential");
                 });
 
@@ -81,6 +85,10 @@ namespace SocialNetwork.Migrations
 
                     b.HasIndex("BloggerRef")
                         .HasName("idBlogger_idx");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasName("Id_UNIQUE");
 
                     b.HasIndex("SubscriberRef")
                         .HasName("idSubscriber_idx");
@@ -104,8 +112,12 @@ namespace SocialNetwork.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasName("idPost_idx");
+
                     b.HasIndex("ProfileRef")
-                        .HasName("idProfileAuthor_idx");
+                        .HasName("profileRef_idx");
 
                     b.ToTable("post");
                 });
@@ -146,7 +158,12 @@ namespace SocialNetwork.Migrations
                         .IsUnique();
 
                     b.HasIndex("Id")
+                        .IsUnique()
                         .HasName("idProfile_idx");
+
+                    b.HasIndex("Login")
+                        .IsUnique()
+                        .HasName("login_idx");
 
                     b.ToTable("profile");
                 });

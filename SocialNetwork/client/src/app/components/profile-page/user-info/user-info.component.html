@@ -5,13 +5,15 @@
   <mat-card-content>
     <img src="./assets/img/avatar.png">
     <h1>
-      <span>{{profile.name}}</span> 
-      <span> {{profile.lastName}} </span>
+      <span>{{profile?.name}}</span>
+      <span> {{profile?.lastName}} </span>
     </h1>
-    <p>Login: <span>{{profile.login}}</span></p>
+    <p>Login: <span>{{profile?.login}}</span></p>
     <h2>About me:</h2>
     <p>{{profile.location}}</p>
   </mat-card-content>
   <mat-card-actions>
+    <button *ngIf="!isUser" value="click" (click)="toggleRelationship()" mat-button>{{this.labelName}}</button>
   </mat-card-actions>
+  <app-footer></app-footer>
 </mat-card>

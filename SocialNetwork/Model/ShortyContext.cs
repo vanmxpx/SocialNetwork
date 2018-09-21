@@ -34,7 +34,7 @@ namespace SocialNetwork
                     .HasName("IdCredential_idx");
 
                 entity.HasIndex(e => e.Id)
-                    .HasName("Id_UNIQUE")
+                    .HasName("IdAuthorization_idx")
                     .IsUnique();
 
                 entity.Property(e => e.SystemStatus)
@@ -47,6 +47,10 @@ namespace SocialNetwork
                 entity.ToTable("credential");
 
                 // entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id_UNIQUE")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.Email)
                     .HasName("Email_UNIQUE")
@@ -81,6 +85,10 @@ namespace SocialNetwork
 
                 entity.ToTable("followings");
 
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id_UNIQUE")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.BloggerRef)
                     .HasName("idBlogger_idx");
 
@@ -92,8 +100,12 @@ namespace SocialNetwork
             {
                 entity.ToTable("post");
 
+                entity.HasIndex(e => e.Id)
+                    .HasName("idPost_idx")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.ProfileRef)
-                    .HasName("idProfileAuthor_idx");
+                    .HasName("profileRef_idx");
 
                 entity.Property(e => e.Datetime).HasColumnType("datetime");
 
@@ -109,7 +121,8 @@ namespace SocialNetwork
                 entity.HasKey(e => e.Id);
 
                 entity.HasIndex(e => e.Id)
-                    .HasName("idProfile_idx");
+                    .HasName("idProfile_idx")
+                    .IsUnique();
 
                 entity.Property(e => e.Gender)
                     .HasColumnType("tinyint(3)")
@@ -120,6 +133,10 @@ namespace SocialNetwork
                     .HasColumnType("varchar(32)");
 
                 entity.Property(e => e.Location).HasColumnType("varchar(64)");
+
+                entity.HasIndex(e => e.Login)
+                    .HasName("login_idx")
+                    .IsUnique();
 
                 entity.Property(e => e.Login)
                     .IsRequired()
