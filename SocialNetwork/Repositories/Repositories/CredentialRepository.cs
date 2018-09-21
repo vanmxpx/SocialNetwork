@@ -49,7 +49,7 @@ namespace SocialNetwork.Repositories
             return false;
         }
 
-         public Credential Authenticate(string email, string password)
+        public Credential Authenticate(string email, string password)
         {
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {

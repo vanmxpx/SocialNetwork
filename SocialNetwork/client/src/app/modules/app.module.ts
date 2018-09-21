@@ -18,6 +18,7 @@ import { ProfileService } from '../services/model-services/profile.service';
 import { InputDataValidatorService } from '../validators/input-data-validator.service';
 import { AddPostComponent } from '../components/profile-page/add-post/add-post.component';
 import { FooterComponent } from '../components/footer/footer.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 
 
@@ -41,7 +42,8 @@ import { FooterComponent } from '../components/footer/footer.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    InfiniteScrollModule
   ],
   providers: [
     PostService,

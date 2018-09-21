@@ -27,29 +27,19 @@ namespace SocialNetwork.Controllers
         [HttpGet("{email}")]
         public async Task<ActionResult> GetByEmail(string email)
         {
-            var Credential = await unitOfWork.CredentialRepository.GetByEmail(email);
-            if (Credential == null)
-                return NotFound();
-            else
-                return new OkObjectResult(Credential);
-        }
-
-        // DELETE api/credentials/50
-        [HttpDelete("{id}")]
-        [ProducesResponseType(201)]
-        [ProducesResponseType(404)]
-        public async Task<ActionResult> Delete(int id)
-        {
-           var entity = await unitOfWork.CredentialRepository.GetById(id);
-           //var profile = await unitOfWork.ProfileRepository.GetById(id);
-            if (entity != null)
+            var credential = await unitOfWork.CredentialRepository.GetByEmail(email);
+            if (credential != null)
             {
-                //entity.Profile = profile;
-                unitOfWork.CredentialRepository.Delete(entity);
-                await unitOfWork.Save();
-                return Ok();
+                if (User.Identity.Name != credential.Id.ToString())
+                {
+                    return Unauthorized();
+                }
+                return new OkObjectResult(credential);
             }
-            return NotFound();
+            else
+            {
+                return NotFound();
+            }
         }
 
         // [AllowAnonymous]
