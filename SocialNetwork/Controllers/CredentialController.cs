@@ -52,75 +52,75 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
-        [AllowAnonymous]
-        [HttpPost]//("{email}/{Login}/{password}/{name}/{lastName}")
-        public async Task<IActionResult> Register(string email, string login, string password, string name = null, string lastName = null)
-        {
-            Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
-            Profile prof = await unitOfWork.ProfileRepository.GetByLogin(login);
-            EmailSender emailService = new MailKitSender(provider.STMPConnection);
+        // [AllowAnonymous]
+        // [HttpPost]//("{email}/{Login}/{password}/{name}/{lastName}")
+        // public async Task<IActionResult> Register(string email, string login, string password, string name = null, string lastName = null)
+        // {
+        //     Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
+        //     Profile prof = await unitOfWork.ProfileRepository.GetByLogin(login);
+        //     EmailSender emailService = new MailKitSender(provider.STMPConnection);
 
-            if (cred != null)
-                return BadRequest("The Email already exist");
-            if (prof != null)
-                return BadRequest("The Login already exist");
+        //     if (cred != null)
+        //         return BadRequest("The Email already exist");
+        //     if (prof != null)
+        //         return BadRequest("The Login already exist");
 
-            int timeout = provider.STMPConnection.TimeOut;
-            var task = emailService.SendConfirmEmailAsync(email,password);
-            if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
-            {
-                if (task.IsFaulted)
-                    return BadRequest("Incorrect email");
+        //     int timeout = provider.STMPConnection.TimeOut;
+        //     var task = emailService.SendConfirmEmailAsync(email,password);
+        //     if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
+        //     {
+        //         if (task.IsFaulted)
+        //             return BadRequest("Incorrect email");
 
-                prof = new Profile()
-                {
-                    Login = login
-                };
-                cred = new Credential()
-                {
-                    Email = email,
-                    Password = password,
-                    Profile = prof
-                };
+        //         prof = new Profile()
+        //         {
+        //             Login = login
+        //         };
+        //         cred = new Credential()
+        //         {
+        //             Email = email,
+        //             Password = password,
+        //             Profile = prof
+        //         };
 
-                if (name != null)
-                    prof.Name = name;
-                if (lastName != null)
-                    prof.LastName = name;
+        //         if (name != null)
+        //             prof.Name = name;
+        //         if (lastName != null)
+        //             prof.LastName = name;
 
-                await unitOfWork.ProfileRepository.Create(prof);
-                await unitOfWork.CredentialRepository.Create(cred);
-                await unitOfWork.Save();
+        //         await unitOfWork.ProfileRepository.Create(prof);
+        //         await unitOfWork.CredentialRepository.Create(cred);
+        //         await unitOfWork.Save();
 
-                return Ok("Ok");
+        //         return Ok("Ok");
 
-            }
-            else
-            {
-                return BadRequest("TimeOut");
-            }
-        }
+        //     }
+        //     else
+        //     {
+        //         return BadRequest("TimeOut");
+        //     }
+        // }
 
 
-        [AllowAnonymous]
-        [HttpPost("{email}/{hash}")]
-        public async Task<ActionResult> ConfirmEmail(string email, string hash)
-        {
-            Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
-            if (cred != null)
-            {
-                if (hash == Sha256Service.Convert(cred.Email + cred.Password))
-                {
-                    cred.DateRegistration = DateTime.Now;
-                    unitOfWork.CredentialRepository.Update(cred.Id, cred);
-                    await unitOfWork.Save();
-                    return Ok("Yeah it's work");
-                }
-                else
-                    return BadRequest("Broken link");
-            }
-            else
-                return BadRequest("link is outdated");
-        }
+        // [AllowAnonymous]
+        // [HttpPost("{email}/{hash}")]
+        // public async Task<ActionResult> ConfirmEmail(string email, string hash)
+        // {
+        //     Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
+        //     if (cred != null)
+        //     {
+        //         if (hash == Sha256Service.Convert(cred.Email + cred.Password))
+        //         {
+        //             cred.DateRegistration = DateTime.Now;
+        //             unitOfWork.CredentialRepository.Update(cred.Id, cred);
+        //             await unitOfWork.Save();
+        //             return Ok("Yeah it's work");
+        //         }
+        //         else
+        //             return BadRequest("Broken link");
+        //     }
+        //     else
+        //         return BadRequest("link is outdated");
+        // }
     }
 }
