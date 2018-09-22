@@ -120,7 +120,7 @@ namespace SocialNetwork
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
                 // запросы на другой домен, порт и т.д.. Все это в целях безопасности)
                 app.UseCors(builder =>
-                    builder.WithOrigins("http://localhost:4200")
+                    builder.WithOrigins("http://localhost:4200")//"http://localhost:4200"
                         .AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()
                 );
             }
