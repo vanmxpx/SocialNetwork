@@ -46,10 +46,10 @@ namespace SocialNetwork
             services.AddDbService(Environment, services.GetProvider());
 
             // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "client/dist";
-            });
+            // services.AddSpaStaticFiles(configuration =>
+            // {
+            //     configuration.RootPath = "client/dist";
+            // });
 
 
 
@@ -107,19 +107,16 @@ namespace SocialNetwork
             {
                 routes.MapHub<ChatHub>("/chatHub");
             });
-
+            app.UseBDScripts(env, provider, ini); // используем скрипты для бд
             app.UseAuthentication(); //используем аутентификацию
             app.UseMvc();
 
-            app.UseBDScripts(env, provider, ini);
+
 
 
             if (Environment.IsDevelopment())
             {
-
-
                 app.UseDeveloperExceptionPage();
-
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 
                 // запросы на другой домен, порт и т.д.. Все это в целях безопасности)
                 app.UseCors(builder =>
@@ -137,26 +134,27 @@ namespace SocialNetwork
             }
 
             // Укажем, что наше приложение будет использовать статические странички, сгенерированые ангуляр приложением.
+            app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+           // app.UseSpaStaticFiles();
+            /* 
+                        // Для того, что бы наше приложение разворачивалось с Ангуляром, используем опцию,
+                        // которая позволяет запускать Single Page Application вместо привычных страниц в папке View
+                        app.UseSpa(spa =>
+                        {
+                            // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                            // see https://go.microsoft.com/fwlink/?linkid=864501
 
-            // Для того, что бы наше приложение разворачивалось с Ангуляром, используем опцию,
-            // которая позволяет запускать Single Page Application вместо привычных страниц в папке View
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
+                            spa.Options.SourcePath = "client";
 
-                spa.Options.SourcePath = "client";
-
-                if (env.IsDevelopment())
-                {
-                    // Первый вариант запустит новое Angular приложение, второй же подключится по ссылке к уже существующему.
-                    // Удобно использовать 2ой вариант, потому что два отдельно запущеных приложения клиента/сервера можно одновременно дебажить.
-                    //spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-                }
-            });
+                            if (env.IsDevelopment())
+                            {
+                                // Первый вариант запустит новое Angular приложение, второй же подключится по ссылке к уже существующему.
+                                // Удобно использовать 2ой вариант, потому что два отдельно запущеных приложения клиента/сервера можно одновременно дебажить.
+                                //spa.UseAngularCliServer(npmScript: "start");
+                                spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                            }
+                        });*/
         }
     }
 }

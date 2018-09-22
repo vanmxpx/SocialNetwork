@@ -11,8 +11,8 @@ export class PostComponent implements OnInit {
   posts: Post[] = [];
   @Input() public isNews: boolean;
   @Input() public profileId: number;
-  page: number = 0;
-  
+  page = 0;
+
   constructor(private postService: PostService) { }
 
   ngOnInit() {
@@ -28,9 +28,9 @@ export class PostComponent implements OnInit {
   }
 
   onPostsSuccess(res) {
-    console.log("Post page " + this.page);
+    console.log('Post page ' + this.page);
     console.log(res);
-    if (res != undefined) {
+    if (res !== undefined) {
       res.forEach(item => {
         this.posts.push(item);
       });
@@ -39,18 +39,19 @@ export class PostComponent implements OnInit {
 
   onScroll() {
     this.page = this.page + 1;
-    if(this.isNews == true){
+    if (this.isNews === true) {
       this.getNewsByPage();
-    }else{
+    } else {
       this.getPostsByPage();
     }
-    console.log("Scrolled down");
+    console.log('Scrolled down');
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
-    if(this.isNews == true){
+    if (this.isNews === true) {
       this.getNewsByPage();
-    }else{
+    } else {
       this.getPostsByPage();
     }
     this.page = this.page + 1;

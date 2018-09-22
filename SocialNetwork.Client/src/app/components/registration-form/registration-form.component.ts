@@ -10,13 +10,13 @@ import { InputDataValidatorService } from '../../validators/input-data-validator
   styleUrls: ['./registration-form.component.scss']
 })
 export class RegistrationComponent implements OnInit {
-  private hide = true;
-  private showEmailNotification = false;
-  private user = new User();
+  public hide = true;
+  public showEmailNotification = false;
+  public user = new User();
 
-  private loginValidator = this.validatorService.getLoginValidator();
-  private emailValidator = this.validatorService.getEmailValidator();
-  private passwordValidator = this.validatorService.getPasswordValidator();
+  public loginValidator = this.validatorService.getLoginValidator();
+  public emailValidator = this.validatorService.getEmailValidator();
+  public passwordValidator = this.validatorService.getPasswordValidator();
 
   constructor(private validatorService: InputDataValidatorService) { }
 
