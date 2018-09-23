@@ -15,10 +15,6 @@ using SocialNetwork.Services;
 using SocialNetwork.Configurations;
 using SocialNetwork.Services.Extentions;
 using AutoMapper;
-using System.Threading.Tasks;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 
 namespace SocialNetwork
@@ -40,8 +36,6 @@ namespace SocialNetwork
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper();
-
-
             services.AddConfigurationProvider(Configuration);
             services.AddDbService(Environment, services.GetProvider());
 
@@ -51,53 +45,10 @@ namespace SocialNetwork
                 configuration.RootPath = "client/dist";
             });
 
-
-
-
             services.AddSignalR();
-
             services.AddTransient<Initializer>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-
-            // конфигурация jwt аутентификации
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.Events = new JwtBearerEvents
-                {
-                    OnTokenValidated = context =>
-                    {
-                        var credentialRepository = context.HttpContext.RequestServices
-                            .GetRequiredService<IUnitOfWork>().CredentialRepository;
-                        var Id = int.Parse(context.Principal.Identity.Name);
-                        var profile = credentialRepository.GetById(Id);
-                        if (profile == null)
-                        {
-                            // return unauthorized if user no longer exists
-                            context.Fail("Unauthorized");
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+            services.AddJWTAuthorization(services.GetProvider());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,14 +61,9 @@ namespace SocialNetwork
 
             app.UseAuthentication(); //используем аутентификацию
             app.UseMvc();
-
             app.UseBDScripts(env, provider, ini);
-
-
             if (Environment.IsDevelopment())
             {
-
-
                 app.UseDeveloperExceptionPage();
 
                 // Позволяем получать запросы с отдельной ангуляр страницы (по умолчанию в браузере нельзя отправлять 

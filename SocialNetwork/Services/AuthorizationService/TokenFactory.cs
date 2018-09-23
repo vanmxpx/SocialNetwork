@@ -5,22 +5,23 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
+using SocialNetwork.Configurations;
 
-namespace SocialNetwork
+namespace SocialNetwork.Services.Authorization
 {
     public class TokenFactory
     {
-        private readonly AppSettings appSettings;
         private readonly Credential credential;
-        public TokenFactory(AppSettings appSettings, Credential credential)
+        private IConfigProvider provider;
+        public TokenFactory(Credential credential, IConfigProvider provider)
         {
-            this.appSettings = appSettings;
             this.credential = credential;
+            this.provider = provider;
         }
         public string GetStringToken()
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(provider.AppSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
