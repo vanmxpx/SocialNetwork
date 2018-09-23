@@ -12,7 +12,7 @@ namespace SocialNetwork.Services.Extentions
     public static class AuthorizationExtension
     {
 
-        public static void AddJWTAuthorization(this IServiceCollection services, IConfigProvider provider)
+        public static void AddJWTAuthorization(this IServiceCollection services)
         {
 
             var key = Encoding.ASCII.GetBytes(services.GetProvider().AppSettings.Secret);

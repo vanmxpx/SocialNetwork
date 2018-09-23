@@ -48,7 +48,7 @@ namespace SocialNetwork
             services.AddSignalR();
             services.AddTransient<Initializer>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddJWTAuthorization(services.GetProvider());
+            services.AddJWTAuthorization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
