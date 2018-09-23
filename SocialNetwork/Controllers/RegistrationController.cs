@@ -52,8 +52,10 @@ namespace SocialNetwork.Controllers
                 if (task.IsFaulted)
                     return BadRequest("TimeOut");
 
-                cred.Profile = p;
                 await unitOfWork.ProfileRepository.Create(p);
+                cred.Profile = p;
+
+
                 await unitOfWork.CredentialRepository.Create(cred);
                 await unitOfWork.Save();
 
@@ -76,7 +78,7 @@ namespace SocialNetwork.Controllers
                     cred.DateRegistration = DateTime.Now;
                     unitOfWork.CredentialRepository.Update(cred.Id, cred);
                     await unitOfWork.Save();
-                    return Ok("Yeah it's work");
+                    return Redirect("http://localhost:5000");
                 }
                 else
                     return BadRequest("Broken link");

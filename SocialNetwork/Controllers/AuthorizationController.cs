@@ -57,7 +57,7 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
         [Produces("application/json")]
-        public async Task<ActionResult<Authorization>> AddAuthorization([FromBody]CredentialDto credentialDto)
+        public async Task<ActionResult<Authorization>> AddAuthorization(CredentialDto credentialDto)
         {
             Credential credential = unitOfWork.CredentialRepository.Authenticate(credentialDto.Email, credentialDto.Password);
             if (credential == null)
