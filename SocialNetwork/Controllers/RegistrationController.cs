@@ -50,7 +50,7 @@ namespace SocialNetwork.Controllers
             if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
             {
                 if (task.IsFaulted)
-                    return BadRequest("TimeOut");
+                    return Ok("TimeOut");
 
                 await unitOfWork.ProfileRepository.Create(p);
                 cred.Profile = p;

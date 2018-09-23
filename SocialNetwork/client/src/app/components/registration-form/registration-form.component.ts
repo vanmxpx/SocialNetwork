@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 // import { InputDataValidatorService } from '../../validators/input-data-validator.service';
 
 
@@ -10,30 +12,38 @@ import { User } from '../../models/user';
   styleUrls: ['./registration-form.component.scss']
 })
 export class RegistrationComponent implements OnInit {
-  private hide = true;
-  private showEmailNotification = false;
-  private user = new User();
-
+  public user = new User();
+  private url = 'http://localhost:5000/api/registration';
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  };
   // private loginValidator = this.validatorService.getLoginValidator();
   // private emailValidator = this.validatorService.getEmailValidator();
   // private passwordValidator = this.validatorService.getPasswordValidator();
 
-  constructor(/*private validatorService: InputDataValidatorService*/) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
 
   onSubmit() {
-    alert('Some action');
-    // this.user.login = this.loginValidator.value;
-    // this.user.email = this.emailValidator.value;
-    // this.user.password = this.passwordValidator.value;
-    // if (this.loginValidator.status === 'VALID'
-    //   && this.emailValidator.status === 'VALID'
-    //   && this.passwordValidator.status === 'VALID') {
-    //   this.showEmailNotification = true;
-    //   alert('Request imitation: ' + JSON.stringify(this.user));
-    // }
+    if (this.user.email === undefined) {
+      // обработка пустого email
+    } else
+      if (this.user.login === undefined) {
+        // обработка пустого login
+      } else
+        if (this.user.password === undefined) {
+          // обработка пустого password
+        } else {
+          this.sendEmail(this.user).subscribe((response: string) => alert(response));
+        }
+  }
+
+  sendEmail(user: User) {
+    return this.http.post<string>(this.url, user, this.httpOptions);
   }
 
   // getEmailErrorMessage() {
