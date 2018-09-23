@@ -10,7 +10,6 @@ import { FollowersComponent } from './components/profile-page/followers/follower
 import { UserTabsComponent } from './components/profile-page/user-tabs/user-tabs.component';
 import { PostService } from './services/model-services/post.service';
 import { ProfileService } from './services/model-services/profile.service';
-import { InputDataValidatorService } from './validators/input-data-validator.service';
 import { AddPostComponent } from './components/profile-page/add-post/add-post.component';
 import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './modules/app-routing.module';
@@ -56,7 +55,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     AuthGuard,
     PostService,
     ProfileService,
-    InputDataValidatorService,
     AuthenticationService,
     FollowingsService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
