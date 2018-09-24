@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
-import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
+import {RegistrationService} from '../../services/registration/registration.service';
 // import { InputDataValidatorService } from '../../validators/input-data-validator.service';
 
 
@@ -13,17 +12,11 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class RegistrationComponent implements OnInit {
   public user = new User();
-  private url = 'http://localhost:5000/api/registration';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
   // private loginValidator = this.validatorService.getLoginValidator();
   // private emailValidator = this.validatorService.getEmailValidator();
   // private passwordValidator = this.validatorService.getPasswordValidator();
 
-  constructor(private http: HttpClient) { }
+  constructor(private registrationService: RegistrationService) { }
 
   ngOnInit() {
   }
@@ -38,12 +31,8 @@ export class RegistrationComponent implements OnInit {
         if (this.user.password === undefined) {
           // обработка пустого password
         } else {
-          this.sendEmail(this.user).subscribe((response: string) => alert(response));
+          this.registrationService.sendEmail(this.user).subscribe((response: string) => alert(response));
         }
-  }
-
-  sendEmail(user: User) {
-    return this.http.post<string>(this.url, user, this.httpOptions);
   }
 
   // getEmailErrorMessage() {
