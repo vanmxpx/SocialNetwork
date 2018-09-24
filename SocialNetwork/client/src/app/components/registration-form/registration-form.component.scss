@@ -4,12 +4,16 @@ sans-serif;
 
 .MainContainer {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .MainContent {
     background-color: $primary-color;
     padding-top: 96px;
     padding-bottom: 96px;
+    flex-grow:4;
 }
 
 .MainContentLine {
@@ -76,6 +80,7 @@ sans-serif;
     color: $primary-text;
     background-color: $primary-dark-color;
     min-height: 60px;
+    margin-bottom: 0px;
 }
 
 // h1{
