@@ -25,18 +25,18 @@ sans-serif;
 }
 
 .MainContentText {
-    @media only screen and (min-width: 600px) {
+    @media only screen and (min-width: 900px) {
         text-align: left;
     }
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 900px) {
         text-align: center;
     }
     max-width: 360px;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding-right: 56px;
-    padding-left: 56px;
+    padding-right: 54px;
+    padding-left: 54px;
     color: $primary-text;
     p {
         margin: 0px;
