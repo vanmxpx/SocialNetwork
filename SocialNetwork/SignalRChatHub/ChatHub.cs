@@ -36,9 +36,23 @@ namespace SocialNetwork.SignalRChatHub
                 }
             }
         }
-        public void DeleteClient(string userName)
+        public async Task DeleteClient(int id)
         {
-            Groups.RemoveFromGroupAsync(Context.ConnectionId, userName);
+            var profileClient = await unitOfWork.ProfileRepository.GetById(id);
+            var subscribers = await unitOfWork.ProfileRepository.GetSubscribersById(id);
+
+            foreach (var profile in subscribers)
+            {
+                if (connectionClients.ClientOnline(profile.Login))
+                {
+                    var connectionsId = connectionClients.GetConnections(profile.Login);
+                    foreach (var connectionId in connectionsId)
+                        await Groups.RemoveFromGroupAsync(connectionId, profileClient.Login);
+                    await Groups.RemoveFromGroupAsync(Context.ConnectionId, profile.Login);
+                }
+            }
+
+            connectionClients.Remove(profileClient.Login, Context.ConnectionId);
         }
     }
 }
