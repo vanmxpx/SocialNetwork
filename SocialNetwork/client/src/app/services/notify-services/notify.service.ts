@@ -10,6 +10,7 @@ export class NotifyService {
 
   private _hubConnection: HubConnection | undefined;
   private recievedPost: Post;
+
   public newPostReceived = new EventEmitter<Post>();
 
   constructor() {
@@ -17,15 +18,17 @@ export class NotifyService {
     this.registerOnServerEvents();
     this.startConnection();
   }
-
+  public RegisteredOnServer(id: number) {
+    this._hubConnection.invoke('AddNewClient', id);
+  }
   private createConnection() {
     this._hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('/chatHub')
       .build();
   }
   private registerOnServerEvents(): void {
-    this._hubConnection.on('ReceivePost', (recievedPost: Post) => {
-      this.newPostReceived.emit(recievedPost);
+    this._hubConnection.on('AddNewPostToNews', (newPost: Post) => {
+      this.newPostReceived.emit(newPost);
     });
   }
   private startConnection() {

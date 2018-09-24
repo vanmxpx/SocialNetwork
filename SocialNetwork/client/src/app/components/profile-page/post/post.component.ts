@@ -39,8 +39,8 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   onPostsSuccess(res) {
-    console.log("Post page " + this.page);
-    console.log(res);
+    // console.log("Post page " + this.page);
+    // console.log(res);
     if (res !== undefined) {
       res.forEach(item => {
         this.posts.push(item);
@@ -55,7 +55,7 @@ export class PostComponent implements OnInit, OnDestroy {
     } else {
       this.getPostsByPage();
     }
-    console.log("Scrolled down");
+    // console.log("Scrolled down");
   }
 
   ngAfterViewInit() {

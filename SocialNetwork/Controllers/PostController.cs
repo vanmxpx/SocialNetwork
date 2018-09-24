@@ -143,7 +143,7 @@ namespace SocialNetwork.Controllers
 
                 post.Profile =  await unitOfWork.ProfileRepository.GetById(post.ProfileRef);
                 var postDto = mapper.Map<Post, PostDto>(post);
-                await hubContext.Clients.All.ReceivePost(postDto);
+                await hubContext.Clients.Group(postDto.profile.Login).AddNewPostToNews(postDto);
 
                 return Created("api/post", post);
             }
