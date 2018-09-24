@@ -11,19 +11,41 @@
       <mat-card class="MainContentForm">
         <mat-card>
           <div class="MainContentFormInputs">
-              <mat-form-field >
-                <input matInput placeholder="Email" name="EmailInput" [(ngModel)]="user.email">
-                
-              </mat-form-field>
-              <mat-form-field >
-                <input matInput placeholder="Login" name="LoginInput" [(ngModel)]="user.login">
-              </mat-form-field>
-              <mat-form-field >
-                <input matInput placeholder="Enter your password" [type]="hide ? 'text' : 'password'" name="PasswordInput" [(ngModel)]="user.password">
-                <mat-icon matSuffix (click)="hide = !hide" matTooltip="Show password" >{{hide ? 'visibility' : 'visibility_off'}} </mat-icon>
-              </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Email" name="emailInput" #emailInput="ngModel" required email [(ngModel)]="user.email">
+              <mat-error *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched) && emailInput.errors.required">
+                  Email is <strong>required</strong>.
+                </mat-error>
+                <mat-error *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched) && emailInput.errors.email &&  !emailInput.errors.required">
+                  Email is <strong>invalid</strong>. 
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input name="loginInput" matInput placeholder="Login" [(ngModel)]="user.login" required minlength="4"
+                maxlength="10" #loginInput="ngModel">
+              <mat-error *ngIf="loginInput.invalid && (loginInput.dirty || loginInput.touched) && loginInput.errors.required">
+                Login is <strong>required</strong>.
+              </mat-error>
+              <mat-error *ngIf="loginInput.invalid && (loginInput.dirty || loginInput.touched) && loginInput.errors.minlength &&  !loginInput.errors.required">
+                Login must contain <strong>more</strong> than 4 characters
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="Enter your password" [type]="hide ? 'text' : 'password'" [(ngModel)]="user.password"
+                name="passwordInput" #passwordInput="ngModel" required minlength="6" maxlength="12">
+                <mat-error *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched) && passwordInput.errors.required">
+                    Passsword is <strong>required</strong>.
+                  </mat-error>
+                  <mat-error *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched) && !passwordInput.errors.required && passwordInput.errors.minlength">
+                      Password must contain <strong>more</strong> than 4 characters
+                    </mat-error>
+              <mat-icon matSuffix (click)="hide = !hide" matTooltip="Show password">{{hide ? 'visibility' :
+                'visibility_off'}} </mat-icon>
+            </mat-form-field>
           </div>
-          
+
           <button mat-raised-button color="warn" (click)="onSubmit()">Sing up</button>
           <p>
             By clicking “Sign up”, you agree to our <a>terms of service</a> and <a>privacy statement</a>.
