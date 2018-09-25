@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 import { AuthenticationService } from '../../services/security/authentication.service';
+import { NotifyService } from '../../services/notify-services/notify.service';
 
 @Component({
     selector: 'app-header',
@@ -23,9 +24,11 @@ export class HeaderComponent {
     // constructor(private breakpointObserver: BreakpointObserver) { }
     constructor(private breakpointObserver: BreakpointObserver,
         private authenticationService: AuthenticationService,
-        private router: Router) {
+        private router: Router,
+        private notifyService: NotifyService) {
     }
     Logout() {
+        this.notifyService.logout();
         this.authenticationService.logout();
         this.router.navigate(['/login']);
     }

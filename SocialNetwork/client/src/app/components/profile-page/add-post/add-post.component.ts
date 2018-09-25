@@ -24,11 +24,11 @@ export class AddPostComponent implements OnInit {
     if (text) {
       this.postService.addPost(newPost)
         .subscribe(
-          (data: NewPost) => {
-            this.recievedPost = data;
-            this.router.navigateByUrl('/profile/' + this.profile.login);
-          },
-          error => console.log(error)
+          // (data: NewPost) => {
+          //   this.recievedPost = data;
+          //   this.router.navigateByUrl('/profile/' + this.profile.login);
+          // },
+          // error => console.log(error)
         );
     }
   }
