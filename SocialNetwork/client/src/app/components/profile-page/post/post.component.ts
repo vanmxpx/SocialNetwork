@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
 import { Post } from '../../../models/post';
 import { PostService } from '../../../services/model-services/post.service';
 import { NotifyService } from '../../../services/notify-services/notify.service';
@@ -8,7 +8,7 @@ import { NotifyService } from '../../../services/notify-services/notify.service'
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent implements OnInit, OnDestroy {
+export class PostComponent implements OnInit, OnDestroy, AfterViewInit {
   posts: Post[] = [];
   @Input() public isNews: boolean;
   @Input() public profileId: number;
@@ -61,6 +61,7 @@ export class PostComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     if (this.isNews === true) {
       this.getNewsByPage();
+      // this.subscribeToEvents();
     } else {
       this.getPostsByPage();
     }

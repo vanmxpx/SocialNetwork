@@ -22,6 +22,7 @@ namespace SocialNetwork.SignalRChatHub
         {
             var profileClient = await unitOfWork.ProfileRepository.GetById(id);
             var subscribers = await unitOfWork.ProfileRepository.GetSubscribersById(id);
+            var bloggers = await unitOfWork.ProfileRepository.GetBloggersById(id);
 
             connectionClients.Add(profileClient.Login, Context.ConnectionId);
 
@@ -32,6 +33,13 @@ namespace SocialNetwork.SignalRChatHub
                     var connectionsId = connectionClients.GetConnections(profile.Login);
                     foreach (var connectionId in connectionsId)
                         await Groups.AddToGroupAsync(connectionId, profileClient.Login);
+                }
+            }
+
+            foreach (var profile in bloggers)
+            {
+                if (connectionClients.ClientOnline(profile.Login))
+                {
                     await Groups.AddToGroupAsync(Context.ConnectionId, profile.Login);
                 }
             }
@@ -40,6 +48,7 @@ namespace SocialNetwork.SignalRChatHub
         {
             var profileClient = await unitOfWork.ProfileRepository.GetById(id);
             var subscribers = await unitOfWork.ProfileRepository.GetSubscribersById(id);
+            var bloggers = await unitOfWork.ProfileRepository.GetBloggersById(id);
 
             foreach (var profile in subscribers)
             {
@@ -48,6 +57,13 @@ namespace SocialNetwork.SignalRChatHub
                     var connectionsId = connectionClients.GetConnections(profile.Login);
                     foreach (var connectionId in connectionsId)
                         await Groups.RemoveFromGroupAsync(connectionId, profileClient.Login);
+                }
+            }
+
+            foreach (var profile in bloggers)
+            {
+                if (connectionClients.ClientOnline(profile.Login))
+                {
                     await Groups.RemoveFromGroupAsync(Context.ConnectionId, profile.Login);
                 }
             }
