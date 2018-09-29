@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, retry } from 'rxjs/operators';
 
 import { User } from '../../models/user';
 
@@ -18,6 +19,11 @@ export class RegistrationService {
   constructor(private http: HttpClient) { }
 
   sendEmail(user: User) {
-    return this.http.post<string>(this.url, user, this.httpOptions);
+    return this.http.post<string>(this.url, user, this.httpOptions).pipe(
+      catchError((df: string) => {
+        console.log(df);
+       return df;
+      }
+      ));
   }
 }

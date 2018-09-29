@@ -8,10 +8,11 @@ import { AuthGuard } from '../guards';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full', runGuardsAndResolvers: 'always', canActivate: [AuthGuard] },
+  { path: '', redirectTo: 'login/', pathMatch: 'full', runGuardsAndResolvers: 'always', canActivate: [AuthGuard] },
   { path: 'profile/:login', component: UserPageComponent, runGuardsAndResolvers: 'always', canActivate: [AuthGuard] },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'login', component: LoginComponent, runGuardsAndResolvers: 'always'}
+  { path: 'login/', component: LoginComponent, runGuardsAndResolvers: 'always'},
+  { path: 'login/:email/:password', component: LoginComponent}
 //  { path: '**', pathMatch: 'full', component: PathNotFoundComponent },
 ];
 

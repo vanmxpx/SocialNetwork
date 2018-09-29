@@ -78,7 +78,7 @@ namespace SocialNetwork.Controllers
                     cred.DateRegistration = DateTime.Now;
                     unitOfWork.CredentialRepository.Update(cred.Id, cred);
                     await unitOfWork.Save();
-                    return Redirect("http://localhost:5000");
+                    return RedirectPermanent("http://localhost:5000/login/" + email + "/" + cred.Password);
                 }
                 else
                     return BadRequest("Broken link");
