@@ -19,11 +19,12 @@ export class RegistrationService {
   constructor(private http: HttpClient) { }
 
   sendEmail(user: User) {
-    return this.http.post<string>(this.url, user, this.httpOptions).pipe(
-      catchError((df: string) => {
-        console.log(df);
-       return df;
-      }
-      ));
+    return this.http.post<string>(this.url, user, this.httpOptions);
+    // .pipe(
+    //   catchError((df: string) => {
+    //     console.log(df);
+    //    return df;
+    //   }
+    //   ));
   }
 }
