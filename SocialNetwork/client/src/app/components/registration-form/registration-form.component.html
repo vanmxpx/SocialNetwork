@@ -12,21 +12,21 @@
         <mat-card>
           <div class="MainContentFormInputs">
             <mat-form-field>
-              <input matInput [formControl]="emailInput" placeholder="Email" required>
+              <input matInput [formControl]="emailInput" [(ngModel)]="user.email" placeholder="Email" required>
               <mat-error *ngIf="emailInput.invalid">
                 {{getEmailErrorMessage()}}
               </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="Login" [formControl]="loginInput">
+              <input matInput placeholder="Login" [(ngModel)]="user.login" [formControl]="loginInput">
               <mat-error *ngIf="loginInput.invalid">
                 {{getLoginErrorMessage()}}
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput [formControl]="passwordInput" placeholder="Password" [type]="hide ? 'text' : 'password'">
+              <input matInput [formControl]="passwordInput" [(ngModel)]="user.password" placeholder="Password" [type]="hide ? 'text' : 'password'">
               <mat-error *ngIf="passwordInput.invalid">
                 {{getPasswordErrorMessage()}}
               </mat-error>
