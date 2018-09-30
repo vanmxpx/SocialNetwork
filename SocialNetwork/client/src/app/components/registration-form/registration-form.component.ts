@@ -43,13 +43,15 @@ export class RegistrationComponent implements OnInit {
           '';
   }
   onSubmit() {
-
-    this.registrationService.sendEmail(this.user).subscribe(
-      (response: string) => {
-        this.snackBar.open(response, undefined, { duration: 50000 });
-        console.log(response);
-      }
-    );
+    if (!this.emailInput.invalid && !this.loginInput.invalid && !this.passwordInput.invalid) {
+      this.registrationService.sendEmail(this.user).subscribe(
+        (response: string) => {
+          this.snackBar.open(response, undefined, { duration: 3000 });
+        }
+      );
+    } else {
+console.log('Error has occurred');
+    }
 
 
   }

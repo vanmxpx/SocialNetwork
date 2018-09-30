@@ -39,10 +39,22 @@ namespace SocialNetwork.Controllers
             Profile p = new Profile();
             p.Login = c.Login;
 
-            if (await unitOfWork.CredentialRepository.GetByEmail(cred.Email) != null)
-                return Ok("the email already exists");
-            if (await unitOfWork.ProfileRepository.GetByLogin(p.Login) != null)
-                return Ok("the login already exists");
+            Credential CredentialDb = await unitOfWork.CredentialRepository.GetByEmail(cred.Email);
+            Profile ProfileDb = await unitOfWork.ProfileRepository.GetByLogin(p.Login);
+
+            if (ProfileDb != null) // Сложная конструкция проверки на ошибку -_-
+                if (CredentialDb != null)
+                {
+                    if (CredentialDb.DateRegistration != DateTime.MinValue)
+                        return Ok("User already exist");
+                }
+                else
+                    return Ok("Login already exist");
+            else
+                if (CredentialDb != null)
+                if (CredentialDb.DateRegistration != DateTime.MinValue)
+                    return Ok("Email already exist");
+
 
             EmailSender emailService = new MailKitSender(provider.STMPConnection);
             int timeout = provider.STMPConnection.TimeOut;
@@ -52,14 +64,18 @@ namespace SocialNetwork.Controllers
                 if (task.IsFaulted)
                     return Ok("TimeOut");
 
+
+                if (CredentialDb != null)
+                    unitOfWork.CredentialRepository.Delete(CredentialDb);
+                if (ProfileDb != null)
+                    unitOfWork.ProfileRepository.Delete(ProfileDb);
+
                 await unitOfWork.ProfileRepository.Create(p);
                 cred.Profile = p;
-
-
                 await unitOfWork.CredentialRepository.Create(cred);
                 await unitOfWork.Save();
 
-                return Ok("Ok");
+                return Ok("Email send to " + cred.Email);
 
             }
 
