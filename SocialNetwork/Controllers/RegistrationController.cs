@@ -69,9 +69,11 @@ namespace SocialNetwork.Controllers
                     unitOfWork.CredentialRepository.Delete(CredentialDb);
                 if (ProfileDb != null)
                     unitOfWork.ProfileRepository.Delete(ProfileDb);
+                    
+                cred.Profile = p;
+                p.CredenitialRef = cred.Id;
 
                 await unitOfWork.ProfileRepository.Create(p);
-                cred.Profile = p;
                 await unitOfWork.CredentialRepository.Create(cred);
                 await unitOfWork.Save();
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
+using IHostedService = Microsoft.Extensions.Hosting.IHostedService;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
@@ -14,6 +15,7 @@ using SocialNetwork.SignalRChatHub;
 using SocialNetwork.Services;
 using SocialNetwork.Configurations;
 using SocialNetwork.Services.Extentions;
+using SocialNetwork.Services.Cron;
 using AutoMapper;
 using Microsoft.Extensions.Options;
 
@@ -31,13 +33,15 @@ namespace SocialNetwork
         public IHostingEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider  ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper();
             services.AddConfigurationProvider(Configuration);
             services.AddDbService(Environment, services.GetProvider());
+
+            
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -49,6 +53,10 @@ namespace SocialNetwork
             services.AddTransient<Initializer>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddJWTAuthorization();
+            services.AddSingleton<ProfileRemoveProvider>();
+            services.AddSingleton<IHostedService, DataRefreshService>();
+
+            return services.BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
