@@ -6,8 +6,9 @@ namespace SocialNetwork.Configurations
         #region  Data
         IDatabaseScriptsOption DatabaseScriptsOption { get; set; }
         IConnectionStrings ConnectionStrings { get; set; }
-        ILogging Logging {get;set;}
-        ISTMPConnection STMPConnection {get;set;}
+        ILogging Logging { get; set; }
+        ISTMPConnection STMPConnection { get; set; }
+        IAppSettings AppSettings { get; set; }
         #endregion
 
     }

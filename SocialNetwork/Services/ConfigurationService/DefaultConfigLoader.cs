@@ -20,7 +20,8 @@ namespace SocialNetwork.Configurations
                 DatabaseScriptsOption =  GetConf<DatabaseScriptsOption>(config,"DatabaseScriptsOption"),
                 ConnectionStrings =  GetConf<ConnectionStrings>(config,"ConnectionStrings"),
                 Logging =  GetConf<Logging>(config,"Logging"),
-                STMPConnection = GetConf<STMPConnection>(config,"STMPConnection")
+                STMPConnection = GetConf<STMPConnection>(config,"STMPConnection"),
+                AppSettings = GetConf<AppSettings>(config,"AppSettings")
             };
             return configProvider;
         }

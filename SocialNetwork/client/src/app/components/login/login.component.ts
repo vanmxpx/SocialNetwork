@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { AuthenticationService } from '../../services/security/authentication.service';
 
 
@@ -22,7 +21,19 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService) { }
+    private authenticationService: AuthenticationService) {
+    if (route.snapshot.params['email'] !== undefined && route.snapshot.params['password'] !== undefined) {
+      this.authenticationService.login(route.snapshot.params['email'], route.snapshot.params['password'])
+      .subscribe(
+        // перенаправление на страницу профиля по login в local Storage
+        data => {
+          this.router.navigate([this.returnUrl + 'profile/' + JSON.parse(localStorage.getItem('login'))]);
+        },
+        error => {
+          this.loading = false;
+        });
+    }
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({

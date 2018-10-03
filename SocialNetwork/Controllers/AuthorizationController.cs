@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters.Json;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
+using SocialNetwork.Services.Authorization;
+using SocialNetwork.Configurations;
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Options;
@@ -20,11 +22,11 @@ namespace SocialNetwork.Controllers
     public class AuthorizationsController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly AppSettings appSettings;
-        public AuthorizationsController(IUnitOfWork unitOfWork, IOptions<AppSettings> appSettings)
+        private readonly IConfigProvider provider;
+        public AuthorizationsController(IUnitOfWork unitOfWork, IConfigProvider provider)
         {
             this.unitOfWork = unitOfWork;
-            this.appSettings = appSettings.Value;
+            this.provider = provider;
         }
 
         //http://localhost:5000/api/authorizations/{id} - test url
@@ -55,7 +57,7 @@ namespace SocialNetwork.Controllers
         [ProducesResponseType(200, Type = typeof(Authorization))]
         [ProducesResponseType(404)]
         [Produces("application/json")]
-        public async Task<ActionResult<Authorization>> AddAuthorization([FromBody]CredentialDto credentialDto)
+        public async Task<ActionResult<Authorization>> AddAuthorization(CredentialDto credentialDto)
         {
             Credential credential = unitOfWork.CredentialRepository.Authenticate(credentialDto.Email, credentialDto.Password);
             if (credential == null)
@@ -72,7 +74,7 @@ namespace SocialNetwork.Controllers
 
             await unitOfWork.AuthorizationRepository.Create(authorization);
             await unitOfWork.Save();
-            String token = new TokenFactory(appSettings, credential).GetStringToken();
+            String token = new TokenFactory(credential,provider).GetStringToken();
             Profile profile = await unitOfWork.ProfileRepository.GetByCredentialId(credential.Id);
             return Ok(new { Token = token, login = profile.Login });
         }

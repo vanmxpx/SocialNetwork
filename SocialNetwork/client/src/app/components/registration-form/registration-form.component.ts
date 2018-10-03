@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
-import { InputDataValidatorService } from '../../validators/input-data-validator.service';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { RegistrationService } from '../../services/registration/registration.service';
+import { AuthenticationService } from '../../services/security/authentication.service';
+import { MatSnackBar } from '@angular/material';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -10,41 +13,49 @@ import { InputDataValidatorService } from '../../validators/input-data-validator
   styleUrls: ['./registration-form.component.scss']
 })
 export class RegistrationComponent implements OnInit {
-  private hide = true;
-  private showEmailNotification = false;
-  private user = new User();
-
-  private loginValidator = this.validatorService.getLoginValidator();
-  private emailValidator = this.validatorService.getEmailValidator();
-  private passwordValidator = this.validatorService.getPasswordValidator();
-
-  constructor(private validatorService: InputDataValidatorService) { }
+  public user = new User();
+  emailInput = new FormControl('', [Validators.required, Validators.email]);
+  loginInput = new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]);
+  passwordInput = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]);
+  constructor(
+    private registrationService: RegistrationService,
+    private snackBar: MatSnackBar,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
   }
-
-  onSubmit() {
-    this.user.login = this.loginValidator.value;
-    this.user.email = this.emailValidator.value;
-    this.user.password = this.passwordValidator.value;
-    if (this.loginValidator.status === 'VALID'
-      && this.emailValidator.status === 'VALID'
-      && this.passwordValidator.status === 'VALID') {
-      this.showEmailNotification = true;
-      alert('Request imitation: ' + JSON.stringify(this.user));
-    }
-  }
-
+  getRand() { return ''; }
   getEmailErrorMessage() {
-    return this.validatorService.getEmailErrorMessage();
+    return this.emailInput.hasError('required') ? 'You must enter a value' :
+      this.emailInput.hasError('email') ? 'Not a valid email' :
+        '';
   }
-
-  getLoginErrorMessage() {
-    return this.validatorService.getLoginErrorMessage();
-  }
-
   getPasswordErrorMessage() {
-    return this.validatorService.getPasswordErrorMessage();
+    return this.passwordInput.hasError('required') ? 'Yout must enter a value' :
+      this.passwordInput.hasError('maxlength') ? 'value must be less then 16 char' :
+        this.passwordInput.hasError('minlength') ? 'value must be longer then 8 char' :
+          '';
   }
+  getLoginErrorMessage() {
+    return this.loginInput.hasError('required') ? 'Yout must enter a value' :
+      this.loginInput.hasError('maxlength') ? 'value must be less then 16 char' :
+        this.loginInput.hasError('minlength') ? 'value must be longer then 6 char' :
+          '';
+  }
+  onSubmit() {
+    if (!this.emailInput.invalid && !this.loginInput.invalid && !this.passwordInput.invalid) {
+      this.registrationService.sendEmail(this.user).subscribe(
+        (response: string) => {
+          this.snackBar.open(response, undefined, { duration: 3000 });
+        }
+      );
+    } else {
+console.log('Error has occurred');
+    }
+
+
+  }
+
+
 
 }

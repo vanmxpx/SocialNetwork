@@ -46,7 +46,7 @@ namespace SocialNetwork
             {
                 entity.ToTable("credential");
 
-                // entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
+               // entity.Property(e => e.ProfileRef).HasColumnType("int(11)");
 
                 entity.HasIndex(e => e.Id)
                     .HasName("Id_UNIQUE")
