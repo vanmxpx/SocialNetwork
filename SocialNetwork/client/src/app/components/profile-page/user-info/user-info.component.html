@@ -3,7 +3,13 @@
 
   </mat-card-header>
   <mat-card-content>
-    <img src="./assets/img/avatar.png">
+    <img src="./assets/img/avatar.png" [matMenuTriggerFor]="menu">
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="MyProfile()">Profile</button>
+      <button mat-menu-item>Settings</button>
+      <mat-divider></mat-divider>
+      <button value="click" (click)="Logout()" mat-menu-item>Logout</button>
+    </mat-menu>
     <h1>
       <span>{{profile?.name}}</span>
       <span> {{profile?.lastName}} </span>
@@ -15,5 +21,4 @@
   <mat-card-actions>
     <button *ngIf="!isUser" value="click" (click)="toggleRelationship()" mat-button>{{this.labelName}}</button>
   </mat-card-actions>
-  <app-footer></app-footer>
 </mat-card>

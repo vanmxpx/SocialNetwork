@@ -1,3 +1,14 @@
+@import '../../_global-style.scss';
+
+mat-toolbar 
+{
+  background-color: $primary-color;
+}
+
+.mat-stroked-button {
+  color: $primary-text;
+}
+
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
