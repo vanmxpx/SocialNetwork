@@ -34,6 +34,17 @@
     background-color: $secondary-dark-color;
     display: flex;
     justify-content: center;
+
+    ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+        color: $primary-dark-color;
+    }
+    ::ng-deep .mat-form-field .mat-form-field-label {
+        color: $primary-dark-color;
+    }
+    ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+        background-color: $primary-dark-color;
+    }
+
     .mat-form-field{
         display: block;
         min-width: 260px;
