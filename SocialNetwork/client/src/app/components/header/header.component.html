@@ -1,19 +1,21 @@
 <div class="header">
-  <mat-toolbar color="primary">
+  <mat-toolbar>
     <img class="logo" src="./assets/img/logo.png">
 
     <!-- This fills the remaining space of the current row -->
     <span class="fill-remaining-space"></span>
 
+    <textarea></textarea>
+
     <div class="button-row">
       <a mat-stroked-button routerLink=".">Search</a>
     </div>
-    <img class="avatar" [matMenuTriggerFor]="menu" src="./assets/img/avatar.png">
+    <!-- <img class="avatar" [matMenuTriggerFor]="menu" src="./assets/img/avatar.png">
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="MyProfile()">Profile</button>
       <button mat-menu-item>Settings</button>
       <mat-divider></mat-divider>
       <button value="click" (click)="Logout()" mat-menu-item>Logout</button>
-    </mat-menu>
+    </mat-menu> -->
   </mat-toolbar>
 </div>

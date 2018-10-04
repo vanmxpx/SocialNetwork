@@ -1,4 +1,13 @@
+@import '../../../_global-style.scss';
 .date
 {
     color: gray;
+}
+
+mat-card
+{
+    background-color: $primary-light-color;
+    color: $primary-text;
+    border: 2px solid $secondary-light-color;
+    margin-top: 10px;
 }

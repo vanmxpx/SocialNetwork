@@ -21,7 +21,6 @@ import { UserPageComponent } from './components/profile-page/user-page/user-page
 import { JwtInterceptor, ErrorInterceptor } from './helpers';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './guards';
-import { FooterComponent } from './components/footer/footer.component';
 import { FollowingsService } from './services/model-services/followings.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -39,8 +38,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     UserTabsComponent,
     RegistrationComponent,
     AddPostComponent,
-    LoginComponent,
-    FooterComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
