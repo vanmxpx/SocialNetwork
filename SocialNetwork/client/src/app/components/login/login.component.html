@@ -1,7 +1,36 @@
 <div class="main-content">
-<div></div>
-<div></div>
-<div></div>
+    <div class="main-content-header">
+        <img src="../../../assets/img/RedLogo.png">
+    </div>
+    <div class="main-content-upform">
+        Sign in to Shorty
+    </div>
+    <div>
+        <mat-card class="main-content-form">
+            <mat-card>
+                <form [formGroup]="loginForm">
+                    <mat-form-field>
+                        <input matInput formControlName="emailInput" type="text" required placeholder="Email">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput formControlName="passwordInput" type="text" required placeholder="Password">
+                    </mat-form-field>
+                </form>
+                <button mat-raised-button>Sing in</button>
+            </mat-card>
+        </mat-card>
+    </div>
+
+
+    <div>
+        <mat-card class="main-content-subform">
+            <mat-card>
+                New to Shorty? <a href="registration"> Create an account. </a>
+            </mat-card>
+
+        </mat-card>
+    </div>
+
 </div>
 
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthenticationService } from '../../services/security/authentication.service';
 
 
@@ -11,7 +11,10 @@ import { AuthenticationService } from '../../services/security/authentication.se
 })
 
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+  loginForm = new  FormGroup({
+    emailInput: new FormControl('', [Validators.email, Validators.required]),
+    passwordInput: new FormControl('', [Validators.minLength(8), Validators.maxLength(16), Validators.required])
+  });
   loading = false;
   submitted = false;
   returnUrl: string;
@@ -36,11 +39,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-
     // получить URL-адрес возврата из параметров маршрута или по умолчанию '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
