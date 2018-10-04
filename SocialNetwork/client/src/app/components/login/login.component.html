@@ -11,12 +11,18 @@
                 <form [formGroup]="loginForm">
                     <mat-form-field>
                         <input matInput formControlName="emailInput" type="text" required placeholder="Email">
+                        <mat-error *ngIf="loginForm.controls.emailInput.invalid">
+                                {{getEmailErrorMessage()}}
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field>
                         <input matInput formControlName="passwordInput" type="text" required placeholder="Password">
+                        <mat-error *ngIf="loginForm.controls.passwordInput.invalid">
+                                {{getPasswordErrorMessage()}}
+                        </mat-error>
                     </mat-form-field>
                 </form>
-                <button mat-raised-button>Sing in</button>
+                <button mat-raised-button (click)="onSubmit()">Sing in</button>
             </mat-card>
         </mat-card>
     </div>
