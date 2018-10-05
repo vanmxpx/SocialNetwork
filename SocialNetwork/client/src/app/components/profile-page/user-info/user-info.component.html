@@ -1,24 +1,24 @@
-<mat-card class="user-info-card">
-  <mat-card-header>
-
-  </mat-card-header>
-  <mat-card-content>
+<mat-card class="user-info-border">
+  <mat-card class="user-info-card">
     <img src="./assets/img/avatar.png" [matMenuTriggerFor]="menu">
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="MyProfile()">Profile</button>
-      <button mat-menu-item>Settings</button>
-      <mat-divider></mat-divider>
-      <button value="click" (click)="Logout()" mat-menu-item>Logout</button>
-    </mat-menu>
-    <h1>
-      <span>{{profile?.name}}</span>
-      <span> {{profile?.lastName}} </span>
-    </h1>
-    <p>Login: <span>{{profile?.login}}</span></p>
-    <h2>About me:</h2>
-    <p>{{profile.location}}</p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button *ngIf="!isUser" value="click" (click)="toggleRelationship()" mat-button>{{this.labelName}}</button>
-  </mat-card-actions>
+    <div>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="MyProfile()">Profile</button>
+        <button mat-menu-item>Settings</button>
+        <mat-divider></mat-divider>
+        <button value="click" (click)="Logout()" mat-menu-item>Logout</button>
+      </mat-menu>
+      <h2>
+        <span>{{profile?.name}}</span>
+        <span> {{profile?.lastName}} </span>
+      </h2>
+        
+      <h4><i><span>@{{profile?.login}}</span></i></h4>
+      <h3>About me:</h3>
+      <h4>{{profile.location}}</h4>
+      <button *ngIf="!isUser" value="click" (click)="toggleRelationship()" mat-button>{{this.labelName}}</button>
+    </div>
+
+      
+  </mat-card>
 </mat-card>

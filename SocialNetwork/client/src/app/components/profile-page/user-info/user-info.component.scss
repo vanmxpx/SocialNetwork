@@ -1,13 +1,50 @@
 @import '../../../_global-style.scss';
-
-mat-card
-{
-    background-color: $primary-light-color;
-    border: 2px solid $secondary-light-color;
-    margin-right: 10px;
+@import '../../../../sass/variables.scss';
+@media only screen and (max-width: $tablet) {
+    .user-info-card {
+        justify-content: center;
+    }
 }
 
-mat-card-content
-{
+.user-info-card {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 16px;
+    div {
+        padding-left: 16px;
+        margin-top: 12px;
+        display: flex;
+        flex-flow: column;
+        button {
+            background: $secondary-dark-color;
+            color: $secondary-text;
+        }
+        h2 {
+            margin: 0px;
+        }
+        h3{
+            margin: 0px;
+        }
+        h4 {
+            font-weight: normal !important;
+            margin: 0px;
+            padding-bottom: 8px;
+        }
+    }
+    img {
+        border-style: solid;
+        border-radius: 5px;
+        border-width: 0px;
+        height: 225px;
+        width: 225px;
+    }
+}
+
+.user-info-border {
+    background-color: $secondary-dark-color;
+    padding: 3px;
+}
+
+mat-card-content {
     color: $primary-text;
 }
