@@ -24,6 +24,7 @@ import { AuthGuard } from './guards';
 import { FooterComponent } from './components/footer/footer.component';
 import { FollowingsService } from './services/model-services/followings.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { SettingsComponent } from './components/settings/settings.component';
 
 
 
@@ -40,7 +41,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     RegistrationComponent,
     AddPostComponent,
     LoginComponent,
-    FooterComponent
+    FooterComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
