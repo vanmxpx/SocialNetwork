@@ -10,8 +10,6 @@ import { HttpRequest, HttpClient, HttpEventType } from '@angular/common/http';
 })
 export class SettingsComponent implements OnInit {
     selectedAvatarImage: File = null;
-    public progress: number;
-    public message: string;
     public profile;
 
     onFileSelected(event) {
@@ -20,14 +18,7 @@ export class SettingsComponent implements OnInit {
     }
 
     uploadFile() {
-        this.profileService.uploadAvatar(this.selectedAvatarImage).subscribe(event => {
-            if (event.type === HttpEventType.UploadProgress) {
-                this.progress = Math.round(100 * event.loaded / event.total);
-            } else if (event.type === HttpEventType.Response) {
-                this.message = event.body.toString();
-            }
-        }
-        );
+        this.profileService.uploadAvatar(this.selectedAvatarImage).subscribe();
     }
 
     constructor(private profileService: ProfileService,

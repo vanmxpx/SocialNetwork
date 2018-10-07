@@ -4,27 +4,16 @@
   <div class="public-info">
     <div class="info-container">
       <mat-form-field>
-        <input matInput placeholder="Login">
+        <input matInput value={{profile?.name}} placeholder="Name">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Name">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Last Name">
+        <input matInput value={{profile?.lastName}} placeholder="Last Name">
       </mat-form-field>
     </div>
     <div class="image-container">
       <img class="avatar" src={{profile?.photoUrl}}>
       <input type="file" (change)="onFileSelected($event)">
       <button mat-stroked-button (click)="uploadFile()">Upload</button>
-      <br />
-      <span style="font-weight:bold;color:green;" *ngIf="progress > 0 && progress < 100">
-        {{progress}}%
-      </span>
-
-      <span style="font-weight:bold;color:green;" *ngIf="message">
-        {{message}}
-      </span>
     </div>
   </div>
 </div>
