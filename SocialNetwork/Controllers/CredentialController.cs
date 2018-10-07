@@ -102,7 +102,7 @@ namespace SocialNetwork.Controllers
                 if (hash == Sha256Service.Convert(cred.Email + cred.Password))
                 {
                     cred.DateRegistration = DateTime.Now;
-                    unitOfWork.CredentialRepository.Update(cred.Id, cred);
+                    unitOfWork.CredentialRepository.Update(cred);
                     await unitOfWork.Save();
                     return Ok("Yeah it's work");
                 }

@@ -20,13 +20,15 @@ export class PostService {
     return this.http.get<Post[]>('http://localhost:5000/api/posts?authorId=' + profileId.toString());
   }
   public getPostsByPage(profileId: number, page: number): Observable<Post[]> {
-    return this.http.get<Post[]>('http://localhost:5000/api/posts/postsByPage?authorId=' + profileId.toString() + '&page=' + page.toString());
+    return this.http.get<Post[]>('http://localhost:5000/api/posts/postsByPage?authorId='
+    + profileId.toString() + '&page=' + page.toString());
   }
   public getNews(profileId: number): Observable<Post[]> {
     return this.http.get<Post[]>('http://localhost:5000/api/posts/news/?id=' + profileId.toString());
   }
-  public getNewsByPage(profileId: number, page: number): Observable<Post[]>{
-    return this.http.get<Post[]>('http://localhost:5000/api/posts/newsByPage/?id=' + profileId.toString() + '&page=' + page.toString());
+  public getNewsByPage(profileId: number, page: number): Observable<Post[]> {
+    return this.http.get<Post[]>('http://localhost:5000/api/posts/newsByPage/?id='
+    + profileId.toString() + '&page=' + page.toString());
   }
   public addPost(post: NewPost): Observable<NewPost> {
     return this.http.post<NewPost>('http://localhost:5000/api/posts', post, httpOptions);

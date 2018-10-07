@@ -2,7 +2,9 @@
   <div class="row" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
   <mat-card *ngFor="let post of posts" class="post">
       <mat-card-header>
-        <div mat-card-avatar class="avatar"></div>
+        <div mat-card-avatar class="avatar">
+          <img class="avatar" matListAvatar src={{post.profile.photoUrl}} alt="...">
+        </div>
         <mat-card-title>
           <span> {{post.profile.name}} </span>
           <span>  {{post.profile.lastName}} </span>

@@ -8,6 +8,6 @@ namespace SocialNetwork.Repositories.GenericRepository
         IQueryable<TEntity> GetAll();
     
         Task Create(TEntity entity);    
-        void Update(int id, TEntity entity);
+        void Update(TEntity entity);
     }
 }
