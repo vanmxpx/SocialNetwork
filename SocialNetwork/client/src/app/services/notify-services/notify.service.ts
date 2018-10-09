@@ -21,9 +21,7 @@ export class NotifyService {
     this.registerOnServerEvents();
     this.startConnection();
   }
-  public logout() {
-    this._hubConnection.invoke('DeleteClient', this.Id);
-  }
+
   private createConnection() {
     const token = JSON.parse(localStorage.getItem('token'));
     this._hubConnection = new signalR.HubConnectionBuilder()
