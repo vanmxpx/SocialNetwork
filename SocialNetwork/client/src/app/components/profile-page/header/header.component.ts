@@ -17,7 +17,11 @@ export class HeaderComponent implements OnInit {
   }
 
   PersonButtonClick() {
-    this.router.navigate([this.returnURL + 'profile/' + JSON.parse(localStorage.getItem('login'))]);
+    this.router.navigate([this.returnURL + 'profile/' + this.userProfile.login]);
+  }
+  AppExtiButtonClick() {
+    localStorage.clear();
+    this.router.navigate([this.returnURL + 'login']);
   }
 
 }
