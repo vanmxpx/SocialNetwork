@@ -55,9 +55,7 @@ namespace SocialNetwork.SignalRChatHub
             var profileClient = await unitOfWork.ProfileRepository.GetById(id);
             var subscribers = await unitOfWork.ProfileRepository.GetSubscribersById(id);
             var bloggers = await unitOfWork.ProfileRepository.GetBloggersById(id);
-
-            connectionClients.Add(profileClient.Login, Context.ConnectionId);
-
+            
             foreach (var profile in subscribers)
             {
                 if (connectionClients.ClientOnline(profile.Login))
