@@ -1,5 +1,9 @@
 @import '../../../../sass/variables.scss';
 
+.main-flex-container{
+  display: flex;
+  flex-direction: column;
+}
 @media only screen and (min-width: $tablet) {
   .flex-container {
     overflow: hidden;

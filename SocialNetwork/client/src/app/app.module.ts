@@ -3,7 +3,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderComponent } from './components/profile-page/header/header.component';
 import { UserInfoComponent } from './components/profile-page/user-info/user-info.component';
 import { PostComponent } from './components/profile-page/post/post.component';
 import { FollowersComponent } from './components/profile-page/followers/followers.component';

@@ -1,0 +1,21 @@
+@import "../../../../sass/variables.scss";
+
+.header-main-content {
+    width: 100pv;
+    background:$secondary-dark-color;
+    padding: 3px;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 16px;
+    
+    mat-card {
+        display: flex;
+        justify-content: space-between;
+        height: 10px;
+        img{
+            max-height: 64px;
+            max-width: 64px;
+        }
+    }
+    
+}
