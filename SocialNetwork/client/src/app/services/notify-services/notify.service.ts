@@ -16,7 +16,7 @@ export class NotifyService {
   public newPostReceived = new EventEmitter<Post>();
 
   constructor() { }
-  public RegisteredOnServer(id: number) {
+  public RegisteredOnServer() {
     this.createConnection();
     this.registerOnServerEvents();
     this.startConnection();
