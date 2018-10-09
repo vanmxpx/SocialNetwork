@@ -1,21 +1,69 @@
 @import "../../../../sass/variables.scss";
-
-.header-main-content {
-    width: 100pv;
-    background:$secondary-dark-color;
-    padding: 3px;
-    margin-left: 16px;
-    margin-right: 16px;
-    margin-top: 16px;
-    
-    mat-card {
-        display: flex;
-        justify-content: space-between;
-        height: 10px;
-        img{
-            max-height: 64px;
-            max-width: 64px;
+@media only screen and (min-width: $tablet) {
+    .header-main-content {
+        margin-left: 16px;
+        margin-right: 16px;
+        margin-top: 16px;
+        border-top-left-radius: 5vh;
+        border-bottom-left-radius: 5vh;
+        mat-card {
+            border-top-left-radius: 5vh;
+            border-bottom-left-radius: 5vh;
         }
     }
-    
+}
+
+.header-main-content {
+    background: $secondary-dark-color;
+    padding: 3px;
+    mat-card {
+        height: 10vh;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px;
+        div {
+            display: flex;
+            align-items: center;
+            img {
+                height: 8vh;
+                padding-left: 1vh; // max-height: 64px;
+                // max-width: 64px;
+            }
+        }
+    }
+}
+
+.menu-context {
+    margin-right: 2.5vh;
+    cursor: pointer;
+    mat-icon {
+        color: $primary-dark-color;
+    }
+    img {
+        padding-left: 0px !important;
+        height: 5vh !important;
+        border-radius: 1vh;
+    }
+}
+
+::ng-deep .mat-menu-content {
+    padding: 0px !important;
+    mat-card{
+        background-color: $secondary-dark-color;
+        padding: 3px;
+        .menu-header{
+            color: $secondary-text;
+            font-size: 14px;
+            padding: 8px;
+            padding-top: 12px;
+            h4{
+                font-size: 16px;
+                margin: 0px;
+            }
+        }
+        .menu-content{
+            background-color: $secondary-text;
+        }
+    }
 }

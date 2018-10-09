@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Profile } from '../../../models/profile';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor() { }
+  private returnURL: string;
+  public userProfile = JSON.parse(localStorage.getItem('profile'));
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.returnURL = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+  }
+
+  PersonButtonClick() {
+    this.router.navigate([this.returnURL + 'profile/' + JSON.parse(localStorage.getItem('login'))]);
   }
 
 }
