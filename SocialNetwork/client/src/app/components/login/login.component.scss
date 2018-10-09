@@ -1,0 +1,81 @@
+@import '../../../sass/variables';
+.main-content {
+    
+    background-color: $primary-color;
+    min-height: 600px;
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+    justify-content: start;
+    img {
+        height: 64px;
+        width: 64px;
+    }
+    div {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.main-content-header {
+    padding-top: 32px;
+    padding-bottom: 24px;
+    display: flex;
+}
+.main-content-upform{
+    font-size: 26px;
+    font-family: $font-light;
+    color: $primary-text;
+    padding-bottom: 16px;
+}
+.main-content-form {
+    padding: 3px;
+    padding-top: 24px;
+    background-color: $secondary-dark-color;
+    display: flex;
+    justify-content: center;
+
+    ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+        color: $primary-dark-color;
+    }
+    ::ng-deep .mat-form-field .mat-form-field-label {
+        color: $primary-dark-color;
+    }
+    ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+        background-color: $primary-dark-color;
+    }
+
+    .mat-form-field{
+        display: block;
+        min-width: 260px;
+    }
+    
+    button{
+        padding-top: 5px;
+        background-color: $secondary-dark-color;
+        color: $secondary-text;
+        width: 100% !important;
+    }
+}
+
+.main-content-subform{
+    background-color: $secondary-dark-color;
+    
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    min-width: 260px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 3px;
+    mat-card{
+        min-width: 260px;
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+    a{
+        color: $secondary-color;
+    }
+}
