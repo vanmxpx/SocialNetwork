@@ -4,7 +4,7 @@
   <mat-card *ngFor="let post of posts" class="post">
     <mat-card-header>
       <mat-card-title>
-        <img src="../../../../assets/img/avatar.png"> 
+        <img src={{post?.profile?.photoUrl}}> 
       </mat-card-title>
       <mat-card-subtitle><h3>{{post.profile.login}}</h3></mat-card-subtitle>
     </mat-card-header>

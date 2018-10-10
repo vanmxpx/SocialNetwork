@@ -2,7 +2,7 @@
   <mat-card>
     <div><img src="../../../../assets/img/RedLogo.png"></div>
     <div class="menu-context" [matMenuTriggerFor]="menu">
-      <img src="../../../../assets/img/avatar.png">
+      <img src={{userProfile?.photoUrl}}>
       <mat-icon >expand_more</mat-icon>
       <mat-menu  #menu="matMenu">
         <mat-card>

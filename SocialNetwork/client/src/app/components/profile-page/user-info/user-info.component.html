@@ -1,6 +1,6 @@
 <mat-card class="user-info-border">
   <mat-card class="user-info-card">
-    <img src="./assets/img/avatar.png" [matMenuTriggerFor]="menu">
+    <img src={{profile?.photoUrl}} [matMenuTriggerFor]="menu">
     <div>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="MyProfile()">Profile</button>
