@@ -1,0 +1,11 @@
+D:\Git\Flexis\FlexisServerLogger\obj\Debug\netcoreapp2.1\FlexisServerLogger.csprojAssemblyReference.cache
+D:\Git\Flexis\FlexisServerLogger\obj\Debug\netcoreapp2.1\FlexisServerLogger.csproj.CoreCompileInputs.cache
+D:\Git\Flexis\FlexisServerLogger\obj\Debug\netcoreapp2.1\FlexisServerLogger.AssemblyInfoInputs.cache
+D:\Git\Flexis\FlexisServerLogger\obj\Debug\netcoreapp2.1\FlexisServerLogger.AssemblyInfo.cs
+D:\Git\Flexis\FlexisServerLogger\bin\Debug\netcoreapp2.1\FlexisServerLogger.deps.json
+D:\Git\Flexis\FlexisServerLogger\bin\Debug\netcoreapp2.1\FlexisServerLogger.runtimeconfig.json
+D:\Git\Flexis\FlexisServerLogger\bin\Debug\netcoreapp2.1\FlexisServerLogger.runtimeconfig.dev.json
+D:\Git\Flexis\FlexisServerLogger\bin\Debug\netcoreapp2.1\FlexisServerLogger.dll
+D:\Git\Flexis\FlexisServerLogger\bin\Debug\netcoreapp2.1\FlexisServerLogger.pdb
+D:\Git\Flexis\FlexisServerLogger\obj\Debug\netcoreapp2.1\FlexisServerLogger.dll
+D:\Git\Flexis\FlexisServerLogger\obj\Debug\netcoreapp2.1\FlexisServerLogger.pdb
