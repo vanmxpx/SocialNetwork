@@ -24,6 +24,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { FollowingsService } from './services/model-services/followings.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NotifyService } from './services/notify-services/notify.service';
+import { AddpostService } from './services/addpost-services/addpost.service';
 
 
 
@@ -58,6 +59,7 @@ import { NotifyService } from './services/notify-services/notify.service';
     AuthenticationService,
     FollowingsService,
     NotifyService,
+    AddpostService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

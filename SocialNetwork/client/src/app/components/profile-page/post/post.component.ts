@@ -2,6 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter, OnDestroy, AfterViewIni
 import { Post } from '../../../models/post';
 import { PostService } from '../../../services/model-services/post.service';
 import { NotifyService } from '../../../services/notify-services/notify.service';
+import { AddpostService } from '../../../services/addpost-services/addpost.service';
 
 @Component({
   selector: 'app-post',
@@ -17,9 +18,14 @@ export class PostComponent implements OnInit, OnDestroy, AfterViewInit {
   public eventAddPost;
 
   constructor(private postService: PostService,
-    private notifyService: NotifyService) {
+    private notifyService: NotifyService,
+    private addNewPostService: AddpostService) {
     this.page = 0;
     this.subscribeToEvents();
+
+    this.addNewPostService.addNewPost.subscribe((post: Post) => {
+        this.posts.unshift(post);
+    });
   }
 
   private subscribeToEvents(): void {
