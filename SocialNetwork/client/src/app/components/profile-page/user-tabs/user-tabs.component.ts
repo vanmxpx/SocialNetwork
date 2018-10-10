@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Profile } from '../../../models/profile';
 import { ProfileService } from '../../../services/model-services/profile.service';
 
@@ -7,7 +7,7 @@ import { ProfileService } from '../../../services/model-services/profile.service
   templateUrl: './user-tabs.component.html',
   styleUrls: ['./user-tabs.component.scss']
 })
-export class UserTabsComponent implements OnInit {
+export class UserTabsComponent implements OnInit, AfterViewInit {
   public isAuthorizedUserProfile: boolean;
   @Input() public profile: Profile;
   public subscribers: Profile[] = [];

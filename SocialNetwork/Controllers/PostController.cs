@@ -145,7 +145,7 @@ namespace SocialNetwork.Controllers
                 await hubContext.Clients.Group(postDto.profile.Login).AddNewPostToNews(postDto);
                 
                 return Created("api/post", post);
-            }
+            } 
             return BadRequest();
         }
 

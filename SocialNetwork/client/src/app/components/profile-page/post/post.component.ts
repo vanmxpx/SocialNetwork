@@ -21,19 +21,6 @@ export class PostComponent implements OnInit, OnDestroy, AfterViewInit {
     private notifyService: NotifyService,
     private addNewPostService: AddpostService) {
     this.page = 0;
-    this.subscribeToEvents();
-
-    this.addNewPostService.addNewPost.subscribe((post: Post) => {
-        this.posts.unshift(post);
-    });
-  }
-
-  private subscribeToEvents(): void {
-    this.eventAddPost = this.notifyService.newPostReceived.subscribe((post: Post) => {
-      if (this.isNews === true) {
-        this.posts.unshift(post);
-      }
-    });
   }
   ngOnInit() {
   }
@@ -68,16 +55,23 @@ export class PostComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.isNews === true) {
+
+    if (this.isNews) {
       this.getNewsByPage();
-      // this.subscribeToEvents();
+      this.eventAddPost = this.notifyService.newPostReceived.subscribe((post: Post) => {
+        this.posts.unshift(post);
+      });
     } else {
       this.getPostsByPage();
+      this.eventAddPost = this.addNewPostService.addNewPost.subscribe((post: Post) => {
+        this.posts.unshift(post);
+      });
     }
+
     this.page = this.page + 1;
   }
 
   ngOnDestroy() {
-    this.eventAddPost.unsubscribe();
+      this.eventAddPost.unsubscribe();
   }
 }

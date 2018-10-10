@@ -36,8 +36,7 @@ export class AddPostComponent implements OnInit {
 
           this.addNewPostService.addPost(post);
     },
-    error => console.log(error)
-        );
+    error => console.log(error));
   }
 }
 

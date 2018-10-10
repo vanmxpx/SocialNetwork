@@ -42,7 +42,7 @@ export class UserPageComponent implements OnInit {
   private getProfile(): void {
     this.login = this.route.snapshot.paramMap.get('login');
     this.profileService.getProfile(this.login)
-      .subscribe(profile => (this.profile = profile, this.notifyService.RegisteredOnServer(this.profile.id)));
+      .subscribe(profile => (this.profile = profile, this.notifyService.RegisteredOnServer()));
   }
 
   ngOnInit() {
