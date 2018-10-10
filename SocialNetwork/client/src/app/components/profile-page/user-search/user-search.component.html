@@ -1,0 +1,21 @@
+<div class="main-content">
+  <div class="content-header">
+    <mat-form-field>
+      <input matInput placeholder="Input"  [(ngModel)]="SearchString" (keyup)="SearchClick()">
+    </mat-form-field>
+  </div>
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+      <div class="content-context" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"  [fromRoot]="true" (scrolled)="onScroll()">
+          <mat-nav-list >
+              <mat-list-item routerLink="/profile/{{profile.login}}" *ngFor="let profile of profiles">
+                <img matListAvatar src="./assets/img/avatar.png" alt="...">
+                <h3 matLine> {{profile.login}} </h3>
+                <p matLine>
+                  <span> {{profile.name}} </span>
+                  <span class="demo-2">  {{profile.lastName}} </span>
+                </p>
+              </mat-list-item>
+            </mat-nav-list>
+  </div>
+  
+</div>

@@ -22,6 +22,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './guards';
 import { FollowingsService } from './services/model-services/followings.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { UserSearchComponent } from './components/profile-page/user-search/user-search.component';
 
 
 
@@ -37,7 +38,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     UserTabsComponent,
     RegistrationComponent,
     AddPostComponent,
-    LoginComponent
+    LoginComponent,
+    UserSearchComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

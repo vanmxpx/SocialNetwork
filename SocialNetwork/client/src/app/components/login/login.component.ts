@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
 
   // callback функция события клика по кнопке войти в форме на странице /login
   onSubmit() {
-alert('hello');
     this.submitted = true;
 
     // данные формы не валидны

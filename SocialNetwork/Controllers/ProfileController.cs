@@ -53,6 +53,30 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetProfilesByNameOrLastName([FromQuery]string name, [FromQuery] string lastName, [FromQuery] int from, [FromQuery] int count)
+        {
+
+            return Ok();
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("{login}/{from}/{count}")]
+        public async Task<IActionResult> GetProfilesByLogin(string login, int from, int count)
+        {
+            if (from >= 0 && count > 0)
+            {
+                return new OkObjectResult(unitOfWork.ProfileRepository.GetCoincidentallyLogin(login, from, count));
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+
+        }
+
         //http://localhost:5000/api/profiles/name/?{name}&{lastName}
         [AllowAnonymous]
         [HttpGet]
@@ -63,7 +87,7 @@ namespace SocialNetwork.Controllers
         {
             List<Profile> profiles = await unitOfWork.ProfileRepository.GetByNameAndLastName(name, lastName);
             List<ProfileDto> profileDTOs;
-            if(profiles != null)
+            if (profiles != null)
             {
                 profileDTOs = new List<ProfileDto>(profiles.Count);
                 for (int i = 0; i < profiles.Count; i++)
@@ -89,7 +113,7 @@ namespace SocialNetwork.Controllers
             }
 
             var credential = await unitOfWork.CredentialRepository.GetById(id);
-            
+
             if (profile != null)
             {
                 unitOfWork.ProfileRepository.Delete(profile);

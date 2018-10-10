@@ -38,9 +38,10 @@
     margin-right: 2.5vh;
     cursor: pointer;
     mat-icon {
-        color: $primary-dark-color;
+        color: $primary-light-color;
     }
     img {
+        
         padding-left: 0px !important;
         height: 5vh !important;
         border-radius: 1vh;
@@ -64,6 +65,7 @@
         }
         .menu-content{
             background-color: $secondary-text;
+            
         }
     }
 }

@@ -1,0 +1,15 @@
+@import "../../../../sass/variables";
+.main-content {
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    ::ng-deep .mat-form-field {
+        width: 100%;
+    }
+    ::ng-deep .mat-progress-bar-secondary .mat-progress-bar-fill .mat-progress-bar-element{
+        background-color: $secondary-dark-color;
+    }
+    .content-context{
+       
+    }
+}

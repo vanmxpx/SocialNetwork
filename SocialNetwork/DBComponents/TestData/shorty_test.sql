@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `shorty_test`.`credential` (
     REFERENCES `shorty_test`.`profile` (`Id`)
     ON DELETE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 51
+AUTO_INCREMENT =51
 DEFAULT CHARACTER SET = utf8;
 
 

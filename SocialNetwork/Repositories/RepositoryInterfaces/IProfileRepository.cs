@@ -14,6 +14,8 @@ namespace SocialNetwork.Repositories.GenericRepository
         Task<List<Profile>> GetSubscribersById(int idBloger);
         Task<List<Profile>> GetBloggersById(int idSuscriber);
         Task<Profile> GetByCredentialId(int id);
+        List<Profile> GetCoincidentallyLogin(string login, int skip, int take);
+        List<Profile> GetCoincidentallyName(string name, string lastName, int skip, int take);
     
         void Delete(Profile profile);
     }    
