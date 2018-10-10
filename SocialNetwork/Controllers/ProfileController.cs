@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using AutoMapper;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace SocialNetwork.Controllers
 {
@@ -122,6 +124,63 @@ namespace SocialNetwork.Controllers
                 return Ok();
             }
             return NotFound();
+        }
+
+        // [HttpPost]
+        // [Route("avatar")]
+        // public async Task<IActionResult> UploadImage()
+        // {
+        //     var file = Request.Form.Files[0];
+        //     if (file == null || file.Length == 0)
+        //         return Content("file not selected");
+
+        //     //TODO: check on file format (.jpg)
+
+        //     var path = Path.Combine(
+        //                 Directory.GetCurrentDirectory(), "client/src/assets/avatars/avatar",
+        //                 User.Identity.Name + ".jpg");
+
+        //     using (var stream = new FileStream(path, FileMode.Create))
+        //     {
+        //         await file.CopyToAsync(stream);
+        //     }
+        //     Profile profile = await unitOfWork.ProfileRepository.GetById(int.Parse(User.Identity.Name));
+        //     profile.PhotoUrl = "/assets/avatars/avatar" +
+        //                 profile.Id + ".jpg";
+
+        //     return Ok();
+        // }
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<ActionResult> UploadFile()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                if (file == null || file.Length == 0)
+                    return Content("file not selected");
+
+                //TODO: check on file format (.jpg)
+
+                var path = Path.Combine(
+                            Directory.GetCurrentDirectory(), "client/src/assets/avatars",
+                            User.Identity.Name + ".png");
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                Profile profile = await unitOfWork.ProfileRepository.GetById(int.Parse(User.Identity.Name));
+                profile.PhotoUrl = "./assets/avatars/" +
+                            profile.Id + ".png";
+                unitOfWork.ProfileRepository.Update(profile);
+                await unitOfWork.Save();
+
+                return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest("Upload Failed: " + ex.Message);
+            }
         }
     }
 }

@@ -92,6 +92,7 @@ namespace SocialNetwork.Controllers
         // }
 
 
+<<<<<<< HEAD
         // [AllowAnonymous]
         // [HttpPost("{email}/{hash}")]
         // public async Task<ActionResult> ConfirmEmail(string email, string hash)
@@ -112,5 +113,27 @@ namespace SocialNetwork.Controllers
         //     else
         //         return BadRequest("link is outdated");
         // }
+=======
+        [AllowAnonymous]
+        [HttpPost("{email}/{hash}")]
+        public async Task<ActionResult> ConfirmEmail(string email, string hash)
+        {
+            Credential cred = await unitOfWork.CredentialRepository.GetByEmail(email);
+            if (cred != null)
+            {
+                if (hash == Sha256Service.Convert(cred.Email + cred.Password))
+                {
+                    cred.DateRegistration = DateTime.Now;
+                    unitOfWork.CredentialRepository.Update(cred);
+                    await unitOfWork.Save();
+                    return Ok("Yeah it's work");
+                }
+                else
+                    return BadRequest("Broken link");
+            }
+            else
+                return BadRequest("link is outdated");
+        }
+>>>>>>> setting
     }
 }

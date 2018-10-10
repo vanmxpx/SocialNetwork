@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, AfterViewInit } from '@angular/core';
 import { Post } from '../../../models/post';
 import { PostService } from '../../../services/model-services/post.service';
 
@@ -7,7 +7,7 @@ import { PostService } from '../../../services/model-services/post.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, AfterViewInit {
   posts: Post[] = [];
   @Input() public isNews: boolean;
   @Input() public profileId: number;

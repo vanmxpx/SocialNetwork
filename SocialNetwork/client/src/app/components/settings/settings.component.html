@@ -1,0 +1,19 @@
+<div class="preferences-container">
+  <h2>Public Info</h2>
+  <mat-divider></mat-divider>
+  <div class="public-info">
+    <div class="info-container">
+      <mat-form-field>
+        <input matInput value={{profile?.name}} placeholder="Name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput value={{profile?.lastName}} placeholder="Last Name">
+      </mat-form-field>
+    </div>
+    <div class="image-container">
+      <img class="avatar" src={{profile?.photoUrl}}>
+      <input type="file" (change)="onFileSelected($event)">
+      <button mat-stroked-button (click)="uploadFile()">Upload</button>
+    </div>
+  </div>
+</div>

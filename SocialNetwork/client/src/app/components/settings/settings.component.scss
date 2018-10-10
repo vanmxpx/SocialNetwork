@@ -1,0 +1,26 @@
+.public-info {
+  max-width: 600px;
+  overflow: hidden;
+  display: flex;
+  margin: 1em;
+  flex-direction: row;
+}
+
+.info-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-container>* {
+  width: 100%;
+}
+
+.image-container {
+  flex: 1;
+}
+
+.avatar {
+  height: 215px;
+  width: 215px;
+}
