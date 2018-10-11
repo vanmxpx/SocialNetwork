@@ -13,7 +13,7 @@ export class UserSearchComponent implements OnInit {
   public loading: boolean;
   constructor(private profileService: ProfileService) { }
 
-  ngOnInit() {  }
+  ngOnInit() { }
   SearchClick() {
     this.profiles = [];
     this.recieveProfiles();
@@ -29,11 +29,23 @@ export class UserSearchComponent implements OnInit {
       this.profileService.getProfiles(this.SearchString, this.profiles.length, this.profiles.length + 6)
         .subscribe((res) => {
           if (res !== undefined && res !== null) {
+            let isExist: boolean;
             res.forEach(item => {
-              this.profiles.push(item);
+              isExist = false;
+
+              for (const i of this.profiles) {
+                if (i.login === item.login) {
+                  isExist = true;
+                }
+              }
+              if (!isExist) {
+                this.profiles.push(item);
+              }
+
+
             });
-            this.loading = false;
           }
+          this.loading = false;
         },
           error => {
             this.loading = false;
