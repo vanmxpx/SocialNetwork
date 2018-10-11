@@ -16,10 +16,13 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <input matInput formControlName="passwordInput" type="text" required placeholder="Password">
+                        <input matInput formControlName="passwordInput" [type]="hide ? 'text' : 'password'" required placeholder="Password">
                         <mat-error *ngIf="loginForm.controls.passwordInput.invalid">
                                 {{getPasswordErrorMessage()}}
                         </mat-error>
+                        <mat-icon matSuffix (click)="hide = !hide" matTooltip="Show password">{{hide ? 'visibility' :
+                            'visibility_off'}}
+                          </mat-icon>
                     </mat-form-field>
                 </form>
                 <button mat-raised-button (click)="onSubmit()">Sing in</button>

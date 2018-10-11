@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
     emailInput: new FormControl('', [Validators.email, Validators.required]),
     passwordInput: new FormControl('', [Validators.minLength(6), Validators.maxLength(16), Validators.required])
   });
+  hide = false;
   loading = false;
   submitted = false;
   returnUrl: string;

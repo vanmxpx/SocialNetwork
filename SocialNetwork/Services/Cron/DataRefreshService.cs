@@ -19,7 +19,7 @@ namespace SocialNetwork.Services.Cron
             while (!cancellationToken.IsCancellationRequested)
             {
                 await _randomStringProvider.Do(cancellationToken);
-                await Task.Delay(TimeSpan.FromMinutes(60), cancellationToken);
+                await Task.Delay(TimeSpan.FromMinutes(2), cancellationToken);
             }
         }
     }
