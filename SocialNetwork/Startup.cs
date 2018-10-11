@@ -62,12 +62,14 @@ namespace SocialNetwork
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfigProvider provider, Initializer ini)
         {
+
+            app.UseWebSockets();
+            app.UseAuthentication(); //используем аутентификацию
             app.UseSignalR(routes =>
             {
-                routes.MapHub<ChatHub>("/chatHub");
+                routes.MapHub<ConnectionHub>("/chatHub");
             });
 
-            app.UseAuthentication(); //используем аутентификацию
             app.UseMvc();
             app.UseBDScripts(env, provider, ini);
             if (Environment.IsDevelopment())

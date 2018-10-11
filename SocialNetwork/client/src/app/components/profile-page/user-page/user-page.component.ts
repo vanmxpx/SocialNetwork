@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { ProfileService } from '../../../services/model-services/profile.service';
 import { Profile } from '../../../models/profile';
+import { NotifyService } from '../../../services/notify-services/notify.service';
 
 @Component({
   selector: 'app-user-page',
@@ -20,8 +21,8 @@ export class UserPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private profileService: ProfileService
-  ) {
+    private profileService: ProfileService,
+    private notifyService: NotifyService) {
     // override the route reuse strategy
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -41,7 +42,7 @@ export class UserPageComponent implements OnInit {
   private getProfile(): void {
     this.login = this.route.snapshot.paramMap.get('login');
     this.profileService.getProfile(this.login)
-      .subscribe(profile => this.profile = profile);
+      .subscribe(profile => (this.profile = profile, this.notifyService.RegisteredOnServer()));
   }
 
   ngOnInit() {

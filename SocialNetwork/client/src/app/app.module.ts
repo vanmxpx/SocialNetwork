@@ -24,6 +24,8 @@ import { FollowingsService } from './services/model-services/followings.service'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { UserSearchComponent } from './components/profile-page/user-search/user-search.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { NotifyService } from './services/notify-services/notify.service';
+import { AddpostService } from './services/addpost-services/addpost.service';
 
 
 
@@ -59,6 +61,8 @@ import { SettingsComponent } from './components/settings/settings.component';
     ProfileService,
     AuthenticationService,
     FollowingsService,
+    NotifyService,
+    AddpostService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
