@@ -7,6 +7,8 @@ using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using AutoMapper;
 using System;
+using Microsoft.AspNetCore.SignalR;
+using SocialNetwork.SignalRChatHub;
 
 namespace SocialNetwork.Controllers
 {
@@ -18,11 +20,14 @@ namespace SocialNetwork.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private IHubContext<ConnectionHub, INotifyHubClient> hubContext;
 
-        public PostsController(IUnitOfWork unitOfWork, IMapper mapper)
+        public PostsController(IUnitOfWork unitOfWork, IMapper mapper,
+                        IHubContext<ConnectionHub, INotifyHubClient> hubContext)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.hubContext = hubContext;
         }
 
         // GET api/posts/79
@@ -97,7 +102,7 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
-         //GET api/posts/newsByPage/?id=2&page=24
+        //GET api/posts/newsByPage/?id=2&page=24
         [AllowAnonymous]
         [HttpGet]
         [Route("newsByPage")]
@@ -116,7 +121,7 @@ namespace SocialNetwork.Controllers
             }
             return new OkObjectResult(new List<PostDto>());
         }
-        
+
         // POST api/posts
         [HttpPost]
         public async Task<ActionResult> AddPost([FromBody]Post post)
@@ -134,8 +139,13 @@ namespace SocialNetwork.Controllers
                 if (!ModelState.IsValid) return BadRequest();
                 await unitOfWork.PostRepository.Create(post);
                 await unitOfWork.Save();
+
+                post.Profile =  await unitOfWork.ProfileRepository.GetById(post.ProfileRef);
+                var postDto = mapper.Map<Post, PostDto>(post);
+                await hubContext.Clients.Group(postDto.profile.Login).AddNewPostToNews(postDto);
+                
                 return Created("api/post", post);
-            }
+            } 
             return BadRequest();
         }
 
@@ -152,7 +162,7 @@ namespace SocialNetwork.Controllers
                 return Unauthorized();
             }
 
-            
+
             if (post != null)
             {
                 unitOfWork.PostRepository.Delete(post);

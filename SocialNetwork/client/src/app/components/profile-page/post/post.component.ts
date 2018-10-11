@@ -1,20 +1,27 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
 import { Post } from '../../../models/post';
 import { PostService } from '../../../services/model-services/post.service';
+import { NotifyService } from '../../../services/notify-services/notify.service';
+import { AddpostService } from '../../../services/addpost-services/addpost.service';
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnDestroy, AfterViewInit {
   posts: Post[] = [];
   @Input() public isNews: boolean;
   @Input() public profileId: number;
-  page: number = 0;
-  
-  constructor(private postService: PostService) { }
+  page: number;
 
+  public eventAddPost;
+
+  constructor(private postService: PostService,
+    private notifyService: NotifyService,
+    private addNewPostService: AddpostService) {
+    this.page = 0;
+  }
   ngOnInit() {
   }
 
@@ -28,9 +35,9 @@ export class PostComponent implements OnInit {
   }
 
   onPostsSuccess(res) {
-    console.log("Post page " + this.page);
-    console.log(res);
-    if (res != undefined) {
+    // console.log("Post page " + this.page);
+    // console.log(res);
+    if (res !== undefined) {
       res.forEach(item => {
         this.posts.push(item);
       });
@@ -39,20 +46,32 @@ export class PostComponent implements OnInit {
 
   onScroll() {
     this.page = this.page + 1;
-    if(this.isNews == true){
+    if (this.isNews === true) {
       this.getNewsByPage();
-    }else{
+    } else {
       this.getPostsByPage();
     }
-    console.log("Scrolled down");
+    // console.log("Scrolled down");
   }
 
   ngAfterViewInit() {
-    if(this.isNews == true){
+
+    if (this.isNews) {
       this.getNewsByPage();
-    }else{
+      this.eventAddPost = this.notifyService.newPostReceived.subscribe((post: Post) => {
+        this.posts.unshift(post);
+      });
+    } else {
       this.getPostsByPage();
+      this.eventAddPost = this.addNewPostService.addNewPost.subscribe((post: Post) => {
+        this.posts.unshift(post);
+      });
     }
+
     this.page = this.page + 1;
+  }
+
+  ngOnDestroy() {
+      this.eventAddPost.unsubscribe();
   }
 }
