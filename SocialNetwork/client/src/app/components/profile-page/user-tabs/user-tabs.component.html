@@ -1,19 +1,26 @@
-<mat-tab-group>
-  <mat-tab label="Posts">
-    <ng-template matTabContent>
-      <app-add-post *ngIf="isAuthorizedUserProfile" [profile]="profile"></app-add-post>
-      <app-post [isNews]="false" [profileId]="this.profile.id"></app-post>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="Subscribers">
-    <app-followers [profiles]="subscribers"></app-followers>
-  </mat-tab>
-  <mat-tab label="Bloggers">
-    <app-followers [profiles]="bloggers"></app-followers>
-  </mat-tab>
-  <mat-tab label="News" >
-    <ng-template matTabContent>
-      <app-post  [isNews]="true" [profileId]="this.profile.id"></app-post>
-    </ng-template>
-    </mat-tab>
-</mat-tab-group>
+<mat-card class="tab-control">
+  <mat-card>
+    <mat-tab-group>
+      <mat-tab label="Posts">
+        <ng-template matTabContent>
+          <app-add-post *ngIf="isAuthorizedUserProfile" [profile]="profile"></app-add-post>
+          <app-post [isNews]="false" [profileId]="this.profile.id"></app-post>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Subscribers">
+        <app-followers [profiles]="subscribers"></app-followers>
+      </mat-tab>
+      <mat-tab label="Bloggers">
+        <app-followers [profiles]="bloggers"></app-followers>
+      </mat-tab>
+      <mat-tab label="News">
+        <ng-template matTabContent>
+          <app-post [isNews]="true" [profileId]="this.profile.id"></app-post>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Search">
+        <app-user-search></app-user-search>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</mat-card>

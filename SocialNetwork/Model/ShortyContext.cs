@@ -146,7 +146,9 @@ namespace SocialNetwork
                     //.IsRequired()
                     .HasColumnType("varchar(32)");
 
-                entity.Property(e => e.Photo).HasColumnType("varbinary(8001)");
+                entity.Property(e => e.PhotoUrl)
+                .HasColumnType("varchar(64)")
+                .HasDefaultValue("./assets/avatars/avatar.png");
                 
                 entity.HasMany(d => d.Posts)
                     .WithOne(p => p.Profile)

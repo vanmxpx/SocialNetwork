@@ -1,3 +1,4 @@
+@import '../../../../sass/variables.scss';
 .example-form {
   min-width: 150px;
   width: 100%;
@@ -5,12 +6,32 @@
 
 textarea {
   max-height: 200px;
+  color: $primary-dark-color;
 }
 
 .full-width {
+  padding-top: 8px;
+  padding-bottom: 8px;
   width: 100%;
+}
+::ng-deep textarea[_ngcontent-c9]{
+  color: black;
+}
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: $primary-color;
+}
+::ng-deep .mat-form-field .mat-form-field-label {
+  color: $primary-color;
+}
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: $primary-dark-color;
 }
 
 .fill-remaining-space {
   flex: 1 1 auto;
+}
+button{
+  background-color: $secondary-dark-color;
+  border-width: 0px;
+  color: $secondary-text;
 }

@@ -76,5 +76,23 @@ namespace SocialNetwork.Repositories
             }
             return bloggers;
         }
+
+        public List<Profile> GetCoincidentallyLogin(string login, int skip, int take)
+        {
+             List<Profile> profiles = Context.Profiles.Where(u=>u.Login.StartsWith(login)).Skip(skip).Take(take).ToList();
+             return profiles;
+
+            //from user in Context.Profiles
+            //         where user.Login.StartsWith(login)
+                    
+            //         orderby(user.Login)
+            //         select user;
+                    
+        }
+
+        List<Profile> IProfileRepository.GetCoincidentallyName(string name, string lastName, int skip, int take)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

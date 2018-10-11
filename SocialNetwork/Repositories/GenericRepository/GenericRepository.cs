@@ -23,7 +23,7 @@ namespace SocialNetwork.Repositories.GenericRepository
             await Context.Set<TEntity>().AddAsync(entity);
         }
 
-        public void Update(int id, TEntity entity)
+        public void Update(TEntity entity)
         {
             Context.Set<TEntity>().Update(entity);
         }

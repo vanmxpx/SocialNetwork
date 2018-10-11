@@ -1,4 +1,47 @@
-<h2>Login</h2>
+<div class="main-content">
+    <div class="main-content-header">
+        <img src="../../../assets/img/RedLogo.png">
+    </div>
+    <div class="main-content-upform">
+        Sign in to Shorty
+    </div>
+    <div>
+        <mat-card class="main-content-form">
+            <mat-card>
+                <form [formGroup]="loginForm">
+                    <mat-form-field>
+                        <input matInput formControlName="emailInput" type="text" required placeholder="Email">
+                        <mat-error *ngIf="loginForm.controls.emailInput.invalid">
+                                {{getEmailErrorMessage()}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput formControlName="passwordInput" type="text" required placeholder="Password">
+                        <mat-error *ngIf="loginForm.controls.passwordInput.invalid">
+                                {{getPasswordErrorMessage()}}
+                        </mat-error>
+                    </mat-form-field>
+                </form>
+                <button mat-raised-button (click)="onSubmit()">Sing in</button>
+            </mat-card>
+        </mat-card>
+    </div>
+
+
+    <div>
+        <mat-card class="main-content-subform">
+            <mat-card>
+                New to Shorty? <a href="registration"> Create an account. </a>
+            </mat-card>
+
+        </mat-card>
+    </div>
+
+</div>
+
+
+
+<!-- <h2>Login</h2>
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label for="email">E-mail</label>
@@ -19,4 +62,4 @@
         <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         <a [routerLink]="['/registration']" class="btn btn-link">Registration</a>
     </div>
-</form>
+</form> -->

@@ -36,7 +36,6 @@ namespace SocialNetwork.Services.Cron
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Fuck");
             }
 
 

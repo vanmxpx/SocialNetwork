@@ -35,10 +35,7 @@ export class AuthenticationService {
   }
 
   public logout() {
-    // удаляем токен для выхода из системы
-    localStorage.removeItem('token');
-    localStorage.removeItem('login');
-    localStorage.removeItem('login');
+    localStorage.clear();
   }
 
   public getProfile(): void {

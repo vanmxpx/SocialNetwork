@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { timeout, catchError } from 'rxjs/operators';
 
 import { Profile } from '../../models/profile';
 
@@ -9,6 +10,8 @@ const httpOptions = {
     'Content-Type': 'application/json',
   })
 };
+
+
 
 @Injectable()
 export class ProfileService {
@@ -21,6 +24,29 @@ export class ProfileService {
   getBloggers(profileId: number): Observable<Profile[]> {
     return this.http.get<Profile[]>('http://localhost:5000/api/followings/bloggers/?id=' + profileId.toString());
   }
+  getProfiles(login: string, from: number, to: number): Observable<Profile[]> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<Profile[]>('http://localhost:5000/api/profiles/' + login + '/' + from.toString() + '/' + to.toString()).pipe(
+      timeout(3000),
+      catchError(e => {
+        // do something on a timeout
+        return of(null);
+      })
+    );
+  }
+
+  public uploadAvatar(avatar: File): Observable<any> {
+    const formData = new FormData();
+
+        formData.append(avatar.name, avatar);
+
+        const uploadReq = new HttpRequest('POST', 'http://localhost:5000/api/profiles', formData, {
+            reportProgress: true,
+        });
+    return this.http.request(uploadReq);
+  }
+
+
   constructor(private http: HttpClient) { }
 
 

@@ -1,0 +1,29 @@
+@import '../../../../sass/variables.scss';
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: $secondary-color !important;
+}
+
+@media only screen and (max-width: $tablet) {
+    .tab-control {
+        margin-left: 0px !important;
+    }
+}
+
+.tab-control {
+    background-color: $secondary-dark-color;
+    padding: 3px;
+    margin-left: 16px;
+    mat-card {
+       
+    }
+}
+
+::ng-deep .mat-tab-label-content {
+    color: black;
+}
+
+// .mat-tab-label
+// {
+//     color: $primary-text !important;
+// }

@@ -1,0 +1,31 @@
+<mat-card class="header-main-content">
+  <mat-card>
+    <div><img src="../../../../assets/img/RedLogo.png"></div>
+    <div class="menu-context" [matMenuTriggerFor]="menu">
+      <img src={{userProfile?.photoUrl}}>
+      <mat-icon >expand_more</mat-icon>
+      <mat-menu  #menu="matMenu">
+        <mat-card>
+            <mat-card class="menu-header">
+                Signed in as:
+               <p><span><h4>{{userProfile.name}}</h4></span></p>
+              </mat-card>
+              <mat-card class="menu-content">
+                  <button mat-menu-item (click)="PersonButtonClick()">
+                      <mat-icon>person</mat-icon>
+                      <span>Profile</span>
+                    </button>          
+                    <button mat-menu-item (click)="AppExtiButtonClick()">
+                      <mat-icon>exit_to_app</mat-icon>
+                      <span>Log out</span>
+                    </button>
+              </mat-card>
+              
+        </mat-card>
+        
+          
+        </mat-menu>
+    </div>
+   
+  </mat-card>
+</mat-card>

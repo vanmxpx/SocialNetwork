@@ -3,7 +3,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderComponent } from './components/profile-page/header/header.component';
 import { UserInfoComponent } from './components/profile-page/user-info/user-info.component';
 import { PostComponent } from './components/profile-page/post/post.component';
 import { FollowersComponent } from './components/profile-page/followers/followers.component';
@@ -20,11 +20,13 @@ import { UserPageComponent } from './components/profile-page/user-page/user-page
 import { JwtInterceptor, ErrorInterceptor } from './helpers';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './guards';
-import { FooterComponent } from './components/footer/footer.component';
 import { FollowingsService } from './services/model-services/followings.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { UserSearchComponent } from './components/profile-page/user-search/user-search.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { NotifyService } from './services/notify-services/notify.service';
 import { AddpostService } from './services/addpost-services/addpost.service';
+
 
 
 
@@ -40,7 +42,8 @@ import { AddpostService } from './services/addpost-services/addpost.service';
     RegistrationComponent,
     AddPostComponent,
     LoginComponent,
-    FooterComponent
+    UserSearchComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

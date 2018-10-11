@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Repositories;
 using SocialNetwork.Repositories.GenericRepository;
 using AutoMapper;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace SocialNetwork.Controllers
 {
@@ -53,6 +55,30 @@ namespace SocialNetwork.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetProfilesByNameOrLastName([FromQuery]string name, [FromQuery] string lastName, [FromQuery] int from, [FromQuery] int count)
+        {
+
+            return Ok();
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("{login}/{from}/{count}")]
+        public async Task<IActionResult> GetProfilesByLogin(string login, int from, int count)
+        {
+            if (from >= 0 && count > 0)
+            {
+                return new OkObjectResult(unitOfWork.ProfileRepository.GetCoincidentallyLogin(login, from, count));
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+
+        }
+
         //http://localhost:5000/api/profiles/name/?{name}&{lastName}
         [AllowAnonymous]
         [HttpGet]
@@ -63,7 +89,7 @@ namespace SocialNetwork.Controllers
         {
             List<Profile> profiles = await unitOfWork.ProfileRepository.GetByNameAndLastName(name, lastName);
             List<ProfileDto> profileDTOs;
-            if(profiles != null)
+            if (profiles != null)
             {
                 profileDTOs = new List<ProfileDto>(profiles.Count);
                 for (int i = 0; i < profiles.Count; i++)
@@ -89,7 +115,7 @@ namespace SocialNetwork.Controllers
             }
 
             var credential = await unitOfWork.CredentialRepository.GetById(id);
-            
+
             if (profile != null)
             {
                 unitOfWork.ProfileRepository.Delete(profile);
@@ -98,6 +124,63 @@ namespace SocialNetwork.Controllers
                 return Ok();
             }
             return NotFound();
+        }
+
+        // [HttpPost]
+        // [Route("avatar")]
+        // public async Task<IActionResult> UploadImage()
+        // {
+        //     var file = Request.Form.Files[0];
+        //     if (file == null || file.Length == 0)
+        //         return Content("file not selected");
+
+        //     //TODO: check on file format (.jpg)
+
+        //     var path = Path.Combine(
+        //                 Directory.GetCurrentDirectory(), "client/src/assets/avatars/avatar",
+        //                 User.Identity.Name + ".jpg");
+
+        //     using (var stream = new FileStream(path, FileMode.Create))
+        //     {
+        //         await file.CopyToAsync(stream);
+        //     }
+        //     Profile profile = await unitOfWork.ProfileRepository.GetById(int.Parse(User.Identity.Name));
+        //     profile.PhotoUrl = "/assets/avatars/avatar" +
+        //                 profile.Id + ".jpg";
+
+        //     return Ok();
+        // }
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<ActionResult> UploadFile()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                if (file == null || file.Length == 0)
+                    return Content("file not selected");
+
+                //TODO: check on file format (.jpg)
+
+                var path = Path.Combine(
+                            Directory.GetCurrentDirectory(), "client/src/assets/avatars",
+                            User.Identity.Name + ".png");
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                Profile profile = await unitOfWork.ProfileRepository.GetById(int.Parse(User.Identity.Name));
+                profile.PhotoUrl = "./assets/avatars/" +
+                            profile.Id + ".png";
+                unitOfWork.ProfileRepository.Update(profile);
+                await unitOfWork.Save();
+
+                return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest("Upload Failed: " + ex.Message);
+            }
         }
     }
 }

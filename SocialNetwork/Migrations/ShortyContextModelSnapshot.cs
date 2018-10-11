@@ -14,7 +14,7 @@ namespace SocialNetwork.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("SocialNetwork.Authorization", b =>
@@ -149,8 +149,10 @@ namespace SocialNetwork.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("varchar(32)");
 
-                    b.Property<byte[]>("Photo")
-                        .HasColumnType("varbinary(8001)");
+                    b.Property<string>("PhotoUrl")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varchar(64)")
+                        .HasDefaultValue("./assets/avatars/avatar.png");
 
                     b.HasKey("Id");
 

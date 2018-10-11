@@ -12,6 +12,6 @@ namespace SocialNetwork
         public Gender Gender { get; set; }
         public string Location { get; set; }
         public byte? Age { get; set; }
-        public byte[] Photo { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }

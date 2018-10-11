@@ -54,6 +54,7 @@ export class PostComponent implements OnInit, OnDestroy, AfterViewInit {
     // console.log("Scrolled down");
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
 
     if (this.isNews) {

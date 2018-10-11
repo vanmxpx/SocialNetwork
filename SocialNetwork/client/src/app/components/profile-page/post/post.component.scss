@@ -1,4 +1,46 @@
+@import '../../../../sass/variables.scss';
+
+
 .date
 {
-    color: gray;
+    color: $primary-color;
+}
+.content{
+    color: $primary-dark-color;
+}
+
+mat-card-header{
+    
+    padding-top: 0px;
+    img{
+        border-radius: 4px;
+        height: 32px;
+        width: 32px;
+    }
+   ::ng-deep .mat-card-header-text{
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+    ::ng-deep mat-card-subtitle{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        h3{
+            margin: 0px;
+        }
+        padding-left: 8px;
+        color: $primary-dark-color !important;
+    }
+}
+.main-post-container{
+    background-color: $secondary-dark-color;
+    padding: 3px;
+    margin-top: 10px;
+    
+    mat-card{
+        margin: 0px;
+        color: white;
+    margin-bottom: 3px;
+    }
 }
