@@ -9,11 +9,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   private returnURL: string;
-  public userProfile = JSON.parse(localStorage.getItem('profile'));
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
+  public userProfile;
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.returnURL = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+    this.userProfile = JSON.parse(localStorage.getItem('profile'));
   }
 
   PersonButtonClick() {
@@ -22,6 +24,13 @@ export class HeaderComponent implements OnInit {
   AppExtiButtonClick() {
     localStorage.clear();
     this.router.navigate([this.returnURL + 'login']);
+  }
+
+  GetPictureURL() {
+    if (this.userProfile !== null) {
+      return this.userProfile.photoUrl;
+    }
+
   }
 
 }
